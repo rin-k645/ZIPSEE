@@ -21,7 +21,6 @@ public class HouseDealServiceImpl implements HouseDealService {
 	
 	@Override
 	public List<HouseDealDto> getHouseDealList(String dongCode) throws Exception {
-		System.out.println("??");
 		return houseDealMapper.getHouseDealList(dongCode);
 	}
 

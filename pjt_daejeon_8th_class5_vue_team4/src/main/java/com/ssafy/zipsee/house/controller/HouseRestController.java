@@ -5,15 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.zipsee.house.model.HouseDealDto;
 import com.ssafy.zipsee.house.model.service.HouseDealService;
 
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
 @RestController
 @RequestMapping("/deal")
 public class HouseRestController {
@@ -41,8 +44,8 @@ public class HouseRestController {
 	}
 	
 	@GetMapping("/{dealid}")
-	public ResponseEntity<?> viewHouseDeal(@PathVariable("dealid") String dealId) {
-		return null;
+	public ResponseEntity<?> viewHouseDeal(@PathVariable("dealid") int dealId) throws Exception {
+		return new ResponseEntity<HouseDealDto>(houseDealService.getHouseDeal(dealId), HttpStatus.OK);
 	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
