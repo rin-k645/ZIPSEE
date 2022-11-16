@@ -18,7 +18,7 @@ public class UserHouseDto {
 	private String userId;
 	private int dealId;
 	
-	HouseDealDto houseDeal;
+	private HouseDealDto houseDeal;
 
 	public UserHouseDto() {
 		super();

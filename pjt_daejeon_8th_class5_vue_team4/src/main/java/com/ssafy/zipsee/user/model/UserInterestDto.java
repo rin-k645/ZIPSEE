@@ -16,7 +16,7 @@ public class UserInterestDto {
 	private String userId;
 	private int interestId;
 	
-	InterestDto interest;
+	private InterestDto interest;
 
 	public UserInterestDto() {
 		super();

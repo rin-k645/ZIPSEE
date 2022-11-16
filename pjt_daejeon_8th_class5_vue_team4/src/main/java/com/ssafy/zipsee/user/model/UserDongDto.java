@@ -18,7 +18,7 @@ public class UserDongDto {
 	private String userId;
 	private String dongCode;
 	
-	DongDto dong;
+	private DongDto dong;
 
 	public UserDongDto() {
 		super();
