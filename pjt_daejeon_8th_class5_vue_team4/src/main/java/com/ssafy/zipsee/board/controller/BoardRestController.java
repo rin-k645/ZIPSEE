@@ -59,7 +59,7 @@ public class BoardRestController {
 		}
 	}
 	
-	@GetMapping("/inquiry")
+	@GetMapping("/ask")
 	@ApiOperation(value = "게시판 문의목록", notes = "모든 문의 게시글의 정보를 반환한다.", response = List.class)
 	public ResponseEntity<?> InquiryList() {
 		try {
@@ -75,20 +75,30 @@ public class BoardRestController {
 		}
 	}
 	
-	@ApiOperation(value = "문의 글작성", notes = "새로운 문의 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping
-	public ResponseEntity<String> writeBoard(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto board) throws Exception {
-		logger.info("writeBoard - 호출");
+	@ApiOperation(value = "공지글 글작성", notes = "새로운 공지 정보를 입력한다.(관리자만 가능) 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/notice")
+	public ResponseEntity<String> writeNotice(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto board) throws Exception {
+		logger.info("writeNotice - 호출");
 		if (boardService.registerBoard(board)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiOperation(value = "문의 글수정", notes = "수정할 문의 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("/inquiry")
-	public ResponseEntity<String> modifyBoard(@RequestBody @ApiParam(value = "수정할 문의 정보", required = true) BoardDto board) throws Exception {
-		logger.info("modifyBoard - 호출", board);
+	@ApiOperation(value = "문의 글작성", notes = "새로운 문의 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/ask")
+	public ResponseEntity<String> writeAsk(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto board) throws Exception {
+		logger.info("writeAsk - 호출");
+		if (boardService.registerBoard(board)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "공지 글수정", notes = "수정할 공지 정보를 입력한다.(관리자만 가능) 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/notice")
+	public ResponseEntity<String> modifyNotice(@RequestBody @ApiParam(value = "수정할 문의 정보", required = true) BoardDto board) throws Exception {
+		logger.info("modifyNotice - 호출", board);
 		
 		if (boardService.modifyBoard(board)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -96,10 +106,31 @@ public class BoardRestController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "문의 글수정", notes = "수정할 문의 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/ask")
+	public ResponseEntity<String> modifyAsk(@RequestBody @ApiParam(value = "수정할 문의 정보", required = true) BoardDto board) throws Exception {
+		logger.info("modifyAsk - 호출", board);
+		
+		if (boardService.modifyBoard(board)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "공지 글삭제", notes = "글번호에 해당하는 공지글의 정보를 삭제한다.(관리자만 가능) 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("notice/{boardid}")
+	public ResponseEntity<String> deleteNotice(@PathVariable("boardid") @ApiParam(value = "삭제할 글의 글번호.", required = true, example = "0") int boardId) throws Exception {
+		logger.info("deleteNotice - 호출");
+		if (boardService.deleteBoard(boardId)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 	@ApiOperation(value = "문의 글삭제", notes = "글번호에 해당하는 문의글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("inquiry/{boardid}")
-	public ResponseEntity<String> deleteBoard(@PathVariable("boardid") @ApiParam(value = "삭제할 글의 글번호.", required = true, example = "0") int boardId) throws Exception {
-		logger.info("deleteArticle - 호출");
+	@DeleteMapping("ask/{boardid}")
+	public ResponseEntity<String> deleteAsk(@PathVariable("boardid") @ApiParam(value = "삭제할 글의 글번호.", required = true, example = "0") int boardId) throws Exception {
+		logger.info("deleteAsk - 호출");
 		if (boardService.deleteBoard(boardId)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
