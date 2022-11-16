@@ -44,7 +44,7 @@
 
 <h3> :pushpin: 메인 페이지 </h3>
 
-<img src="https://user-images.githubusercontent.com/67595512/192798477-03155de6-1ccb-4ace-ba50-fa68db1b54c1.PNG" />
+<img src="https://user-images.githubusercontent.com/28649890/202128179-f5113e5f-fb8d-49e8-8466-d4c7768ac91c.PNG" />
 
 <br>
 <br>
@@ -66,7 +66,7 @@
 
 - 시/도, 구/군, 동, 매매년/월 및 부동산 유형(아파트, 주택)을 선택하여 매매현황 확인 가능
 
-<img src="https://user-images.githubusercontent.com/67595512/192799898-e4859b4b-a857-4c26-96c0-74a00b018bf6.png" />
+<img src="https://user-images.githubusercontent.com/28649890/202128706-331f4014-1c56-435d-8127-5f2458b8a129.PNG" />
 
 - 아파트 매매 현황
   - 페이지 접속 시 현재 위치를 default 값으로 지도에 표시
@@ -80,7 +80,7 @@
 <br>
 <h3> :pushpin: 로그인 페이지 </h3>
 
-<img src="https://user-images.githubusercontent.com/67595512/192801436-7417552c-df04-4228-ac1a-87b9819053ff.png" />
+<img src="https://user-images.githubusercontent.com/28649890/202128781-9933d52a-33c5-4a96-80e2-4e6815c2ef30.PNG" />
 
 - 아이디 및 비밀번호 입력 폼, 로그인 버튼, 회원가입 페이지로 이동하는 버튼
   <br>
@@ -97,7 +97,7 @@
 <br>
 <h3> :pushpin: 회원가입 페이지 </h3>
 
-<img src="https://user-images.githubusercontent.com/67595512/192802029-ede6d6ba-acac-482d-88dd-f4801ecab45b.png" />
+<img src="https://user-images.githubusercontent.com/28649890/202128878-171b989c-46bb-425d-92d6-4dddacb2a66c.PNG" />
 
 - 아이디, 비밀번호, 이름, 전화번호, 주소, 우편번호 입력 폼, 회원가입 버튼
 - 입력하지 않은 정보가 있을 경우, 회원가입이 제한됨
@@ -114,7 +114,10 @@
 <br>
 <br>
 <br>
-
+![notice](https://user-images.githubusercontent.com/28649890/202128799-e3f26169-d3a0-4bcb-b1af-698a92876832.PNG)
+![noticewrite](https://user-images.githubusercontent.com/28649890/202128809-36cef24f-90dd-4e74-82b4-f5e5901c06ef.PNG)
+![ask](https://user-images.githubusercontent.com/28649890/202128830-7d46746e-7c06-4d5f-b4c2-f4d84c7625fd.PNG)
+![question](https://user-images.githubusercontent.com/28649890/202128870-3783450c-6e47-4203-9c6a-cc0e8c2de4f1.PNG)
 - RestController 구현 : 기존의 servlet을 restcontroller로 구현
 
 ```java
