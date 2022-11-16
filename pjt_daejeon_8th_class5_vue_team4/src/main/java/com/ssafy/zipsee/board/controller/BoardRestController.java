@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.zipsee.board.model.BoardDto;
+import com.ssafy.zipsee.board.model.CommentDto;
 import com.ssafy.zipsee.board.model.service.BoardService;
+import com.ssafy.zipsee.board.model.service.CommentService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +38,7 @@ public class BoardRestController {
 	private static final String FAIL = "fail";
 	
 	private BoardService boardService;
+	private CommentService commentService;
 
 	@Autowired
 	public BoardRestController(BoardService boardService) {
@@ -132,6 +135,18 @@ public class BoardRestController {
 	public ResponseEntity<String> deleteAsk(@PathVariable("boardid") @ApiParam(value = "삭제할 글의 글번호.", required = true, example = "0") int boardId) throws Exception {
 		logger.info("deleteAsk - 호출");
 		if (boardService.deleteBoard(boardId)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	//Comment
+	
+	@ApiOperation(value = "문의에 대한 답변 작성", notes = "새로운 답변을 입력한다.(관리자만 가능) 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/comment")
+	public ResponseEntity<String> writeComment(@RequestBody @ApiParam(value = "답변 정보.", required = true) CommentDto comment) throws Exception {
+		logger.info("writeNotice - 호출");
+		if (commentService.registerComment(comment)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

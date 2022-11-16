@@ -14,12 +14,14 @@
 	
 	<select id="getInquiryList" resultType="com.ssafy.zipsee.board.model.BoardDto">
 		SELECT
-			BOARD_ID as boardId,
-			USER_ID as userId,
-			TITLE as title,
-			CONTENT as content,
-			REGISTER_DATE as registerDate
-		FROM BOARD
+			B.BOARD_ID as boardId,
+			B.USER_ID as userId,
+			B.TITLE as title,
+			B.CONTENT as content,
+			B.REGISTER_DATE as registerDate,
+			C.CONTENT as "comment.content",
+			C.REGISTER_DATE as "comment.registerDate"
+		FROM BOARD B, COMMENT C 
 		WHERE USER_ID != 'admin'
 	</select>
 	
@@ -35,8 +37,8 @@
 	</select>
 	
 	<insert id="registerBoard" parameterType="com.ssafy.zipsee.board.model.BoardDto">
-		INSERT INTO BOARD(BOARD_ID, USER_ID, TITLE, CONTENT, REGISTER_DATE)
-		VALUES(#{boardId}, #{userId}, #{title}, #{content}, now())
+		INSERT INTO BOARD(USER_ID, TITLE, CONTENT, REGISTER_DATE)
+		VALUES(#{userId}, #{title}, #{content}, now())
 	</insert>
 	
 	<update id="modifyBoard" parameterType="com.ssafy.zipsee.board.model.BoardDto">
