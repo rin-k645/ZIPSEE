@@ -23,16 +23,17 @@ public class HouseInfoDto {
 	private String jibun;
 	private String lat;
 	private String lng;
-	private int img;
+	private String img;
 	
 	DongDto dong;
 	List<HouseDealDto> dealList;
 	public HouseInfoDto() {
 		super();
 	}
-	
-	public HouseInfoDto(int houseId, String houseName, String houseType, String dongCode, String dongName, int buildYear,
-			String jibun, String lat, String lng, int img, DongDto dong, List<HouseDealDto> dealList) {
+
+	public HouseInfoDto(int houseId, String houseName, String houseType, String dongCode, String dongName,
+			int buildYear, String jibun, String lat, String lng, String img, DongDto dong,
+			List<HouseDealDto> dealList) {
 		super();
 		this.houseId = houseId;
 		this.houseName = houseName;
@@ -120,11 +121,11 @@ public class HouseInfoDto {
 		this.lng = lng;
 	}
 
-	public int getImg() {
+	public String getImg() {
 		return img;
 	}
 
-	public void setImg(int img) {
+	public void setImg(String img) {
 		this.img = img;
 	}
 

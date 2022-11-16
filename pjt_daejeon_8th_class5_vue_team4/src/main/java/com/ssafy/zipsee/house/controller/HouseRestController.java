@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.zipsee.house.model.HouseDealDto;
 import com.ssafy.zipsee.house.model.service.HouseDealService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
 @RestController
 @RequestMapping("/deal")
+@Api("매물 정보 컨트롤러  API")
 public class HouseRestController {
 	private HouseDealService houseDealService;
 
@@ -28,6 +32,7 @@ public class HouseRestController {
 		this.houseDealService = houseDealService;
 	}
 
+	@ApiOperation(value = "매물 검색", notes = "동코드 조건에 맞는 매물을 검색해 반환한다", response = List.class)
 	@GetMapping
 	public ResponseEntity<?> list(@RequestParam String dongCode) {
 		try {
@@ -43,6 +48,7 @@ public class HouseRestController {
 		}
 	}
 	
+	@ApiOperation(value = "매물 보기", notes = "매물 id에 해당하는 매물을 반환한다", response = List.class)
 	@GetMapping("/{dealid}")
 	public ResponseEntity<?> viewHouseDeal(@PathVariable("dealid") int dealId) throws Exception {
 		return new ResponseEntity<HouseDealDto>(houseDealService.getHouseDeal(dealId), HttpStatus.OK);
