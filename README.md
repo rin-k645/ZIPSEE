@@ -22,21 +22,16 @@
 
 <br>
 
-# 2 구현 파일
+# 2 프로젝트 환경
 
-| 기능       | 파일명                                                                                                                |
-| ---------- | --------------------------------------------------------------------------------------------------------------------- |
-| dto        | UserDto, LikeHouseDto, HouseInfoDto, DongCodeDto                                                                      |
-| dao        | UserMapper, HouseInfoMapper, HouseDealMapper, LikeHouseMapper, DongCodeMapper (interface/xml)                         |
-| service    | UserService, HouseDealService, HouseInfoService, LikeHouseService, DongCodeService (interface/class)                  |
-| controller | UserController, UserRestController, ViewController, HouseRestController                                               |
-| jsp        | index.jsp, login.jsp, signup.jsp, house.jsp, mypageMain.jsp, mypageChange.jsp, mypageLikeApt.jsp, mypageLikeHouse.jsp |
-| js         | house.js, main.js, user.js                                                                                            |
-
-- User 파일: 회원가입, 로그인 등 사용자 정보 데이터베이스 및 관련 연산 수행
-- HouseDeal/HouseInfo 파일 : 아파트/주택 매물 데이터베이스 및 관련 연산 수행
-- LikeHouse 파일: 관심 등록한 아파트/주택 매물 데이터베이스 및 관련 연산 수행
-- js 파일: 비동기 통신과 페이지 이동에 필요한 기능 수행
+| 분류 | 환경 |
+| ---  | ---  |
+| OS | Windows |
+| IDE | STS, VS Code |
+| FrontEnd | HTML, CSS, JavaScript, Vue, Tailwind |
+| BackEnd | Language : JAVA |
+|  | Framework : Spring Boot (2.7.5) |
+|  | DataBase : Mysql  |
 
 <br>
 
@@ -118,119 +113,7 @@
 ![noticewrite](https://user-images.githubusercontent.com/28649890/202128809-36cef24f-90dd-4e74-82b4-f5e5901c06ef.PNG)
 ![ask](https://user-images.githubusercontent.com/28649890/202128830-7d46746e-7c06-4d5f-b4c2-f4d84c7625fd.PNG)
 ![question](https://user-images.githubusercontent.com/28649890/202128870-3783450c-6e47-4203-9c6a-cc0e8c2de4f1.PNG)
-- RestController 구현 : 기존의 servlet을 restcontroller로 구현
 
-```java
-@RestController
-@RequestMapping("/user")
-public class UserRestController {
-@Autowired
-private UserService userService;
-
-    @Autowired
-    public UserRestController(UserService userService) {
-      this.userService = userService;
-    }
-
-    @PostMapping
-    public String register(@RequestBody UserDto userDto) throws Exception {
-      if(userService.registerUser(userDto))
-        return "회원 가입 성공";
-      return "회원 가입 실패";
-    }
-
-    @GetMapping("/{userid}")
-    public ResponseEntity<?> view(@PathVariable("userid") String userId) {
-      return null;
-    }
-
-    @PutMapping
-    public String modify(@RequestBody UserDto userDto) throws Exception {
-      if(userService.modifyUser(userDto))
-        return "회원 정보 수정 성공";
-      return "회원 정보 수정 실패";
-    }
-
-    @DeleteMapping("/{userid}")
-    public ResponseEntity<?> userDelete(@PathVariable("userid") String userId) {
-      return null;
-    }
-
-    private ResponseEntity<String> exceptionHandling(Exception e) {
-      return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
-```
-
-<br>
-
-```java
-@RestController
-@RequestMapping("/deal")
-public class HouseRestController {
-	private HouseDealService houseDealService;
-
-	@Autowired
-	public HouseRestController(HouseDealService houseDealService) {
-		super();
-		this.houseDealService = houseDealService;
-	}
-
-	@GetMapping
-	public ResponseEntity<?> list(@RequestParam Map<String, Object> map) {
-		try {
-			List<HouseDealDto> list = houseDealService.getHouseDealList(map);
-			if (list != null && !list.isEmpty()) {
-				System.out.println(list);
-				return new ResponseEntity<List<HouseDealDto>>(list, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-			}
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
-  }
-
-	private ResponseEntity<String> exceptionHandling(Exception e) {
-		e.printStackTrace();
-		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-}
-```
-
-<br>
-
-```javascript
-document.querySelector("#list-btn").addEventListener("click", function() {
-
-	let houseType = document.getElementById("kind").value;
-
-	document.getElementById("apartInfo").setAttribute("style", "display: block;");
-		document.getElementById("houseInfo").setAttribute("style", "display: none;");
-		
-		let gugunSel = document.querySelector("#dong");
-		let regCode = gugunSel[gugunSel.selectedIndex].value;
-		let yearSel = document.querySelector("#year");
-		let year = yearSel[yearSel.selectedIndex].value;
-		let monthSel = document.querySelector("#month");
-		let month = monthSel[monthSel.selectedIndex].value;
-	
-		let queryParams =
-			"&" + "dongCode" + "=" + regCode; /*아파트소재 구군*/
-		queryParams +=
-		"&" + "dealYear" + "=" + year; /*조회년*/
-		queryParams +=
-		"&" + "dealMonth" + "=" + month; /*조회월*/
-
-	
-		fetch(`${getContextPath()}/deal?${queryParams}`)
-			.then((response) => response.json())
-			.then((data) => {
-				makeAptList(data);
-			});
-
-});
-```
 
 <br>
 
@@ -238,7 +121,7 @@ document.querySelector("#list-btn").addEventListener("click", function() {
 # 4 데이터베이스 설계
 
 <h3> :pushpin: ER 다이어그램 </h3>
-<img src="https://user-images.githubusercontent.com/67595512/199498777-f97889ef-4d55-4fe4-8256-6c21e88345f2.png" />
+<img src="https://user-images.githubusercontent.com/67595512/202134838-dff4ffea-015a-40a3-8aa8-f7426c302266.PNG" />
 
 
 <br>
