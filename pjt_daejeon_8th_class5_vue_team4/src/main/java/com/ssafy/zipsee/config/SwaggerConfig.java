@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 	private ApiInfo info() {
-		return new ApiInfoBuilder().title("Where Is My Home Rest").build();
+		return new ApiInfoBuilder().title("zipsee Rest").build();
 	}
 	
 	@Bean
@@ -23,7 +23,7 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(info())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.ssafy.team4"))
+				.apis(RequestHandlerSelectors.basePackage("com.ssafy.zipsee"))
 				.paths(PathSelectors.ant("/**"))
 				.build();
 	}
