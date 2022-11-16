@@ -167,6 +167,43 @@ CREATE TABLE IF NOT EXISTS `zipsee`.`USER_DEAL` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `zipsee`.`BOARD`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `zipsee`.`BOARD` (
+  `BOARD_ID` INT NOT NULL AUTO_INCREMENT,
+  `USER_ID` VARCHAR(45) NOT NULL,
+  `TITLE` VARCHAR(45) NOT NULL,
+  `CONTENT` VARCHAR(45) NOT NULL,
+  `REGISTER_DATE` DATETIME NOT NULL,
+  PRIMARY KEY (`BOARD_ID`),
+  INDEX `board_user_userid_fk_idx` (`USER_ID` ASC) VISIBLE,
+  CONSTRAINT `board_user_userid_fk`
+    FOREIGN KEY (`USER_ID`)
+    REFERENCES `zipsee`.`USER` (`USER_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `zipsee`.`COMMENT`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `zipsee`.`COMMENT` (
+  `COMMENT_ID` INT NOT NULL AUTO_INCREMENT,
+  `BOARD_ID` VARCHAR(45) NOT NULL,
+  `CONTENT` VARCHAR(45) NOT NULL,
+  `REGISTER_DATE` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`COMMENT_ID`),
+  INDEX `board_comment_commentid_fk_idx` (`BOARD_ID` ASC) VISIBLE,
+  CONSTRAINT `board_comment_commentid_fk`
+    FOREIGN KEY (`BOARD_ID`)
+    REFERENCES `zipsee`.`BOARD` (`USER_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
