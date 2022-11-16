@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.zipsee.user.model.mapper.UserMapper">
- 	<!-- <insert id="registerUser" parameterType="com.ssafy.zipsee.user.model.UserDto">
+ 	<insert id="registerUser" parameterType="com.ssafy.zipsee.user.model.UserDto">
 		INSERT INTO USER(USER_ID, PASSWORD, NAME, NICK_NAME, EMAIL, PHONE, SEX, REGISTER_DATE)
 		VALUES(#{userId}, #{password}, #{name}, #{nickName}, #{email}, #{phone}, #{sex}, now())
 	</insert>
-
-	<select id="loginUser" parameterType="map" resultMap="com.ssafy.zipsee.user.model.UserDto">
-		select *
-		from user
-		where user_id = #{userId} and password = #{password}
-	</select>
 	
 	<delete id="deleteUser" parameterType="String">
 		delete from user
@@ -18,7 +12,15 @@
 	</delete>
 	
 	<select id="getUser" parameterType="String" resultType="com.ssafy.zipsee.user.model.UserDto">
-		select *
+		select
+			USER_ID as userId,
+			PASSWORD as password,
+			NICK_NAME as nickName,
+			NAME as name,
+			EMAIL as email,
+			PHONE as phone,
+			SEX as sex,
+			REGISTER_DATE as registerDate
 		from user
 		where user_id = #{userId}
 	</select>
@@ -28,5 +30,5 @@
 		set user_id = #{userId}, password = #{password}, name = #{name}, nick_name = #{nickName}, email = #{email}, phone = #{phone},
 			sex = #{sex}, register_date = #{registerDate}
 		where user_id = #{userId}
-	</update> -->
+	</update>
 </mapper>

@@ -1,7 +1,5 @@
 package com.ssafy.zipsee.user.model.service;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +23,6 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 	
-	@Override
-	public UserDto loginUser(Map<String, String> map) throws Exception {
-		return userMapper.loginUser(map);
-	}
-
 	@Override
 	public boolean deleteUser(String userId) throws Exception {
 		if(userMapper.deleteUser(userId) == 1) 

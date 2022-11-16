@@ -1,8 +1,11 @@
 package com.ssafy.zipsee.user.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,15 +13,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.zipsee.board.controller.BoardRestController;
 import com.ssafy.zipsee.user.model.UserDto;
 import com.ssafy.zipsee.user.model.service.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
 @RestController
 @RequestMapping("/user")
+@Api("회원 컨트롤러  API")
 public class UserRestController {
+	private static final Logger logger = LoggerFactory.getLogger(BoardRestController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+	
 	@Autowired
 	private UserService userService;
 
@@ -27,28 +40,42 @@ public class UserRestController {
 		this.userService = userService;
 	}
 	
+	@ApiOperation(value = "회원 정보 등록", notes = "새로운 회원을 등록한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
-	public String register(@RequestBody UserDto userDto) throws Exception {
-		if(userService.registerUser(userDto))
-			return "회원 가입 성공";
-		return "회원 가입 실패";
+	public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) throws Exception {
+		logger.info("registerUser - 호출");
+		if (userService.registerUser(userDto)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "회원 정보 보기", notes = "회원 아이디에 해당하는 회원 정보를 반환한다.", response = UserDto.class)
 	@GetMapping("/{userid}")
-	public ResponseEntity<?> view(@PathVariable("userid") String userId) {
-		return null;
+	public ResponseEntity<?> viewUser(@PathVariable("userid") String userId) throws Exception {
+		logger.info("viewUser - 호출 : " + userId);
+		return new ResponseEntity<UserDto>(userService.getUser(userId), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "회원 수정", notes = "수정할 회원의 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping
-	public String modify(@RequestBody UserDto userDto) throws Exception {
-		if(userService.modifyUser(userDto))
-			return "회원 정보 수정 성공";
-		return "회원 정보 수정 실패";
+	public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) throws Exception {
+		logger.info("modifyUser - 호출 {}", userDto);
+		
+		if (userService.modifyUser(userDto)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "회원 삭제", notes = "회원 아이디에 해당하는 회원의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{userid}")
-	public ResponseEntity<?> userDelete(@PathVariable("userid") String userId) {
-		return null;
+	public ResponseEntity<?> userDelete(@PathVariable("userid") String userId) throws Exception {
+		logger.info("deleteArticle - 호출");
+		if (userService.deleteUser(userId)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
