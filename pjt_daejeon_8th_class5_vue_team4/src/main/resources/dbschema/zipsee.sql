@@ -135,7 +135,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `zipsee`.`interest`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `zipsee`.`interest` (
-  `INTEREST_ID` INT NOT NULL AUTO_INCREMENT,
+  `INTEREST_ID` VARCHAR(45) NOT NULL,
   `INTEREST_NAME` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`INTEREST_ID`))
 ENGINE = InnoDB
@@ -188,7 +188,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `zipsee`.`user_interest` (
   `USER_INTEREST_ID` INT NOT NULL AUTO_INCREMENT,
   `USER_ID` VARCHAR(45) NOT NULL,
-  `INTEREST_ID` INT NOT NULL,
+  `INTEREST_ID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`USER_INTEREST_ID`),
   INDEX `user_interest_userid_fk_idx` (`USER_ID` ASC) VISIBLE,
   INDEX `user_interest_interestid_fk_idx` (`INTEREST_ID` ASC) VISIBLE,

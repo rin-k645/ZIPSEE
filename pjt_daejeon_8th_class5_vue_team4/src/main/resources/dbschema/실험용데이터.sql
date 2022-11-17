@@ -2,11 +2,8 @@ INSERT INTO `dong` VALUES ('1111010100','서울특별시','종로구','청운동
 
 INSERT INTO `houseinfo` VALUES (1,'광화문풍림스페이스본(101동~105동)', '아파트' ,'1111011500','사직동',2008,'9','37.5743822','126.9688505',NULL);
 INSERT INTO `houseinfo` VALUES (2,'광화문풍림스페이스본(106동)', '아파트','1111011500','사직동',2008,'9-1','37.57348','126.967792',NULL);
-INSERT INTO `houseinfo` VALUES (3,'주택1', '주택' ,'1111011500','사직동',2008,'9','37.5743822','126.9688505',NULL);
-INSERT INTO `houseinfo` VALUES (4,'주택2', '주택','1111011500','사직동',2008,'9-1','37.57348','126.967792',NULL);
 
-INSERT INTO `housedeal` VALUES (1,1,'97.61','10','매매', NULL, '105000'),(2,2,'163.33','11','전세', NULL, 105000),(3,1,'131.44','13','1', NULL, 105000);
-INSERT INTO `housedeal` VALUES (4,3,'97.61','10','월세', NULL, '105000'),(5,3,'163.33','11','월세', 1000, 50),(6,4,'131.44','13','1', 2000, 50);
+INSERT INTO `housedeal` VALUES (1,1,'97.61','10','1','105000'),(2,2,'163.33','11','1','105000'),(3,1,'131.44','13','1','105000');
 
 INSERT INTO user(USER_ID, password, NAME, NICK_NAME, EMAIL, PHONE, SEX, REGISTER_DATE)
 values('admin', 'admin', '김관리', '관리자', 'admain@zipsee.com', '010-1111-1111', '남자', now());

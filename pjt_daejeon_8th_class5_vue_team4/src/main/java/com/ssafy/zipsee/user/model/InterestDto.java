@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class InterestDto {
-	private int interestId;
+	private String interestId;
 	private String interestName;
 	
 //	public InterestDto() {

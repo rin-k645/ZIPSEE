@@ -14,7 +14,7 @@ import lombok.ToString;
 public class UserInterestDto {
 	private int userInterestId;
 	private String userId;
-	private int interestId;
+	private String interestId;
 	
 	private InterestDto interest;
 
