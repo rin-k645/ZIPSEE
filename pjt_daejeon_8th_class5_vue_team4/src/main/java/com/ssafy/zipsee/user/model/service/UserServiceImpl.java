@@ -12,16 +12,23 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.zipsee.user.model.UserDongDto;
 import com.ssafy.zipsee.user.model.UserDto;
 import com.ssafy.zipsee.user.model.UserInterestDto;
+import com.ssafy.zipsee.user.model.mapper.UserDongMapper;
+import com.ssafy.zipsee.user.model.mapper.UserInterestMapper;
 import com.ssafy.zipsee.user.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private UserInterestMapper userInterestMapper;
+	@Autowired
+	private UserDongMapper userDongMapper;
 
-	public UserServiceImpl(UserMapper userMapper) {
+	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper) {
 		super();
 		this.userMapper = userMapper;
+		this.userInterestMapper = userInterestMapper;
 	}
 
 	@Override
@@ -61,10 +68,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public boolean modifyUser(UserDto userDto) throws Exception {
-		if(userMapper.modifyUser(userDto) == 1)
+		if(userMapper.modifyUser(userDto) == 1) {
+			//관심사 기존 것 삭제하고
+			userInterestMapper.deleteUserInterest(userDto.getUserId());
+			//새로 저장하기
+			List<UserInterestDto> interestList = userDto.getInterestList();
+			if(interestList != null && !interestList.isEmpty()) {
+				userMapper.registerUserInterest(userDto);
+			}
+			
+			//관심 지역 기존 것 삭제하고
+			userDongMapper.deleteUserDong(userDto.getUserId());
+			//새로 저장하기
+			List<UserDongDto> dongList = userDto.getDongList();
+			if(dongList != null && !dongList.isEmpty()) {
+				userMapper.registerUserDong(userDto);
+			}
+			
 			return true;
-		return false;
+		}else {
+			return false;
+		}
 	}
 
 	@Override

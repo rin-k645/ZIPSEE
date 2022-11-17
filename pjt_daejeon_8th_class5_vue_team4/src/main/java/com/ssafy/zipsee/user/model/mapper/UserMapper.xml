@@ -51,9 +51,9 @@
 	
 	<select id="login" parameterType="com.ssafy.zipsee.user.model.UserDto" resultType="com.ssafy.zipsee.user.model.UserDto">
 		SELECT
-			USER_ID AS #{userId},
-			NAME AS #{name},
-			NICK_NAME #{nickName}
+			USER_ID AS userId,
+			NAME AS name,
+			NICK_NAME nickName
 		FROM USER
 		WHERE USER_ID = #{userId} AND PASSWORD = #{password}
 	</select>

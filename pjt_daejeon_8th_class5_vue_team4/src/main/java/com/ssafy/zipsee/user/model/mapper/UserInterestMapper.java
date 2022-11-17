@@ -11,5 +11,5 @@ import com.ssafy.zipsee.user.model.UserInterestDto;
 public interface UserInterestMapper {
 	public int insertUserInterest(UserInterestDto userInterestDto) throws SQLException;
 	public List<UserInterestDto> getUserInterestList(String userId) throws SQLException;
-	public int deleteUserInterest(String userInterestId) throws SQLException;
+	public int deleteUserInterest(String userId) throws SQLException;
 }

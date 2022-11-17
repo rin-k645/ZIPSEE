@@ -10,5 +10,5 @@ import com.ssafy.zipsee.user.model.UserDongDto;
 public interface UserDongMapper {
 	public int insertUserDong(UserDongDto userDongDto) throws SQLException;
 	public UserDongDto getUserDong(String userDongId) throws SQLException;
-	public int deleteUserDong(String userDongId) throws SQLException;
+	public int deleteUserDong(String userId) throws SQLException;
 }

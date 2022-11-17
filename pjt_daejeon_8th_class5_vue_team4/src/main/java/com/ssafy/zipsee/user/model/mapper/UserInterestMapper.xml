@@ -17,8 +17,8 @@
 			AND USER_ID = #{userId}
 	</select>
 	
-	<delete id="deleteUserInterest">
+	<delete id="deleteUserInterest" parameterType="String">
 		DELETE FROM USER_INTEREST
-		WHERE USER_INTEREST_ID = #{userInterestId}
+		WHERE USER_ID = #{userId}
 	</delete>
 </mapper>

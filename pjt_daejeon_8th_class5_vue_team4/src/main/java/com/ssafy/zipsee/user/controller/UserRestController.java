@@ -78,24 +78,20 @@ public class UserRestController {
 	public ResponseEntity<?> modifyUser(@RequestBody UserDto userDto) throws Exception {
 		logger.info("modifyUser - 호출 {}", userDto);
 		
-//		if (userService.modifyUser(userDto)) {
-//			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//		}
-//		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
-		
-		return null;
+		if (userService.modifyUser(userDto)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "회원 삭제", notes = "회원 아이디에 해당하는 회원의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{userid}")
 	public ResponseEntity<?> userDelete(@PathVariable("userid") String userId) throws Exception {
 		logger.info("deleteArticle - 호출");
-//		if (userService.deleteUser(userId)) {
-//			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//		}
-//		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-		
-		return null;
+		if (userService.deleteUser(userId)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 	////////////////////////////////////////////////////////////////////////
@@ -108,6 +104,8 @@ public class UserRestController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
+			System.out.println(userDto);
+			
 			UserDto loginUser = userService.login(userDto);
 			if (loginUser != null) {
 				String accessToken = jwtService.createAccessToken("userId", loginUser.getUserId());// key, data
