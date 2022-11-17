@@ -2,6 +2,8 @@ package com.ssafy.zipsee.user.model;
 
 import java.util.List;
 
+import com.ssafy.zipsee.board.model.BoardDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,7 @@ public class UserDto {
 	private List<UserInterestDto> interestList;
 	private List<UserDongDto> dongList;
 	private List<UserHouseDto> likeList;
+	private List<BoardDto> boardList;
 	
 //	public UserDto() {
 //		super();
