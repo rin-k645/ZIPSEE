@@ -7,7 +7,7 @@
 		VALUES(#{userId}, #{password}, #{name}, #{nickName}, #{email}, #{phone}, #{sex}, now())
 	</insert>
 	
-	<insert id="registerUserInterest" parameterType="com.ssafy.zipsee.user.model.UserDto">
+	<insert id="registerUserDong" parameterType="com.ssafy.zipsee.user.model.UserDto">
 		INSERT INTO USER_DONG (USER_ID, DONG_CODE)
 		VALUES
 		<foreach collection="dongList" item="userDong" separator=" , ">
@@ -15,7 +15,7 @@
 		</foreach>
 	</insert>
 	
-	<insert id="registerUserDong" parameterType="com.ssafy.zipsee.user.model.UserDto">
+	<insert id="registerUserInterest" parameterType="com.ssafy.zipsee.user.model.UserDto">
 		INSERT INTO USER_INTEREST (USER_ID, INTEREST_ID)
 		VALUES
 		<foreach collection="interestList" item="userInterest" separator=" , ">

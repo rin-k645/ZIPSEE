@@ -1,6 +1,7 @@
 package com.ssafy.zipsee.house.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,22 @@ public class HouseRestController {
 			return exceptionHandling(e);
 		}
 	}
+	
+//	@ApiOperation(value = "매물 검색", notes = "필터 조건(동코드, 집유형, 거래타입, 면적)에 맞는 매물을 검색해 반환한다", response = List.class)
+//	@GetMapping
+//	public ResponseEntity<?> list2(@RequestParam Map<String, Object> map) {
+//		try {
+//			List<HouseDealDto> list = houseDealService.getHouseDealList2(map);
+//			if (list != null && !list.isEmpty()) {
+//				System.out.println(list);
+//				return new ResponseEntity<List<HouseDealDto>>(list, HttpStatus.OK);
+//			} else {
+//				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//			}
+//		} catch (Exception e) {
+//			return exceptionHandling(e);
+//		}
+//	}
 	
 	@ApiOperation(value = "매물 보기", notes = "매물 id에 해당하는 매물을 반환한다", response = List.class)
 	@GetMapping("/{dealid}")

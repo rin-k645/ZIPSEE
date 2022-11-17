@@ -1,6 +1,7 @@
 package com.ssafy.zipsee.house.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class HouseDealServiceImpl implements HouseDealService {
 	@Override
 	public HouseDealDto getHouseDeal(int dealId) throws Exception {
 		return houseDealMapper.getHouseDeal(dealId);
+	}
+
+	@Override
+	public List<HouseDealDto> getHouseDealList2(Map<String, Object> map) throws Exception {
+		return houseDealMapper.getHouseDealList2(map);
 	}
 
 }
