@@ -17,6 +17,7 @@ public class HouseDealDto {
 	private int area;
 	private int floor;
 	private String dealType;
+	private int deposit;
 	private int price;
 	
 	private HouseInfoDto houseInfo;
