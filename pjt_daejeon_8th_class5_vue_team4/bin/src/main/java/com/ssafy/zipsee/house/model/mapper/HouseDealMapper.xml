@@ -9,8 +9,10 @@
 		d.area as area,
 		d.floor as floor,
 		d.deal_type as dealType,
+		d.deposit as deposit,
 		d.price as price,
 		i.house_name as "houseInfo.houseName",
+		i.house_type as "houseInfo.houseType",
 		i.build_year as "houseInfo.buildYear",
 		i.jibun as "houseInfo.jibun", 
 		i.lat as "houseInfo.lat",
@@ -20,6 +22,27 @@
 		where d.house_id = i.house_id
 			and i.dong_code = #{dongCode}
 	</select>
+	
+	<select id="getHouseDealList2" parameterType="map" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
+		select
+		d.deal_id as dealId,
+		d.house_id as houseId,
+		d.area as area,
+		d.floor as floor,
+		d.deal_type as dealType,
+		d.deposit as deposit,
+		d.price as price,
+		i.house_name as "houseInfo.houseName",
+		i.house_type as "houseInfo.houseType",
+		i.build_year as "houseInfo.buildYear",
+		i.jibun as "houseInfo.jibun", 
+		i.lat as "houseInfo.lat",
+		i.lng as "houseInfo.lng",
+		i.img as "houseInfo.img"
+		from housedeal d, houseinfo i
+		where d.house_id = i.house_id
+			and i.dong_code = #{dongCode} and i.house_type = #{houseInfo.houseType} and d.deal_type = #{dealType} and area = #{area}
+	</select>
 		
 	<select id="getHouseDeal" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
 		select
@@ -28,6 +51,7 @@
 		d.area as area,
 		d.floor as floor,
 		d.deal_type as dealType,
+		d.deposit as deposit,
 		d.price as price,
 		i.house_name as "houseInfo.houseName",
 		i.build_year as "houseInfo.buildYear",
@@ -38,5 +62,49 @@
 		from housedeal d, houseinfo i
 		where d.house_id = i.house_id
 			and d.deal_id = #{dealId}
+	</select>
+	
+	<select id="getApartRecommandList" parameterType="String" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
+		select
+		d.deal_id as dealId,
+		d.house_id as houseId,
+		d.area as area,
+		d.floor as floor,
+		d.deal_type as dealType,
+		d.deposit as deposit,
+		d.price as price,
+		i.house_name as "houseInfo.houseName",
+		i.house_type as "houseInfo.houseType",
+		i.build_year as "houseInfo.buildYear",
+		i.jibun as "houseInfo.jibun", 
+		i.lat as "houseInfo.lat",
+		i.lng as "houseInfo.lng",
+		i.img as "houseInfo.img"
+		from housedeal d, houseinfo i
+		where d.house_id = i.house_id
+			and i.dong_code = #{dongCode} and i.house_type = '아파트'
+		limit 10
+	</select>
+	
+	<select id="getOneRoomRecommandList" parameterType="String" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
+		select
+		d.deal_id as dealId,
+		d.house_id as houseId,
+		d.area as area,
+		d.floor as floor,
+		d.deal_type as dealType,
+		d.deposit as deposit,
+		d.price as price,
+		i.house_name as "houseInfo.houseName",
+		i.house_type as "houseInfo.houseType",
+		i.build_year as "houseInfo.buildYear",
+		i.jibun as "houseInfo.jibun", 
+		i.lat as "houseInfo.lat",
+		i.lng as "houseInfo.lng",
+		i.img as "houseInfo.img"
+		from housedeal d, houseinfo i
+		where d.house_id = i.house_id
+			and i.dong_code = #{dongCode} and i.house_type = '주택'
+		limit 10
 	</select>
 </mapper>
