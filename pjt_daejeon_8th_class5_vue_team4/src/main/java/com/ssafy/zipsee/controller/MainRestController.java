@@ -61,7 +61,7 @@ public class MainRestController {
 			
 			List<HouseDealDto> oneRoomlist = houseDealService.getOneRoomRecommandList("1111011500"); //사직동 주택
 			if (oneRoomlist != null && !oneRoomlist.isEmpty()) {
-				apartListByDong.add(oneRoomlist);
+				oneRoomListByDong.add(oneRoomlist);
 			}
 			
 		} else { //로그인 했을 경우 - 유저 맞춤 매물 추천해주기
@@ -80,7 +80,7 @@ public class MainRestController {
 				
 				List<HouseDealDto> oneRoomlist = houseDealService.getApartRecommandList(dongCode);
 				if (oneRoomlist != null && !oneRoomlist.isEmpty()) {
-					apartListByDong.add(oneRoomlist);
+					oneRoomListByDong.add(oneRoomlist);
 				}
 			}
 		}
