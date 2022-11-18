@@ -1,15 +1,17 @@
 <template>
   <div>
-    <img
-      src="@/assets/main.jpg"
-      class="object-cover object-center w-full h-500" />
+    <img src="@/assets/main.jpg" class="object-cover object-center w-full h-500" />
     <div>
       <div class="mt-20 mb-20 ml-20 text-xl font-bold">실시간 매물 TOP 10</div>
       <!-- Slider main container -->
       <div ref="swiper" class="swiper">
         <div class="swiper-wrapper">
           <!-- Slides -->
-          <div v-for="index in 10" :key="index" class="swiper-slide">
+          <div
+            v-for="(houseDeal, index) in recommendHouses.popularDealList"
+            :key="index"
+            class="swiper-slide"
+          >
             <img src="@/assets/sample.jpg" />
           </div>
         </div>
@@ -17,13 +19,11 @@
 
       <!-- 아파트 추천 리스트(동코드) -->
       <div v-for="(apartList, i) in recommendHouses.apartListBydong" :key="i">
-        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">
-          내 꿈은 건물주님을 위한 HOT 10
-        </div>
+        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
         <div :ref="`swiper${i + 2}`" class="swiper">
           <div class="swiper-wrapper">
             <!-- Slides -->
-            <div v-for="index in 10" :key="index" class="swiper-slide">
+            <div v-for="(houseDeal, index) in apartList" :key="index" class="swiper-slide">
               <img src="@/assets/sample.jpg" />
             </div>
           </div>
@@ -31,16 +31,12 @@
       </div>
 
       <!-- 원룸 추천 리스트(동코드) -->
-      <div v-for="(apartList, i) in recommendHouses.oneRoomListByDong" :key="i">
-        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">
-          내 꿈은 건물주님을 위한 HOT 10
-        </div>
-        <div
-          :ref="`swiper${recommendHouses.apartListBydong + i + 2}`"
-          class="swiper">
+      <div v-for="(oneRoom, i) in recommendHouses.oneRoomListByDong" :key="i">
+        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
+        <div :ref="`swiper${recommendHouses.apartListBydong.length + i + 2}`" class="swiper">
           <div class="swiper-wrapper">
             <!-- Slides -->
-            <div v-for="index in 10" :key="index" class="swiper-slide">
+            <div v-for="(houseDeal, index) in oneRoom" :key="index" class="swiper-slide">
               <img src="@/assets/sample.jpg" />
             </div>
           </div>
@@ -64,6 +60,9 @@ export default {
     this.getRecommendHouseList().then(() => console.log(this.recommendHouses));
   },
   mounted() {
+    let user = this.recommendHouses.user;
+    console.log(user);
+
     let apartRecommendSize = this.recommendHouses.apartListBydong.length;
     console.log(apartRecommendSize);
 
@@ -93,8 +92,8 @@ export default {
       num++;
     }
 
-    for (let i = 0; i <= oneRoomRecommendSize; i++) {
-      //아파트 추천 리스트(동코드)
+    for (let i = 0; i < oneRoomRecommendSize; i++) {
+      //원룸 추천 리스트(동코드)
       new Swiper(this.$refs["swiper" + num], {
         modules: [Navigation, Pagination, Autoplay],
         grabCursor: true,

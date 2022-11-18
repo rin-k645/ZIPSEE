@@ -26,7 +26,8 @@ function interestList(success, fail) {
 }
 
 function recommendHouseList(success, fail) {
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token");
   api.get(`/`).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList};
+export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList };
