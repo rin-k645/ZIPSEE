@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.zipsee.user.model.mapper.UserDealMapper">
+	<insert id="insertUserHouse" parameterType="com.ssafy.zipsee.user.model.UserDealDto">
+		INSERT INTO USER_DEAL
+		VALUES(#{userId}, #{dealId})
+	</insert>
+	
+	<select id="getUserHouseList" parameterType="String" resultType="com.ssafy.zipsee.user.model.UserDealDto">
+		SELECT
+			UH.USER_HOUSE_ID AS userHouseId,
+			UH.USER_ID AS userId,
+			UH.DEAL_ID AS dealId,
+		FROM USER_DEAL UH, HOUSEDEAL H
+		WHERE UH.DEAL_ID = H.DEAL_ID
+			AND UH.USER_ID = #{userId}
+	</select>
+	
+	<delete id="deleteUserHouse" parameterType="String">
+		DELETE FROM USER_DEAL
+		WHERE USER_ID = #{userId} AND DEAL_ID = #{dealId}
+	</delete>
+</mapper>

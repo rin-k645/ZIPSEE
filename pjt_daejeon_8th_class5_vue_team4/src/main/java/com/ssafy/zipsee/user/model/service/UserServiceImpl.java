@@ -14,6 +14,7 @@ import com.ssafy.zipsee.user.model.UserDongDto;
 import com.ssafy.zipsee.user.model.UserDto;
 import com.ssafy.zipsee.user.model.UserInterestDto;
 import com.ssafy.zipsee.user.model.mapper.UserDongMapper;
+import com.ssafy.zipsee.user.model.mapper.UserDealMapper;
 import com.ssafy.zipsee.user.model.mapper.UserInterestMapper;
 import com.ssafy.zipsee.user.model.mapper.UserMapper;
 
@@ -26,14 +27,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDongMapper userDongMapper;
 	@Autowired
+	private UserDealMapper userHouseMapper;
+	@Autowired
 	private BoardMapper boardMapper;
 
 	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper, UserDongMapper userDongMapper,
-			BoardMapper boardMapper) {
+			UserDealMapper userHouseMapper, BoardMapper boardMapper) {
 		super();
 		this.userMapper = userMapper;
 		this.userInterestMapper = userInterestMapper;
 		this.userDongMapper = userDongMapper;
+		this.userHouseMapper = userHouseMapper;
 		this.boardMapper = boardMapper;
 	}
 
@@ -73,6 +77,7 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto = userMapper.getUser(userId);
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
+		userDto.setLikeList(userHouseMapper.getUserHouseList(userId));
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;

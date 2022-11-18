@@ -13,8 +13,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserHouseDto {
-	private int houseId;
+public class UserDealDto {
+	private int userDealId;
 	private String userId;
 	private int dealId;
 	

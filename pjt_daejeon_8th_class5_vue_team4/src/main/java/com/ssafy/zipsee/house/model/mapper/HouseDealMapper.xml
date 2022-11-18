@@ -24,7 +24,7 @@
 			and i.dong_code = #{dongCode}
 	</select>
 	
-	<select id="getHouseDealList2" parameterType="map" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
+	<select id="getHouseDealListByFilter" parameterType="map" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
 		select
 		d.deal_id as dealId,
 		d.house_id as houseId,
@@ -137,4 +137,16 @@
 		order by d.like desc
 		limit 10
 	</select>
+	
+	<update id="increaseLike" parameterType="String">
+		UPDATE HOUSEDEAL
+		SET LIKE = LIKE + 1
+		WHERE DEAL_ID = #{dealId}
+	</update>
+	
+	<update id="decreaseLike" parameterType="String">
+		UPDATE HOUSEDEAL
+		SET LIKE = LIKE - 1
+		WHERE DEAL_ID = #{dealId}
+	</update>
 </mapper>

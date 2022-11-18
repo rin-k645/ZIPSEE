@@ -27,6 +27,6 @@ public class UserDto {
 	
 	private List<UserInterestDto> interestList;
 	private List<UserDongDto> dongList;
-	private List<UserHouseDto> likeList;
+	private List<UserDealDto> likeList;
 	private List<BoardDto> boardList;
 }
