@@ -24,4 +24,9 @@ function houseList(params, success, fail) {
 function interestList(success, fail) {
   api.get(`/deal`).then(success).catch(fail);
 }
-export { sidoList, gugunList, dongList, houseList, interestList };
+
+function recommendHouseList(success, fail) {
+  api.get(`/`).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList};

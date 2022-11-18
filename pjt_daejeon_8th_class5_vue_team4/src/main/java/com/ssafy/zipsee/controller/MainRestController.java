@@ -46,12 +46,12 @@ public class MainRestController {
 	public ResponseEntity<?> recommandlist(HttpServletRequest request) throws Exception {
 		System.out.println("메인 컨트롤러 실행");
 		
-		String token = request.getHeader("refresh-token");
+		String token = request.getHeader("access-token");
 		System.out.println(token);
 		
 		Map<String, Object> resultMap = new HashMap<>(); //응답으로 보낼 데이터 맵
 		List<List<HouseDealDto>> apartListByDong = new ArrayList<>(); //아파트 추천 리스트 여러개
-		List<List<HouseDealDto>> oneRoomListByDong = new ArrayList<>(); //아파트 추천 리스트 여러개
+		List<List<HouseDealDto>> oneRoomListByDong = new ArrayList<>(); //원룸 추천 리스트 여러개
 		
 		if(token == null) { //로그인 안했을 경우 - 공통 추천
 			List<HouseDealDto> apartList = houseDealService.getApartRecommandList("1111011500"); //사직동 주택

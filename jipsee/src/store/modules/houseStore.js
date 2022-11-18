@@ -1,4 +1,4 @@
-import { sidoList, gugunList, dongList, houseList, interestList } from "@/api/house.js";
+import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList } from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -13,6 +13,7 @@ const houseStore = {
     houseType: [],
     dealType: [],
     interests: [],
+    recommendHouses: [],
   },
   getters: {},
   mutations: {
@@ -39,6 +40,10 @@ const houseStore = {
     },
     SET_DETAIL_HOUSE(state, house) {
       state.house = house;
+    },
+    SET_RECOMMEND_HOUSE_LIST(state, recommendHouses) {
+      state.recommendHouses = recommendHouses;
+      console.log(state.recommendHouses);
     },
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: null, text: "시/도" }];
@@ -103,6 +108,17 @@ const houseStore = {
       interestList(
         ({ data }) => {
           commit("SET_INTEREST_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getRecommendHouseList({ commit }) {
+      recommendHouseList(
+        ({ data }) => {
+          commit("SET_RECOMMEND_HOUSE_LIST", data);
+          console.log(data);
         },
         (error) => {
           console.log(error);

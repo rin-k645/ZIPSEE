@@ -7,36 +7,35 @@
       <div ref="swiper" class="swiper">
         <div class="swiper-wrapper">
           <!-- Slides -->
-          <div v-for="index in 10" :key="index" class="swiper-slide"><img src="@/assets/sample.jpg" /></div>
+          <div v-for="index in 10" :key="index" class="swiper-slide">
+            <img src="@/assets/sample.jpg" />
+          </div>
         </div>
       </div>
 
-      <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
-      <div ref="swiper2" class="swiper">
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <div v-for="index in 10" :key="index" class="swiper-slide"><img src="@/assets/sample.jpg" /></div>
+      <!-- 아파트 추천 리스트(동코드) -->
+      <div v-for="(apartList, i) in recommendHouses.apartListBydong" :key="i">
+        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
+        <div :ref="`swiper${i + 2}`" class="swiper">
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div v-for="index in 10" :key="index" class="swiper-slide">
+              <img src="@/assets/sample.jpg" />
+            </div>
+          </div>
         </div>
       </div>
-      <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
-      <div ref="swiper3" class="swiper">
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <div v-for="index in 10" :key="index" class="swiper-slide"><img src="@/assets/sample.jpg" /></div>
-        </div>
-      </div>
-      <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
-      <div ref="swiper4" class="swiper">
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <div v-for="index in 10" :key="index" class="swiper-slide"><img src="@/assets/sample.jpg" /></div>
-        </div>
-      </div>
-      <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
-      <div ref="swiper5" class="swiper">
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <div v-for="index in 10" :key="index" class="swiper-slide"><img src="@/assets/sample.jpg" /></div>
+
+      <!-- 원룸 추천 리스트(동코드) -->
+      <div v-for="(apartList, i) in recommendHouses.oneRoomListByDong" :key="i">
+        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">내 꿈은 건물주님을 위한 HOT 10</div>
+        <div :ref="`swiper${recommendHouses.apartListBydong + i + 2}`" class="swiper">
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div v-for="index in 10" :key="index" class="swiper-slide">
+              <img src="@/assets/sample.jpg" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -48,44 +47,62 @@
 import Swiper, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/swiper-bundle.min.css";
 import TheFooter from "@/views/TheFooter.vue";
+import { mapState, mapActions } from "vuex";
+const houseStore = "houseStore";
 
 export default {
   components: { TheFooter },
+  created() {
+    this.getRecommendHouseList().then(() => console.log(this.recommendHouses));
+  },
   mounted() {
+    let apartRecommendSize = this.recommendHouses.apartListBydong.length;
+    console.log(apartRecommendSize);
+
+    let oneRoomRecommendSize = this.recommendHouses.oneRoomListByDong.length;
+    console.log(oneRoomRecommendSize);
+
+    let num = 2;
+
     new Swiper(this.$refs.swiper, {
+      //실시간 top 10
       modules: [Navigation, Pagination, Autoplay],
       grabCursor: true,
       slidesPerView: 5.3,
       spaceBetween: 30,
     });
-    new Swiper(this.$refs.swiper2, {
-      modules: [Navigation, Pagination, Autoplay],
-      grabCursor: true,
-      slidesPerView: 5.3,
-      spaceBetween: 30,
-      freeMode: true,
-    });
-    new Swiper(this.$refs.swiper3, {
-      modules: [Navigation, Pagination, Autoplay],
-      grabCursor: true,
-      slidesPerView: 5.3,
-      spaceBetween: 30,
-      freeMode: true,
-    });
-    new Swiper(this.$refs.swiper4, {
-      modules: [Navigation, Pagination, Autoplay],
-      grabCursor: true,
-      slidesPerView: 5.3,
-      spaceBetween: 30,
-      freeMode: true,
-    });
-    new Swiper(this.$refs.swiper5, {
-      modules: [Navigation, Pagination, Autoplay],
-      grabCursor: true,
-      slidesPerView: 5.3,
-      spaceBetween: 30,
-      freeMode: true,
-    });
+
+    for (let i = 0; i < apartRecommendSize; i++) {
+      //아파트 추천 리스트(동코드)
+      new Swiper(`this.$refs.swiper${num}`, {
+        modules: [Navigation, Pagination, Autoplay],
+        grabCursor: true,
+        slidesPerView: 5.3,
+        spaceBetween: 30,
+        freeMode: true,
+      });
+
+      num++;
+    }
+
+    for (let i = 0; i <= oneRoomRecommendSize; i++) {
+      //아파트 추천 리스트(동코드)
+      new Swiper(`this.$refs.swiper${num}`, {
+        modules: [Navigation, Pagination, Autoplay],
+        grabCursor: true,
+        slidesPerView: 5.3,
+        spaceBetween: 30,
+        freeMode: true,
+      });
+
+      num++;
+    }
+  },
+  computed: {
+    ...mapState(houseStore, ["recommendHouses"]),
+  },
+  methods: {
+    ...mapActions(houseStore, ["getRecommendHouseList"]),
   },
 };
 </script>
