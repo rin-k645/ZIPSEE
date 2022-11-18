@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.zipsee.board.model.mapper.BoardMapper;
 import com.ssafy.zipsee.user.model.UserDongDto;
 import com.ssafy.zipsee.user.model.UserDto;
 import com.ssafy.zipsee.user.model.UserInterestDto;
@@ -24,11 +25,16 @@ public class UserServiceImpl implements UserService {
 	private UserInterestMapper userInterestMapper;
 	@Autowired
 	private UserDongMapper userDongMapper;
+	@Autowired
+	private BoardMapper boardMapper;
 
-	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper) {
+	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper, UserDongMapper userDongMapper,
+			BoardMapper boardMapper) {
 		super();
 		this.userMapper = userMapper;
 		this.userInterestMapper = userInterestMapper;
+		this.userDongMapper = userDongMapper;
+		this.boardMapper = boardMapper;
 	}
 
 	@Override
@@ -64,7 +70,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUser(String userId) throws Exception {
-		return userMapper.getUser(userId);
+		UserDto userDto = userMapper.getUser(userId);
+		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
+		userDto.setDongList(userDongMapper.getUserDongList(userId));
+		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
+		
+		return userDto;
 	}
 
 	@Override
@@ -117,6 +128,11 @@ public class UserServiceImpl implements UserService {
 		map.put("userId", userId);
 		map.put("token", null);
 		userMapper.deleteRefreshToken(map);
+	}
+
+	@Override
+	public String getUserByToken(String token) throws Exception {
+		return userMapper.getUserByToken(token);
 	}
 
 }

@@ -35,4 +35,14 @@ public class HouseDealServiceImpl implements HouseDealService {
 		return houseDealMapper.getHouseDealList2(map);
 	}
 
+	@Override
+	public List<HouseDealDto> getApartRecommandList(String dongCode) throws Exception {
+		return houseDealMapper.getApartRecommandList(dongCode);
+	}
+
+	@Override
+	public List<HouseDealDto> getOneRoomRecommandList(String dongCode) throws Exception {
+		return houseDealMapper.getOneRoomRecommandList(dongCode);
+	}
+
 }

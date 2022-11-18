@@ -8,10 +8,10 @@
 	
 	<select id="getUserInterestList" parameterType="String" resultType="com.ssafy.zipsee.user.model.UserInterestDto">
 		SELECT
-			USER_INTEREST_ID AS userInterestId,
-			USER_ID AS userId,
-			INTEREST_ID AS interestId
-			INTEREST_NAME AS "interest.interestName"
+			UI.USER_INTEREST_ID AS userInterestId,
+			UI.USER_ID AS userId,
+			UI.INTEREST_ID AS interestId,
+			I.INTEREST_NAME AS "interest.interestName"
 		FROM USER_INTEREST UI, INTEREST I
 		WHERE UI.INTEREST_ID = I.INTEREST_ID
 			AND USER_ID = #{userId}

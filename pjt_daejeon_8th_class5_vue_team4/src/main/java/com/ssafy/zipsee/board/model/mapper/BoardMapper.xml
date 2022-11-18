@@ -50,4 +50,17 @@
 		DELETE FROM BOARD
 		WHERE BOARD_ID = #{boardId}
 	</delete>
+	
+	<select id="getInquiryListByUserId" parameterType="String" resultType="com.ssafy.zipsee.board.model.BoardDto">
+		SELECT
+			B.BOARD_ID as boardId,
+			B.USER_ID as userId,
+			B.TITLE as title,
+			B.CONTENT as content,
+			B.REGISTER_DATE as registerDate,
+			C.CONTENT as "comment.content",
+			C.REGISTER_DATE as "comment.registerDate"
+		FROM BOARD B, COMMENT C 
+		WHERE USER_ID = #{userId}
+	</select>
 </mapper>

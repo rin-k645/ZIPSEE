@@ -75,4 +75,11 @@
 		set token = #{token, jdbcType=VARCHAR}
 		where user_id = #{userId}
 	</update>
+	
+	<select id="getUserIdByToken" parameterType="string" resultType="string">
+		select
+			USER_ID as userId,
+		from user
+		where token = #{token}
+	</select>
 </mapper>

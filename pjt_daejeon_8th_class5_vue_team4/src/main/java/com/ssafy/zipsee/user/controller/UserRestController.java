@@ -66,12 +66,12 @@ public class UserRestController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-//	@ApiOperation(value = "회원 정보 보기", notes = "회원 아이디에 해당하는 회원 정보를 반환한다.", response = UserDto.class)
-//	@GetMapping("/{userid}")
-//	public ResponseEntity<?> viewUser(@PathVariable("userid") String userId) throws Exception {
-//		logger.info("viewUser - 호출 : " + userId);
-//		return new ResponseEntity<UserDto>(userService.getUser(userId), HttpStatus.OK);
-//	}
+	@ApiOperation(value = "회원 정보 보기", notes = "회원 아이디에 해당하는 회원 정보를 반환한다.", response = UserDto.class)
+	@GetMapping("/{userid}")
+	public ResponseEntity<?> viewUser(@PathVariable("userid") String userId) throws Exception {
+		logger.info("viewUser - 호출 : " + userId);
+		return new ResponseEntity<UserDto>(userService.getUser(userId), HttpStatus.OK);
+	}
 	
 	@ApiOperation(value = "회원 수정", notes = "수정할 회원의 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping
