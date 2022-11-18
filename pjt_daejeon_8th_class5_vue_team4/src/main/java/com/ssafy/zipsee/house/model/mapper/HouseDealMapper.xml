@@ -11,7 +11,6 @@
 		d.deal_type as dealType,
 		d.deposit as deposit,
 		d.price as price,
-		d.like as like,
 		i.house_name as "houseInfo.houseName",
 		i.house_type as "houseInfo.houseType",
 		i.build_year as "houseInfo.buildYear",
@@ -33,7 +32,6 @@
 		d.deal_type as dealType,
 		d.deposit as deposit,
 		d.price as price,
-		d.like as like,
 		i.house_name as "houseInfo.houseName",
 		i.house_type as "houseInfo.houseType",
 		i.build_year as "houseInfo.buildYear",
@@ -55,7 +53,6 @@
 		d.deal_type as dealType,
 		d.deposit as deposit,
 		d.price as price,
-		d.like as like,
 		i.house_name as "houseInfo.houseName",
 		i.build_year as "houseInfo.buildYear",
 		i.jibun as "houseInfo.jibun", 
@@ -76,7 +73,6 @@
 		d.deal_type as dealType,
 		d.deposit as deposit,
 		d.price as price,
-		d.like as like,
 		i.house_name as "houseInfo.houseName",
 		i.house_type as "houseInfo.houseType",
 		i.build_year as "houseInfo.buildYear",
@@ -87,7 +83,7 @@
 		from housedeal d, houseinfo i
 		where d.house_id = i.house_id
 			and i.dong_code = #{dongCode} and i.house_type = '아파트'
-		order by like desc
+		order by d.like desc
 		limit 10
 	</select>
 	
@@ -100,7 +96,6 @@
 		d.deal_type as dealType,
 		d.deposit as deposit,
 		d.price as price,
-		d.like as like,
 		i.house_name as "houseInfo.houseName",
 		i.house_type as "houseInfo.houseType",
 		i.build_year as "houseInfo.buildYear",
@@ -111,7 +106,29 @@
 		from housedeal d, houseinfo i
 		where d.house_id = i.house_id
 			and i.dong_code = #{dongCode} and i.house_type = '주택'
-		order by like desc
+		order by d.like desc
+		limit 10
+	</select>
+	
+	<select id="getPopularDealList" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
+		select
+		d.deal_id as dealId,
+		d.house_id as houseId,
+		d.area as area,
+		d.floor as floor,
+		d.deal_type as dealType,
+		d.deposit as deposit,
+		d.price as price,
+		i.house_name as "houseInfo.houseName",
+		i.house_type as "houseInfo.houseType",
+		i.build_year as "houseInfo.buildYear",
+		i.jibun as "houseInfo.jibun", 
+		i.lat as "houseInfo.lat",
+		i.lng as "houseInfo.lng",
+		i.img as "houseInfo.img"
+		from housedeal d, houseinfo i
+		where d.house_id = i.house_id
+		order by d.like desc
 		limit 10
 	</select>
 </mapper>

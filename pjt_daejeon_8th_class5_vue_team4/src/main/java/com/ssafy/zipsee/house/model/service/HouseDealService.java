@@ -12,4 +12,5 @@ public interface HouseDealService {
 	List<HouseDealDto> getHouseDealList2(Map<String, Object> map) throws Exception;
 	List<HouseDealDto> getApartRecommandList(String dongCode) throws Exception;
 	List<HouseDealDto> getOneRoomRecommandList(String dongCode) throws Exception;
+	List<HouseDealDto> getPopularDealList() throws Exception;
 }

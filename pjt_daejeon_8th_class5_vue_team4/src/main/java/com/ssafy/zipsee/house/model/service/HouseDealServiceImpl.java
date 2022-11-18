@@ -45,4 +45,9 @@ public class HouseDealServiceImpl implements HouseDealService {
 		return houseDealMapper.getOneRoomRecommandList(dongCode);
 	}
 
+	@Override
+	public List<HouseDealDto> getPopularDealList() throws Exception {
+		return houseDealMapper.getPopularDealList();
+	}
+
 }
