@@ -51,6 +51,7 @@ public class MainRestController {
 		
 		Map<String, Object> resultMap = new HashMap<>(); //응답으로 보낼 데이터 맵
 		
+		UserDto userDto = new UserDto();
 		List<HouseDealDto> popularDealList = houseDealService.getPopularDealList(); //실시간 top 10
 		List<List<HouseDealDto>> apartListByDong = new ArrayList<>(); //아파트 추천 리스트 여러개
 		List<List<HouseDealDto>> oneRoomListByDong = new ArrayList<>(); //원룸 추천 리스트 여러개
@@ -67,7 +68,7 @@ public class MainRestController {
 			}
 			
 		} else { //로그인 했을 경우 - 유저 맞춤 매물 추천해주기
-			UserDto userDto = userService.getUserByToken(token); //////////여기서 에러남..
+			userDto = userService.getUserByToken(token);
 			
 			List<UserDongDto> dongList = userDto.getDongList();
 			for(UserDongDto userDong : dongList) {
@@ -85,6 +86,8 @@ public class MainRestController {
 			}
 		}
 		
+		resultMap.put("user", userDto);
+		resultMap.put("popularDealList", popularDealList);
 		resultMap.put("popularDealList", popularDealList);
 		resultMap.put("apartListBydong", apartListByDong);
 		resultMap.put("oneRoomListByDong", oneRoomListByDong);
