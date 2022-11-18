@@ -46,10 +46,12 @@ public class MainRestController {
 	public ResponseEntity<?> recommandlist(HttpServletRequest request) throws Exception {
 		System.out.println("메인 컨트롤러 실행");
 		
-		String token = request.getHeader("access-token");
+		String token = request.getHeader("refresh-token");
 		System.out.println(token);
 		
 		Map<String, Object> resultMap = new HashMap<>(); //응답으로 보낼 데이터 맵
+		
+		List<HouseDealDto> popularDealList = houseDealService.getPopularDealList(); //실시간 top 10
 		List<List<HouseDealDto>> apartListByDong = new ArrayList<>(); //아파트 추천 리스트 여러개
 		List<List<HouseDealDto>> oneRoomListByDong = new ArrayList<>(); //원룸 추천 리스트 여러개
 		
@@ -65,9 +67,7 @@ public class MainRestController {
 			}
 			
 		} else { //로그인 했을 경우 - 유저 맞춤 매물 추천해주기
-			
-			String userId = userService.getUserByToken(token);
-			UserDto userDto = userService.getUser(userId);
+			UserDto userDto = userService.getUserByToken(token); //////////여기서 에러남..
 			
 			List<UserDongDto> dongList = userDto.getDongList();
 			for(UserDongDto userDong : dongList) {
@@ -85,6 +85,7 @@ public class MainRestController {
 			}
 		}
 		
+		resultMap.put("popularDealList", popularDealList);
 		resultMap.put("apartListBydong", apartListByDong);
 		resultMap.put("oneRoomListByDong", oneRoomListByDong);
 		

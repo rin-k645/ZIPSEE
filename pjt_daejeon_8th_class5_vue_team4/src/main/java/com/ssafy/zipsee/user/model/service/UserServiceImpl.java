@@ -131,8 +131,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String getUserByToken(String token) throws Exception {
-		return userMapper.getUserByToken(token);
+	public UserDto getUserByToken(String token) throws Exception {
+		UserDto userDto = userMapper.getUserByToken(token);
+		String userId = userDto.getUserId();
+		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
+		userDto.setDongList(userDongMapper.getUserDongList(userId));
+		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
+		
+		return userDto;
 	}
 
 }
