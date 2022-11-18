@@ -51,9 +51,6 @@ import TheFooter from "@/views/TheFooter.vue";
 
 export default {
   components: { TheFooter },
-  data() {
-    return {};
-  },
   mounted() {
     new Swiper(this.$refs.swiper, {
       modules: [Navigation, Pagination, Autoplay],

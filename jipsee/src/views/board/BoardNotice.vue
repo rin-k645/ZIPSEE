@@ -28,6 +28,8 @@
 <script>
 import BoardNoticeDetail from "@/views/board/BoardNoticeDetail";
 import { mapState, mapActions } from "vuex";
+const boardStore = "boardStore";
+
 export default {
   components: {
     BoardNoticeDetail,
@@ -41,10 +43,10 @@ export default {
     this.getNoticeList();
   },
   computed: {
-    ...mapState(["notices"]),
+    ...mapState(boardStore, ["notices"]),
   },
   methods: {
-    ...mapActions(["getNoticeList"]),
+    ...mapActions(boardStore, ["getNoticeList"]),
     clickContent(index) {
       this.noticeNo = index;
     },

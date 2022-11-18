@@ -34,13 +34,17 @@
       </div>
       <button
         class="text-yellow-400 bg-white border-yellow-400 border-solid w-120 h-46 rounded-5 border-1 hover:brightness-90"
-        @click="searchHouse"
+        @click="ChangeViewModal"
       >
         필터
       </button>
     </div>
     <div></div>
+
     <house-map></house-map>
+
+    <house-filter-modal v-if="!viewModal" class="absolute z-10 right-[420px] top-[150px]"></house-filter-modal>
+
     <div
       v-if="houses && houses.length != 0"
       class="flex flex-col items-center justify-center overflow-scroll bg-yellow-200 pt-100"
@@ -60,6 +64,9 @@
 import HouseListItem from "@/views/house/HouseListItem";
 import HouseMap from "@/views/house/HouseMap";
 import { mapState, mapMutations, mapActions } from "vuex";
+import HouseFilterModal from "@/views/house/HouseFilterModal";
+const houseStore = "houseStore";
+
 export default {
   name: "HouseList",
   data() {
@@ -67,11 +74,13 @@ export default {
       sidoCode: null,
       gugunCode: null,
       dongCode: null,
+      viewModal: false,
     };
   },
   components: {
     HouseListItem,
     HouseMap,
+    HouseFilterModal,
   },
   created() {
     this.CLEAR_SIDO_LIST();
@@ -81,19 +90,24 @@ export default {
     this.getSidoList();
   },
   computed: {
-    ...mapState(["houses", "sidos", "guguns", "dongs", "house"]),
+    ...mapState(houseStore, ["houses", "sidos", "guguns", "dongs", "house"]),
   },
   methods: {
-    ...mapActions(["getSidoList", "getGugunList", "getDongList", "getHouseList"]),
-    ...mapMutations(["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_DONG_LIST", "CLEAR_HOUSES_LIST"]),
+    ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList", "getHouseList"]),
+    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_DONG_LIST", "CLEAR_HOUSES_LIST"]),
     gugunList() {
+      this.CLEAR_GUGUN_LIST();
       if (this.sidoCode) this.getGugunList(this.sidoCode.slice(0, 2));
     },
     dongList() {
+      this.CLEAR_DONG_LIST();
       if (this.gugunCode) this.getDongList(this.gugunCode.slice(0, 4));
     },
     searchHouse() {
       this.getHouseList(this.dongCode);
+    },
+    ChangeViewModal() {
+      this.viewModal = !this.viewModal;
     },
   },
   filters: {

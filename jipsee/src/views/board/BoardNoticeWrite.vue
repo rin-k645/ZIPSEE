@@ -9,6 +9,8 @@
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CKEditor from "@ckeditor/ckeditor5-vue2";
 import { mapActions } from "vuex";
+const boardStore = "boardStore";
+
 export default {
   name: "CKEditor",
   components: {
@@ -19,11 +21,11 @@ export default {
     editorData: "aa",
   }),
   methods: {
-    ...mapActions(["writeNotice"]),
+    ...mapActions(boardStore, ["writeNoticeAdmin"]),
     writeNewNotice() {
       console.log(this.editorData);
       console.log(typeof this.editorData);
-      this.writeNotice(this.editorData);
+      this.writeNoticeAdmin(this.editorData);
     },
   },
 };

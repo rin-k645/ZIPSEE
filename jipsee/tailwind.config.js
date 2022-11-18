@@ -4,6 +4,7 @@
 //const px0_10 = { ...Array.from(Array(11)).map((_, i) => `${i}px`) };
 const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
+//const px0_1000 = { ...Array.from(Array(1001)).map((_, i) => `${i}px`) };
 const px0_2000 = { ...Array.from(Array(2001)).map((_, i) => `${i}px`) };
 
 module.exports = {
@@ -20,9 +21,10 @@ module.exports = {
       padding: px0_200,
       minWidth: px0_2000,
       minHeight: px0_2000,
-      spacing: px0_100,
+      spacing: px0_200,
       colors: {
-        "yellow-400": "#fab005",
+        "yellow-400": "#fad203",
+        "yellow-700": "#432817",
         black: "#2a2a2a",
       },
     },
