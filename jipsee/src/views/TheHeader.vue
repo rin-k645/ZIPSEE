@@ -40,12 +40,14 @@
         >
       </div>
       <div v-else class="flex items-center justify-center w-200">
-        <div class="ml-12 font-semibold text-18" @click="onClickLogout">
+        <div
+          class="ml-12 font-semibold cursor-pointer text-18"
+          @click="onClickLogout">
           로그아웃
         </div>
         <router-link
           :to="{ name: 'usermypage' }"
-          class="ml-12 font-semibold text-18"
+          class="ml-12 font-semibold cursor-pointer text-18"
           >마이페이지</router-link
         >
       </div>
