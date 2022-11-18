@@ -117,31 +117,41 @@
           </label>
         </div>
       </div>
-      <div class="flex mb-20 w-612 h-61">
+      <div class="flex mb-20 w-612 h-90">
         <div class="h-24 w-80">관심 지역</div>
-        <div class="grid grid-cols-4 grid-rows-2 w-295 h-61 ml-77">
-          <div
-            v-for="(dong, index) in user.dongList"
+        <div class="grid grid-cols-4 grid-rows-2 gap-5 w-330 h-90 ml-73">
+          <label
+            v-for="(dong, index) in dongs"
             :key="index"
-            class="flex items-center justify-center w-64 text-white bg-yellow-400 border-none h-26 border-1 rounded-12 text-14">
-            {{ dong.dongName }}
-          </div>
+            class="cursor-pointer">
+            <input
+              type="checkbox"
+              v-model="user.dongList"
+              :value="{ dongCode: dong.dongCode }"
+              class="sr-only peer"
+              checked />
+            <div
+              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
+              {{ dong.dongName | dongFormat }}
+            </div>
+          </label>
         </div>
 
         <button
-          class="ml-40 text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1"
+          class="ml-12 text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1"
           @click="ChangeViewModal">
           추가하기
         </button>
       </div>
       <button
-        class="font-bold text-black border-yellow-400 bg-yellow-400 rounded-5 w-640 h-50 text-20"
+        class="font-bold text-black bg-yellow-400 border-yellow-400 rounded-5 w-640 h-50 text-20"
         @click="signup">
         가입하기
       </button>
       <user-sign-up-modal
-        v-if="!viewModal"
-        class="absolute left-[700px] bg-gray-200 w-300 h-600"></user-sign-up-modal>
+        v-if="viewModal"
+        @setUserRegion="setDongList"
+        class="absolute left-[650px] bottom-160 bg-gray-200 w-180 h-224"></user-sign-up-modal>
     </div>
   </div>
 </template>
@@ -175,6 +185,7 @@ export default {
         { interestId: "HP8", interestName: "병원" },
         { interestId: "PM9", interestName: "약국" },
       ],
+      dongs: [],
       user: {
         userId: null,
         password: null,
@@ -188,7 +199,6 @@ export default {
       },
     };
   },
-
   methods: {
     ...mapActions(userStore, ["userSignup"]),
     signup() {
@@ -198,7 +208,14 @@ export default {
       this.viewModal = !this.viewModal;
     },
     setDongList(data) {
+      this.dongs.push(data);
       this.user.dongList.push({ dongCode: data.dongCode });
+    },
+  },
+  filters: {
+    dongFormat(gugun) {
+      if (gugun === "동") return "동";
+      return gugun.split(" ")[2];
     },
   },
 };

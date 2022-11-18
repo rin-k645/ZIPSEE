@@ -1,38 +1,39 @@
 <template>
-  <div class="flex flex-col">
-    <div>
-      <select
-        v-model="sidoCode"
-        @change="gugunList"
-        class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400">
-        <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">
-          {{ sido.text }}
-        </option>
-      </select>
-      <select
-        v-model="gugunCode"
-        @change="dongList"
-        class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400">
-        <option
-          v-for="(gugun, index) in guguns"
-          :key="index"
-          :value="gugun.value">
-          {{ gugun.text | gugunFormat }}
-        </option>
-      </select>
-      <select
-        v-model="dongCode"
-        class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400">
-        <option v-for="(dong, index) in dongs" :key="index" :value="dong.value">
-          {{ dong.text | dongFormat }}
-        </option>
-      </select>
-      <button
-        class="text-white bg-yellow-700 w-150 h-46 rounded-5 hover:brightness-90"
-        @clcik="setUserRegion">
-        추가하기
-      </button>
-    </div>
+  <div class="flex flex-col items-center justify-center">
+    <select
+      v-model="sidoCode"
+      @change="gugunList"
+      class="mb-10 border-yellow-400 border-solid cursor-pointer w-180 h-46 hover:brightness-90 focus:ring-white focus:border-yellow-400">
+      <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">
+        {{ sido.text }}
+      </option>
+    </select>
+    <select
+      v-model="gugunCode"
+      @change="dongList"
+      class="mb-10 border-yellow-400 border-solid cursor-pointer w-180 h-46 hover:brightness-90 focus:ring-white focus:border-yellow-400">
+      <option
+        v-for="(gugun, index) in guguns"
+        :key="index"
+        :value="gugun.value">
+        {{ gugun.text | gugunFormat }}
+      </option>
+    </select>
+    <select
+      v-model="dong"
+      class="mb-10 border-yellow-400 border-solid cursor-pointer w-180 h-46 hover:brightness-90 focus:ring-white focus:border-yellow-400">
+      <option
+        v-for="(dong, index) in dongs"
+        :key="index"
+        :value="{ value: dong.value, text: dong.text }">
+        {{ dong.text | dongFormat }}
+      </option>
+    </select>
+    <button
+      class="bg-yellow-400 w-180 h-46 hover:brightness-90"
+      @click="setUserRegion">
+      추가하기
+    </button>
   </div>
 </template>
 
@@ -46,7 +47,7 @@ export default {
       sidoCode: null,
       gugunCode: null,
       dongCode: null,
-      dongName: null,
+      dong: { value: null, text: "동" },
     };
   },
   created() {
@@ -57,6 +58,11 @@ export default {
   },
   computed: {
     ...mapState(houseStore, ["sidos", "guguns", "dongs", "userInfo"]),
+  },
+  watch: {
+    dong(v) {
+      this.dongCode = v.value;
+    },
   },
   methods: {
     ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList"]),
@@ -74,9 +80,10 @@ export default {
       if (this.gugunCode) this.getDongList(this.gugunCode.slice(0, 4));
     },
     setUserRegion() {
+      console.log(this.dongCode);
       this.$emit("setUserRegion", {
-        dongCode: this.dongCode,
-        dongName: this.dongName,
+        dongCode: this.dong.value,
+        dongName: this.dong.text,
       });
     },
   },
