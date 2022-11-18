@@ -58,7 +58,7 @@ export default {
   methods: {
     ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
-      console.log(this.user.userid);
+      console.log(this.user.userId);
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
       console.log("1. confirm() token >> " + token);

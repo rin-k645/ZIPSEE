@@ -29,13 +29,12 @@ const userStore = {
       state.isValidToken = isValidToken;
     },
     SET_USER_INFO: (state, userInfo) => {
-      state.isLogin = true;
       state.userInfo = userInfo;
     },
   },
   actions: {
     async userConfirm({ commit }, user) {
-      console.log("?" + user.userid);
+      console.log("?" + user.userId);
       await login(
         user,
         ({ data }) => {
@@ -68,7 +67,7 @@ const userStore = {
       let decodeToken = jwtDecode(token);
       console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
-        decodeToken.userid,
+        decodeToken.userId,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_USER_INFO", data.userInfo);
@@ -109,7 +108,7 @@ const userStore = {
             console.log("갱신 실패");
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
-              state.userInfo.userid,
+              state.userInfo.userId,
               ({ data }) => {
                 if (data.message === "success") {
                   console.log("리프레시 토큰 제거 성공");
@@ -133,9 +132,9 @@ const userStore = {
       );
     },
 
-    async userLogout({ commit }, userid) {
+    async userLogout({ commit }, userId) {
       await logout(
-        userid,
+        userId,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_IS_LOGIN", false);
