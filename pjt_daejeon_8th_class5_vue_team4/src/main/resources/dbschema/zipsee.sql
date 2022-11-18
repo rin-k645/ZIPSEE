@@ -122,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `zipsee`.`housedeal` (
   `DEAL_TYPE` VARCHAR(45) NOT NULL,
   `DEPOSIT` INT NULL,
   `PRICE` INT NULL DEFAULT NULL,
+  `LIKE` INT NULL DEFAULT 0,
   PRIMARY KEY (`DEAL_ID`),
   INDEX `deal_info_houseid_fk_idx` (`HOUSE_ID` ASC) VISIBLE,
   CONSTRAINT `deal_info_houseid_fk`
