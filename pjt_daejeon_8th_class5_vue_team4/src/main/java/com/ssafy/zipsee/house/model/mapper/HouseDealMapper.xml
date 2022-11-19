@@ -43,7 +43,7 @@
 		i.img as "houseInfo.img"
 		from housedeal d, houseinfo i
 		where d.house_id = i.house_id
-			and i.dong_code = #{dongCode} and i.house_type = #{houseInfo.houseType} and d.deal_type = #{dealType} and area = #{area}
+			and i.dong_code = #{dongCode} and i.house_type = #{houseInfo.houseType} and d.deal_type = #{dealType} and price between #{minDealMoney} and #{maxDealMoney}
 	</select>
 		
 	<select id="getHouseDeal" resultType="com.ssafy.zipsee.house.model.HouseDealDto">
