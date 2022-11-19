@@ -18,7 +18,7 @@ public class HouseDealDto {
 	private int floor;
 	private String dealType;
 	private int deposit;
-	private int price;
+	private long price;
 	private int like;
 	
 	private HouseInfoDto houseInfo;
