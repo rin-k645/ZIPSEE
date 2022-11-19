@@ -1,49 +1,50 @@
 <template>
-  <div class="grid grid-rows-[50px_90px_140px_90px_80px] grid-cols-1 gap-10 bg-gray-100 w-450 h-550 border-1">
-    <div class="flex items-center justify-center font-bold bg-white text-16 border-b-1 border-b-gray-200">필터</div>
+  <div
+    class="grid grid-rows-[50px_90px_140px_90px_80px] grid-cols-1 gap-10 bg-gray-100 w-450 h-550 border-1">
+    <div
+      class="flex items-center justify-center font-bold bg-white text-16 border-b-1 border-b-gray-200">
+      필터
+    </div>
     <div class="grid grid-cols-[200px_250px] grid-rows-[40px_50px] bg-white">
       <div class="flex items-center ml-20 font-bold text-16">주택유형</div>
       <div class="flex items-center font-bold text-16">거래유형</div>
-      <div class="grid content-center grid-cols-2 mb-10 ml-20 w-150 justify-items-center">
+      <div
+        class="grid content-center grid-cols-2 mb-10 ml-20 w-150 justify-items-center">
         <label class="cursor-pointer">
           <input type="checkbox" name="housetype" class="sr-only peer" />
           <div
-            class="flex items-center justify-center h-32 text-yellow-400 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
-          >
+            class="flex items-center justify-center h-32 text-yellow-400 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             아파트
           </div>
         </label>
         <label class="cursor-pointer">
           <input type="checkbox" name="housetype" class="sr-only peer" />
           <div
-            class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-80 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
-          >
+            class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-80 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             주택/원룸
           </div>
         </label>
       </div>
-      <div class="grid content-center grid-cols-3 mb-10 w-210 justify-items-center">
+      <div
+        class="grid content-center grid-cols-3 mb-10 w-210 justify-items-center">
         <label class="cursor-pointer">
           <input type="checkbox" name="dealtype" class="sr-only peer" />
           <div
-            class="flex items-center justify-center h-32 text-yellow-400 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
-          >
+            class="flex items-center justify-center h-32 text-yellow-400 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             매매
           </div>
         </label>
         <label class="cursor-pointer">
           <input type="checkbox" name="dealtype" class="sr-only peer" />
           <div
-            class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
-          >
+            class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             전세
           </div>
         </label>
         <label class="cursor-pointer">
           <input type="checkbox" name="dealtype" class="sr-only peer" />
           <div
-            class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
-          >
+            class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             월세
           </div>
         </label>
@@ -51,17 +52,31 @@
     </div>
     <div class="grid items-center grid-rows-[40px_40px_60px] bg-white">
       <div class="ml-20 font-bold text-16">가격범위</div>
-      <div class="ml-20"><input type="range" min="0" max="100" value="0" class="slider w-390" id="myRange" /></div>
+      <div class="ml-20">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          class="slider w-390"
+          id="myRange" />
+      </div>
       <div class="flex justify-center mb-10 ml-20 w-390">
-        <input type="number" placeholder="0원" name="minDealMoney" v-model="minDealMoney" class="h-40 w-180" />
-        <div class="flex items-center justify-center font-bold text-20 w-30">~</div>
         <input
           type="number"
-          placeholder="10,000,000,000원"
+          placeholder="0만원"
+          name="minDealMoney"
+          v-model="minDealMoney"
+          class="h-40 w-180" />
+        <div class="flex items-center justify-center font-bold text-20 w-30">
+          ~
+        </div>
+        <input
+          type="number"
+          placeholder="1,000,000만원"
           name="maxDealMoney"
           v-model="maxDealMoney"
-          class="h-40 w-180"
-        />
+          class="h-40 w-180" />
       </div>
     </div>
     <div class="bg-white">

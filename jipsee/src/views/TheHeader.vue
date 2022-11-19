@@ -20,12 +20,11 @@
           type="text"
           name="search"
           id="search"
+          v-model="keywordplace"
           class="absolute right-0 bg-gray-200 border-none float w-500 h-35 rounded-5" />
-        <router-link
-          :to="{ name: 'search' }"
-          class="absolute float right-7 top-2 text-20"
-          ><font-awesome-icon icon="fa-solid fa-magnifying-glass"
-        /></router-link>
+        <div class="absolute float right-7 top-2 text-20" @click="setKeyword">
+          <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+        </div>
       </div>
       <div v-if="!isLogin" class="flex items-center justify-center w-200">
         <router-link
@@ -56,20 +55,30 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 const userStore = "userStore";
+const houseStore = "houseStore";
 export default {
   data() {
-    return {};
+    return {
+      keywordplace: null,
+    };
   },
   computed: {
     ...mapState(userStore, ["isLogin", "userInfo"]),
+    ...mapState(houseStore, ["keyword"]),
     ...mapGetters(["checkUserInfo"]),
   },
   methods: {
+    ...mapMutations(houseStore, ["SET_KEYWORD_SEARCH"]),
     ...mapActions(userStore, ["userLogout"]),
     // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    setKeyword() {
+      this.SET_KEYWORD_SEARCH(this.keywordplace);
+      if (this.$route.path != "/house/list")
+        this.$router.push({ name: "houselist" });
+    },
     onClickLogout() {
       // this.SET_IS_LOGIN(false);
       // this.SET_USER_INFO(null);

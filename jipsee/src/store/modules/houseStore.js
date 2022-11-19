@@ -1,4 +1,11 @@
-import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList } from "@/api/house.js";
+import {
+  sidoList,
+  gugunList,
+  dongList,
+  houseList,
+  interestList,
+  recommendHouseList,
+} from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -14,6 +21,7 @@ const houseStore = {
     dealType: [],
     interests: [],
     recommendHouses: [],
+    keyword: "",
   },
   getters: {},
   mutations: {
@@ -43,7 +51,9 @@ const houseStore = {
     },
     SET_RECOMMEND_HOUSE_LIST(state, recommendHouses) {
       state.recommendHouses = recommendHouses;
-      console.log(state.recommendHouses);
+    },
+    SET_KEYWORD_SEARCH(state, keyword) {
+      state.keyword = keyword;
     },
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: null, text: "시/도" }];
@@ -67,7 +77,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
     getGugunList({ commit }, sido) {
@@ -78,7 +88,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
     getDongList({ commit }, gugun) {
@@ -89,7 +99,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
     getHouseList({ commit }, dongCode) {
@@ -98,10 +108,11 @@ const houseStore = {
         params,
         ({ data }) => {
           commit("SET_HOUSE_LIST", data);
+          commit("SET_DETAIL_HOUSE", data[0]);
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
     getInterestList({ commit }) {
@@ -111,7 +122,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
     getRecommendHouseList({ commit }) {
@@ -122,7 +133,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
   },
