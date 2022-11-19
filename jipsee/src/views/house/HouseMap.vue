@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 const houseStore = "houseStore";
 export default {
   data() {
@@ -40,12 +40,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["house"]),
+    ...mapState(houseStore, ["house", "houses", "keyword"]),
   },
   watch: {
     house() {
-      this.panTo();
-      console.log(this.house.houseInfo.lat, this.house.houseInfo.lng);
+      if (this.house) {
+        this.panTo(this.house.houseInfo.lat, this.house.houseInfo.lng);
+        console.log(this.house.houseInfo.lat, this.house.houseInfo.lng);
+      }
+    },
+    keyword() {
+      if (this.keyword) {
+        this.initMap();
+      }
     },
   },
   mounted() {
@@ -55,6 +62,8 @@ export default {
       : this.addKakaoMapScript();
   },
   methods: {
+    ...mapActions(houseStore, ["getHouseList"]),
+    ...mapMutations(houseStore, ["CLEAR_HOUSES_LIST"]),
     initMap() {
       // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
       var placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 }),
@@ -74,6 +83,23 @@ export default {
 
       // 장소 검색 객체를 생성합니다
       var ps = new kakao.maps.services.Places(map);
+
+      // 주소-좌표 변환 객체를 생성합니다
+
+      var geocoder = new kakao.maps.services.Geocoder();
+      var keyword = "";
+      if (!this.keyword) keyword = "양천구청";
+      else keyword = this.keyword;
+
+      ps.keywordSearch(keyword, (data) => {
+        this.panTo(data[0].y, data[0].x);
+        console.log(keyword);
+        geocoder.coord2RegionCode(data[0].x, data[0].y, (result) => {
+          this.CLEAR_HOUSES_LIST();
+          console.log(result[0]);
+          this.getHouseList(result[0].code);
+        });
+      });
 
       // 지도에 idle 이벤트를 등록합니다
       kakao.maps.event.addListener(map, "idle", searchPlaces);
@@ -282,12 +308,9 @@ export default {
         "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a129da21c80496260f16ba43b6b9918b&libraries=services";
       document.head.appendChild(script);
     },
-    panTo() {
+    panTo(lat, lng) {
       // 이동할 위도 경도 위치를 생성합니다
-      var moveLatLon = new kakao.maps.LatLng(
-        this.house.houseInfo.lat,
-        this.house.houseInfo.lng,
-      );
+      var moveLatLon = new kakao.maps.LatLng(lat, lng);
 
       // 지도 중심을 부드럽게 이동시킵니다
       // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다

@@ -21,6 +21,7 @@ const houseStore = {
     dealType: [],
     interests: [],
     recommendHouses: [],
+    keyword: "",
   },
   getters: {},
   mutations: {
@@ -33,7 +34,6 @@ const houseStore = {
       guguns.forEach((gugun) => {
         state.guguns.push({ value: gugun.code, text: gugun.name });
       });
-      console.log(state.guguns);
     },
     SET_DONG_LIST(state, dongs) {
       dongs.forEach((dong) => {
@@ -42,7 +42,6 @@ const houseStore = {
     },
     SET_HOUSE_LIST(state, houses) {
       state.houses = houses;
-      console.log(state.houses);
     },
     SET_INTEREST_LIST(state, interests) {
       state.interests = interests;
@@ -52,7 +51,9 @@ const houseStore = {
     },
     SET_RECOMMEND_HOUSE_LIST(state, recommendHouses) {
       state.recommendHouses = recommendHouses;
-      console.log(state.recommendHouses);
+    },
+    SET_KEYWORD_SEARCH(state, keyword) {
+      state.keyword = keyword;
     },
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: null, text: "시/도" }];
