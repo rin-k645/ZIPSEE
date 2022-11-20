@@ -63,29 +63,29 @@ const routes = [
         name: "usersignup",
         component: UserSignUp,
       },
+    ],
+  },
+  {
+    path: "/mypage",
+    name: "usermypage",
+    beforeEnter: onlyAuthUser,
+    redirect: "/mypage/likehouse",
+    component: UserMyPage,
+    children: [
       {
-        path: "mypage",
-        name: "usermypage",
-        beforeEnter: onlyAuthUser,
-        redirect: "/user/mypage/likehouse",
-        component: UserMyPage,
-        children: [
-          {
-            path: "modify",
-            name: "usermodify",
-            component: UserModify,
-          },
-          {
-            path: "likehouse",
-            name: "userlikehouse",
-            component: UserLikeHouse,
-          },
-          {
-            path: "ask",
-            name: "userask",
-            component: UserAsk,
-          },
-        ],
+        path: "modify",
+        name: "usermodify",
+        component: UserModify,
+      },
+      {
+        path: "likehouse",
+        name: "userlikehouse",
+        component: UserLikeHouse,
+      },
+      {
+        path: "ask",
+        name: "userask",
+        component: UserAsk,
       },
     ],
   },
