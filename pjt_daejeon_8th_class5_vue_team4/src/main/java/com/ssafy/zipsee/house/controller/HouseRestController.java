@@ -64,8 +64,6 @@ public class HouseRestController {
 		}
 	}
 	
-
-
 	@ApiOperation(value = "매물 검색", notes = "필터 조건(동코드, 집유형, 거래타입, 최소가격, 최대가격)에 맞는 매물을 검색해 반환한다", response = List.class)
 	@GetMapping("/filter")
 	public ResponseEntity<?> listByFilter(@RequestParam Map<String, Object> map) {
