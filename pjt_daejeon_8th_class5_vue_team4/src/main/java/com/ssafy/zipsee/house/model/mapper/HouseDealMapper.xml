@@ -110,7 +110,7 @@
 		i.img as "houseInfo.img"
 		from housedeal d, houseinfo i
 		where d.house_id = i.house_id
-			and i.dong_code = #{dongCode} and i.house_type = '주택'
+			and i.dong_code = #{dongCode} and i.house_type = '원룸'
 		order by d.like desc
 		limit 10
 	</select>

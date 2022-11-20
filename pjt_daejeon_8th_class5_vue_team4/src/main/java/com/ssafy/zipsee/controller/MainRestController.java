@@ -58,12 +58,12 @@ public class MainRestController {
 		List<List<HouseDealDto>> oneRoomListByDong = new ArrayList<>(); //원룸 추천 리스트 여러개
 		
 		if(token == null) { //로그인 안했을 경우 - 공통 추천
-			List<HouseDealDto> apartList = houseDealService.getApartRecommandList("1111011500"); //사직동 주택
+			List<HouseDealDto> apartList = houseDealService.getApartRecommandList("1168010100"); //역삼동 아파트
 			if (apartList != null && !apartList.isEmpty()) {
 				apartListByDong.add(apartList);
 			}
 			
-			List<HouseDealDto> oneRoomlist = houseDealService.getOneRoomRecommandList("1111011500"); //사직동 주택
+			List<HouseDealDto> oneRoomlist = houseDealService.getOneRoomRecommandList("1111011100"); //옥인동 주택
 			if (oneRoomlist != null && !oneRoomlist.isEmpty()) {
 				oneRoomListByDong.add(oneRoomlist);
 			}
