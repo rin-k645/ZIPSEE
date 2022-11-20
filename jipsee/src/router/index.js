@@ -100,7 +100,7 @@ const routes = [
         component: HouseList,
       },
       {
-        path: ":houseno",
+        path: "detail",
         name: "housedetail",
         component: HouseDetail,
       },

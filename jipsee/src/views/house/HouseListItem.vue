@@ -16,6 +16,9 @@
           {{ house.price | changeMoneyUnit }}
         </div>
         <div>{{ house.area }}m² {{ house.floor }}층</div>
+        <button class="bg-yellow-400">
+          <router-link :to="{ name: 'housedetail' }">보러가기</router-link>
+        </button>
       </div>
     </div>
   </div>

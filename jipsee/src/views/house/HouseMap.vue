@@ -45,8 +45,9 @@ export default {
   watch: {
     house() {
       if (this.house) {
-        this.panTo(this.house.houseInfo.lat, this.house.houseInfo.lng);
-        console.log(this.house.houseInfo.lat, this.house.houseInfo.lng);
+        this.panTo(this.house.houseInfo.lng, this.house.houseInfo.lat);
+        this.setMarker(this.house.houseInfo.lng, this.house.houseInfo.lat);
+        console.log(this.house.houseInfo.lng, this.house.houseInfo.lat);
       }
     },
     keyword() {
@@ -92,11 +93,12 @@ export default {
       else keyword = this.keyword;
 
       ps.keywordSearch(keyword, (data) => {
+        console.log(data);
         this.panTo(data[0].y, data[0].x);
         console.log(keyword);
         geocoder.coord2RegionCode(data[0].x, data[0].y, (result) => {
           this.CLEAR_HOUSES_LIST();
-          console.log(result[0]);
+          console.log(result);
           this.getHouseList(result[0].code);
         });
       });
@@ -315,6 +317,17 @@ export default {
       // 지도 중심을 부드럽게 이동시킵니다
       // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
       this.map.panTo(moveLatLon);
+    },
+    setMarker(lat, lng) {
+      // 마커가 표시될 위치입니다
+      var markerPosition = new kakao.maps.LatLng(lat, lng);
+
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+
+      marker.setMap(this.map);
     },
   },
 };

@@ -54,12 +54,14 @@
 
       <div
         v-if="houses && houses.length != 0"
-        class="flex flex-col items-center justify-center overflow-scroll scrollbar-thin scrollbar-thumb-yellow-400 pt-[400px]">
+        class="flex flex-col overflow-scroll scrollbar-thin scrollbar-thumb-yellow-400">
         <house-list-item
           v-for="(house, index) in houses"
           :key="index"
           :house="house"
-          class="w-396 h-200 border-gray-200 border-b-1"></house-list-item>
+          @click.native="viewHouseLocation(house)"
+          class="w-396 h-200 border-gray-200 border-b-1 cursor-pointer">
+        </house-list-item>
       </div>
       <div v-else class="flex flex-col items-center justify-center"></div>
     </div>
@@ -129,6 +131,10 @@ export default {
     },
     ChangeViewModal() {
       this.viewModal = !this.viewModal;
+    },
+    viewHouseLocation(house) {
+      this.SET_DETAIL_HOUSE(house);
+      console.log(house);
     },
   },
   filters: {
