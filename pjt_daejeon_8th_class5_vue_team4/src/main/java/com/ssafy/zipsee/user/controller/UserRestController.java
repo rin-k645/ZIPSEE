@@ -141,7 +141,9 @@ public class UserRestController {
 			logger.info("사용 가능한 토큰!!!");
 			try {
 //				로그인 사용자 정보.
+				System.out.println("userId: " + userId);
 				UserDto userDto = userService.getUser(userId);
+				System.out.println(userDto);
 				resultMap.put("userInfo", userDto);
 				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;

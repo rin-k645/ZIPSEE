@@ -44,10 +44,11 @@ public class MainRestController {
 	@ApiOperation(value = "유저 매물 추천", notes = "유저의 관심사와 관심지역에 맞는 매물을 추천해준다.", response = List.class)
 	@GetMapping
 	public ResponseEntity<?> recommandlist(HttpServletRequest request) throws Exception {
-		System.out.println("메인 컨트롤러 실행");
+//		System.out.println("메인 컨트롤러 실행");
 		
 		String token = request.getHeader("refresh-token");
-		System.out.println(token);
+//		System.out.println(token);
+
 		
 		Map<String, Object> resultMap = new HashMap<>(); //응답으로 보낼 데이터 맵
 		
@@ -79,7 +80,7 @@ public class MainRestController {
 					apartListByDong.add(apartList);
 				}
 				
-				List<HouseDealDto> oneRoomlist = houseDealService.getApartRecommandList(dongCode);
+				List<HouseDealDto> oneRoomlist = houseDealService.getOneRoomRecommandList(dongCode);
 				if (oneRoomlist != null && !oneRoomlist.isEmpty()) {
 					oneRoomListByDong.add(oneRoomlist);
 				}
