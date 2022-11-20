@@ -29,4 +29,9 @@ function deleteArticle(articleno, success, fail) {
   api.delete(`/board/${articleno}`).then(success).catch(fail);
 }
 
-export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle };
+function askList(success, fail) {
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token");
+  api.get(`/mypage/ask`).then(success).catch(fail);
+}
+
+export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle, askList };

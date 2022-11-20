@@ -7,14 +7,14 @@
           <th class="w-250">날짜</th>
         </tr>
       </thead>
-      <tbody v-for="(notice, index) in notices" :key="index" @click="clickContent(index)">
+      <tbody v-for="(ask, index) in asks" :key="index" @click="clickContent(index)">
         <tr class="h-60">
-          <td class="pl-30">{{ notice.title }}</td>
-          <td class="text-center">{{ notice.registerDate }}</td>
+          <td class="pl-30">{{ ask.title }}</td>
+          <td class="text-center">{{ ask.registerDate }}</td>
         </tr>
-        <tr v-show="noticeNo == index" class="h-60">
+        <tr v-show="askNo == index" class="h-60">
           <td colspan="2">
-            <board-notice-detail :notice="notice"></board-notice-detail>
+            <board-notice-detail :notice="ask"></board-notice-detail>
           </td>
         </tr>
       </tbody>
@@ -25,25 +25,27 @@
 <script>
 import BoardNoticeDetail from "@/views/board/BoardNoticeDetail";
 import { mapState, mapActions } from "vuex";
+const boardStore = "boardStore";
+
 export default {
   components: {
     BoardNoticeDetail,
   },
   data() {
     return {
-      noticeNo: -1,
+      askNo: -1,
     };
   },
   created() {
-    this.getNoticeList();
+    this.getAskList();
   },
   computed: {
-    ...mapState(["notices"]),
+    ...mapState(boardStore, ["asks"]),
   },
   methods: {
-    ...mapActions(["getNoticeList"]),
+    ...mapActions(boardStore, ["getAskList"]),
     clickContent(index) {
-      this.noticeNo = index;
+      this.askNo = index;
     },
   },
 };
