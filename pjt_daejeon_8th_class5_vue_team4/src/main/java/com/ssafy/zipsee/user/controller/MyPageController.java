@@ -136,6 +136,8 @@ public class MyPageController {
 	@GetMapping("/ask")
 	public ResponseEntity<?> getAskList(HttpServletRequest request) throws Exception {
 		try {
+			logger.info("getAskList - 호출 {}");
+			
 			String token = request.getHeader("refresh-token");
 			
 			UserDto userDto = userService.getUserByToken(token);
