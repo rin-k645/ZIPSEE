@@ -54,13 +54,13 @@
 
       <div
         v-if="houses && houses.length != 0"
-        class="flex flex-col overflow-scroll scrollbar-thin scrollbar-thumb-yellow-400">
+        class="flex flex-col overflow-scroll border-t-2 border-gray-100 scrollbar-thin scrollbar-thumb-yellow-400">
         <house-list-item
           v-for="(house, index) in houses"
           :key="index"
-          :house="house"
+          :houseItem="house"
           @click.native="viewHouseLocation(house)"
-          class="w-396 h-200 border-gray-200 border-b-1 cursor-pointer">
+          class="border-gray-200 cursor-pointer w-396 h-200 border-b-1">
         </house-list-item>
       </div>
       <div v-else class="flex flex-col items-center justify-center"></div>
@@ -97,11 +97,11 @@ export default {
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
     this.CLEAR_DONG_LIST();
-    this.CLEAR_HOUSES_LIST();
+    //this.CLEAR_HOUSES_LIST();
     this.getSidoList();
   },
   computed: {
-    ...mapState(houseStore, ["houses", "sidos", "guguns", "dongs", "house"]),
+    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "house"]),
   },
   methods: {
     ...mapActions(houseStore, [
@@ -126,7 +126,6 @@ export default {
       if (this.gugunCode) this.getDongList(this.gugunCode.slice(0, 4));
     },
     searchHouse() {
-      this.CLEAR_HOUSES_LIST();
       if (this.dongCode) this.getHouseList(this.dongCode);
     },
     ChangeViewModal() {

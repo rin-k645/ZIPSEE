@@ -1,32 +1,33 @@
 <template>
   <div>
-    <div id="map" class="w-full h-full"></div>
-    <ul id="category">
-      <li id="BK9" data-order="0">
-        <span class="category_bg bank"></span>
-        은행
-      </li>
-      <li id="MT1" data-order="1">
-        <span class="category_bg mart"></span>
-        마트
-      </li>
-      <li id="PM9" data-order="2">
-        <span class="category_bg pharmacy"></span>
-        약국
-      </li>
-      <li id="OL7" data-order="3">
-        <span class="category_bg oil"></span>
-        주유소
-      </li>
-      <li id="CE7" data-order="4">
-        <span class="category_bg cafe"></span>
-        카페
-      </li>
-      <li id="CS2" data-order="5">
-        <span class="category_bg store"></span>
-        편의점
-      </li>
-    </ul>
+    <div id="map" class="w-full h-full">
+      <ul id="category">
+        <li id="BK9" data-order="0">
+          <span class="category_bg bank"></span>
+          은행
+        </li>
+        <li id="MT1" data-order="1">
+          <span class="category_bg mart"></span>
+          마트
+        </li>
+        <li id="PM9" data-order="2">
+          <span class="category_bg pharmacy"></span>
+          약국
+        </li>
+        <li id="OL7" data-order="3">
+          <span class="category_bg oil"></span>
+          주유소
+        </li>
+        <li id="CE7" data-order="4">
+          <span class="category_bg cafe"></span>
+          카페
+        </li>
+        <li id="CS2" data-order="5">
+          <span class="category_bg store"></span>
+          편의점
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -45,9 +46,9 @@ export default {
   watch: {
     house() {
       if (this.house) {
-        this.panTo(this.house.houseInfo.lng, this.house.houseInfo.lat);
-        this.setMarker(this.house.houseInfo.lng, this.house.houseInfo.lat);
-        console.log(this.house.houseInfo.lng, this.house.houseInfo.lat);
+        this.panTo(this.house.houseInfo.lat, this.house.houseInfo.lng);
+        this.setMarker(this.house.houseInfo.lat, this.house.houseInfo.lng);
+        console.log(this.house.houseInfo.lat, this.house.houseInfo.lng);
       }
     },
     keyword() {
@@ -56,6 +57,7 @@ export default {
       }
     },
   },
+
   mounted() {
     /* global kakao */
     window.kakao && window.kakao.maps
@@ -64,7 +66,7 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_HOUSES_LIST"]),
+    ...mapMutations(houseStore, ["CLEAR_KEYWORD_LIST"]),
     initMap() {
       // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
       var placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 }),
@@ -89,19 +91,23 @@ export default {
 
       var geocoder = new kakao.maps.services.Geocoder();
       var keyword = "";
-      if (!this.keyword) keyword = "양천구청";
+      if (!this.keyword) keyword = "";
       else keyword = this.keyword;
-
-      ps.keywordSearch(keyword, (data) => {
-        console.log(data);
-        this.panTo(data[0].y, data[0].x);
-        console.log(keyword);
-        geocoder.coord2RegionCode(data[0].x, data[0].y, (result) => {
-          this.CLEAR_HOUSES_LIST();
-          console.log(result);
-          this.getHouseList(result[0].code);
+      if (keyword)
+        ps.keywordSearch(keyword, (data) => {
+          console.log(data);
+          this.panTo(data[0].y, data[0].x);
+          console.log(keyword);
+          geocoder.coord2RegionCode(data[0].x, data[0].y, (result) => {
+            if (result) this.getHouseList(result[0].code);
+          });
         });
-      });
+
+      this.CLEAR_KEYWORD_LIST();
+      if (this.house) {
+        this.panTo(this.house.houseInfo.lat, this.house.houseInfo.lng);
+        this.setMarker(this.house.houseInfo.lat, this.house.houseInfo.lng);
+      }
 
       // 지도에 idle 이벤트를 등록합니다
       kakao.maps.event.addListener(map, "idle", searchPlaces);
@@ -348,7 +354,7 @@ export default {
 }
 #category {
   position: absolute;
-  top: 150px;
+  top: 10px;
   left: 10px;
   border-radius: 5px;
   border: 1px solid #909090;

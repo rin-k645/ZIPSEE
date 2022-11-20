@@ -14,11 +14,11 @@ const houseStore = {
     guguns: [],
     dongs: [],
     houses: [],
-    house: [],
-    minDealMoney: [],
-    maxDealMoney: [],
-    houseType: [],
-    dealType: [],
+    house: null,
+    minDealMoney: null,
+    maxDealMoney: null,
+    houseType: null,
+    dealType: null,
     interests: [],
     recommendHouses: [],
     keyword: "",
@@ -66,7 +66,12 @@ const houseStore = {
     },
     CLEAR_HOUSES_LIST(state) {
       state.houses = [];
+    },
+    CLEAR_HOUSE_LIST(state) {
       state.house = null;
+    },
+    CLEAR_KEYWORD_LIST(state) {
+      state.keyword = null;
     },
   },
   actions: {

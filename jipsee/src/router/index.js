@@ -11,6 +11,7 @@ import UserAsk from "@/views/user/UserAsk";
 import HouseMain from "@/views/house/HouseMain";
 import HouseList from "@/views/house/HouseList";
 import HouseDetail from "@/views/house/HouseDetail";
+
 import BoardMain from "@/views/board/BoardMain";
 import BoardQuestion from "@/views/board/BoardQuestion";
 import BoardAsk from "@/views/board/BoardAsk";
