@@ -61,4 +61,9 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	@Override
+	public List<BoardDto> getInquiryListByUserId(String userId) throws Exception {
+		return boardMapper.getInquiryListByUserId(userId);
+	}
+
 }

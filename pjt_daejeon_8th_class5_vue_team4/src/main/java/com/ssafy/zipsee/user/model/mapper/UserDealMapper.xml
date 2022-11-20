@@ -6,11 +6,16 @@
 		VALUES(#{userId}, #{dealId})
 	</insert>
 	
-	<select id="getUserHouseList" parameterType="String" resultType="com.ssafy.zipsee.user.model.UserDealDto">
+	<select id="getUserDealList" parameterType="String" resultType="com.ssafy.zipsee.user.model.UserDealDto">
 		SELECT
 			UH.USER_DEAL_ID AS userDealId,
 			UH.USER_ID AS userId,
-			UH.DEAL_ID AS dealId
+			UH.DEAL_ID AS dealId,
+			H.AREA AS "houseDeal.area",
+			H.FLOOR AS "houseDeal.floor",
+			H.DEAL_TYPE AS "houseDeal.dealType",
+			H.DEPOSIT AS "houseDeal.deposit",
+			H.PRICE AS "houseDeal.price"
 		FROM USER_DEAL UH, HOUSEDEAL H
 		WHERE UH.DEAL_ID = H.DEAL_ID
 			AND UH.USER_ID = #{userId}

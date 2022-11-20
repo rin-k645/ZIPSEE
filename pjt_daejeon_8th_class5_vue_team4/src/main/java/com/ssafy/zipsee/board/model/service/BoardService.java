@@ -11,4 +11,5 @@ public interface BoardService {
 	public boolean registerBoard(BoardDto board) throws Exception;
 	public boolean modifyBoard(BoardDto board) throws Exception;
 	public boolean deleteBoard(int boardId) throws Exception;
+	public List<BoardDto> getInquiryListByUserId(String userId) throws Exception;
 }

@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto = userMapper.getUser(userId);
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
-		userDto.setLikeList(userHouseMapper.getUserHouseList(userId));
+		userDto.setLikeList(userHouseMapper.getUserDealList(userId));
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;
@@ -141,6 +141,7 @@ public class UserServiceImpl implements UserService {
 		String userId = userDto.getUserId();
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
+		userDto.setLikeList(userHouseMapper.getUserDealList(userId));
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;
