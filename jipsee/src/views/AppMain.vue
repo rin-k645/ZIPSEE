@@ -1,8 +1,6 @@
 <template>
   <div>
-    <img
-      src="@/assets/main.jpg"
-      class="object-cover object-center w-full h-500" />
+    <img src="@/assets/main.jpg" class="object-cover object-center w-full h-500" />
     <div>
       <div class="mt-20 mb-20 ml-20 text-xl font-bold">실시간 매물 TOP 10</div>
       <!-- Slider main container -->
@@ -12,7 +10,8 @@
           <div
             v-for="(houseDeal, index) in recommendHouses.popularDealList"
             :key="index"
-            class="swiper-slide">
+            class="swiper-slide"
+          >
             <img src="@/assets/sample.jpg" />
           </div>
         </div>
@@ -20,16 +19,22 @@
 
       <!-- 아파트 추천 리스트(동코드) -->
       <div v-for="(apartList, i) in recommendHouses.apartListBydong" :key="i">
-        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">
-          내 꿈은 건물주님을 위한 HOT 10
-        </div>
+        <div
+          v-if="recommendHouses.user.nickName != null"
+          class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold"
+          v-text="
+            `${recommendHouses.user.nickName}을 위한 ${apartList[i].houseInfo.dongName} 추천 아파트`
+          "
+        ></div>
+        <div
+          v-else
+          class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold"
+          v-text="`${apartList[i].houseInfo.dongName} 추천 아파트`"
+        ></div>
         <div :ref="`swiper${i + 2}`" class="swiper">
           <div class="swiper-wrapper">
             <!-- Slides -->
-            <div
-              v-for="(houseDeal, index) in apartList"
-              :key="index"
-              class="swiper-slide">
+            <div v-for="(houseDeal, index) in apartList" :key="index" class="swiper-slide">
               <img src="@/assets/sample.jpg" />
             </div>
           </div>
@@ -37,19 +42,23 @@
       </div>
 
       <!-- 원룸 추천 리스트(동코드) -->
-      <div v-for="(oneRoom, i) in recommendHouses.oneRoomListByDong" :key="i">
-        <div class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold">
-          내 꿈은 건물주님을 위한 HOT 10
-        </div>
+      <div v-for="(oneRoomList, i) in recommendHouses.oneRoomListByDong" :key="i">
         <div
-          :ref="`swiper${recommendHouses.apartListBydong.length + i + 2}`"
-          class="swiper">
+          v-if="recommendHouses.user.nickName != null"
+          class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold"
+          v-text="
+            `${recommendHouses.user.nickName}을 위한 ${oneRoomList[i].houseInfo.dongName} 추천 주택/원룸`
+          "
+        ></div>
+        <div
+          v-else
+          class="mt-20 mb-20 ml-20 mr-20 text-xl font-bold"
+          v-text="`${oneRoomList[i].houseInfo.dongName} 추천 주택/원룸`"
+        ></div>
+        <div :ref="`swiper${recommendHouses.apartListBydong.length + i + 2}`" class="swiper">
           <div class="swiper-wrapper">
             <!-- Slides -->
-            <div
-              v-for="(houseDeal, index) in oneRoom"
-              :key="index"
-              class="swiper-slide">
+            <div v-for="(houseDeal, index) in oneRoomList" :key="index" class="swiper-slide">
               <img src="@/assets/sample.jpg" />
             </div>
           </div>
@@ -74,7 +83,7 @@ export default {
   },
   mounted() {
     let user = this.recommendHouses.user;
-    console.log(user);
+    console.log("user", user);
 
     let apartRecommendSize = this.recommendHouses.apartListBydong.length;
     console.log(apartRecommendSize);
