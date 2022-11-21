@@ -22,7 +22,7 @@
 			AND UH.USER_ID = #{userId}
 	</select>
 	
-	<delete id="deleteUserHouse" parameterType="Integer">
+	<delete id="deleteUserHouse">
 		DELETE FROM USER_DEAL
 		WHERE USER_ID = #{userId} AND DEAL_ID = #{dealId}
 	</delete>

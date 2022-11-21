@@ -108,6 +108,8 @@ public class HouseRestController {
 		String token = request.getHeader("refresh-token");
 		UserDto userDto = userService.getUserByToken(token);
 		
+		System.out.println(dealId);
+		
 		if (houseDealService.unlikeHouse(userDto.getUserId(), dealId)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

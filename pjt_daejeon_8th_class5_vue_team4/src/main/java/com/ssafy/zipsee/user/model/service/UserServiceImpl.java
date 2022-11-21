@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.zipsee.board.model.mapper.BoardMapper;
+import com.ssafy.zipsee.user.model.UserDealDto;
 import com.ssafy.zipsee.user.model.UserDongDto;
 import com.ssafy.zipsee.user.model.UserDto;
 import com.ssafy.zipsee.user.model.UserInterestDto;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDongMapper userDongMapper;
 	@Autowired
-	private UserDealMapper userHouseMapper;
+	private UserDealMapper userDealMapper;
 	@Autowired
 	private BoardMapper boardMapper;
 
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 		this.userMapper = userMapper;
 		this.userInterestMapper = userInterestMapper;
 		this.userDongMapper = userDongMapper;
-		this.userHouseMapper = userHouseMapper;
+		this.userDealMapper = userHouseMapper;
 		this.boardMapper = boardMapper;
 	}
 
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto = userMapper.getUser(userId);
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
-		userDto.setLikeList(userHouseMapper.getUserDealList(userId));
+		userDto.setLikeList(userDealMapper.getUserDealList(userId));
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;
@@ -141,7 +142,7 @@ public class UserServiceImpl implements UserService {
 		String userId = userDto.getUserId();
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
-		userDto.setLikeList(userHouseMapper.getUserDealList(userId));
+		userDto.setLikeList(userDealMapper.getUserDealList(userId));
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;
