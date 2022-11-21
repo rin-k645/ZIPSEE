@@ -134,7 +134,6 @@ const houseStore = {
         }
       );
     },
-    //getPlaceId(context, pos) {},
   },
 };
 

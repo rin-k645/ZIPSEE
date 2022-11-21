@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center">
     <div class="relative bg-yellow-200 w-1000 h-500">
       <button class="absolute h-40 font-bold bg-yellow-400 bottom-10 left-10 w-70">
-        <a href="http://localhost:8077/1/index.html">360</a>
+        <a href="http://localhost:8077/1/index.html">360˚</a>
       </button>
     </div>
     <div class="flex flex-row w-1000 h-500 mt-100">
@@ -23,7 +23,6 @@
         </div>
         <div class="mb-10 text-18">
           <!-- {{ house.houseInfo.dong.sidoName }} {{ house.houseInfo.dong.gugunName }} {{ house.houseInfo.dong.dongName }} -->
-          {{ house.houseInfo.dongName }}
         </div>
         <div>{{ house.houseInfo.houseType }} {{ house.area }}m² {{ house.floor }}층</div>
       </div>
