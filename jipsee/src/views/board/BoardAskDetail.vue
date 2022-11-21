@@ -1,20 +1,27 @@
 <template>
-    <div>
-        <div class="pl-40 pt-30 pb-30 bg-gray-50" v-html="ask.content"></div>
-        <hr>
-        <div v-if="ask.comment != null" class="pl-40 pt-30 pb-30 bg-gray-50">
-            <div><b>답변</b></div>
-            <div v-html="ask.comment.registerDate"></div>
-            <div v-html="ask.comment.content"></div>
-        </div>
-        <div v-else>
-            <div class="flex flex-col items-end mt-50">
-                <div><b>답변 달기</b></div>
-                <ckeditor :editor="editor" v-model="comment.content"/>
-                <button class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50" @click="writeNewComment">작성하기</button>
-            </div>
-        </div>
+  <div>
+    <div class="pl-40 pt-30 pb-30 bg-gray-50" v-html="ask.content"></div>
+    <hr />
+    <div v-if="ask.comment != null" class="pl-40 pt-30 pb-30 bg-gray-50">
+      <div class="mb-10 flex justify-between">
+        <div>안녕하세요 <b>JIPSEE</b> 입니다.</div>
+        <div class="mr-49">{{ ask.comment.registerDate }}</div>
+      </div>
+
+      <div>{{ ask.comment.content }}</div>
     </div>
+    <div v-else>
+      <div class="flex flex-col items-end mt-50">
+        <div><b>답변 달기</b></div>
+        <ckeditor :editor="editor" v-model="comment.content" />
+        <button
+          class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50"
+          @click="writeNewComment">
+          작성하기
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -34,21 +41,19 @@ export default {
   data: () => ({
     editor: ClassicEditor,
     comment: {
-        boardId: null,
-        content: "<p>답변할 내용을 적어주세요.</p>",
+      boardId: null,
+      content: "<p>답변할 내용을 적어주세요.</p>",
     },
   }),
-  created(){
+  created() {
     this.comment.boardId = this.ask.boardId;
   },
   methods: {
     ...mapActions(boardStore, ["writeComment"]),
     writeNewComment() {
-      this.writeComment(this.comment).then(()=>{
+      this.writeComment(this.comment).then(() => {
         this.$router.go();
-      }
-      );
-    
+      });
     },
   },
 };

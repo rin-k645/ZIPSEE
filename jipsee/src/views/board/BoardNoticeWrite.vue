@@ -1,14 +1,17 @@
 <template>
-  <div class="flex flex-col items-end mt-50">
-    <div class="">제목</div>
-        <input
-          type="text"
-          name="id"
-          placeholder="제목을 입력해주세요"
-          v-model="notice.title"
-          class="" />
+  <div class="flex flex-col mt-50">
+    <input
+      type="text"
+      name="id"
+      placeholder="제목을 입력해주세요"
+      v-model="notice.title"
+      class="w-full mb-15" />
     <ckeditor :editor="editor" v-model="notice.content" />
-    <button class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50" @click="writeNewNotice">작성하기</button>
+    <button
+      class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50 place-self-end"
+      @click="writeNewNotice">
+      작성하기
+    </button>
   </div>
 </template>
 
@@ -26,9 +29,9 @@ export default {
   data: () => ({
     editor: ClassicEditor,
     notice: {
-        userId: "admin",
-        title: null,
-        content: "<p>공지할 내용을 적어주세요.</p>",
+      userId: "admin",
+      title: null,
+      content: "<p>공지할 내용을 적어주세요.</p>",
     },
   }),
   methods: {

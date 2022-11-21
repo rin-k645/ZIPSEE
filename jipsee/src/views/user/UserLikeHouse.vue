@@ -1,23 +1,31 @@
 <template>
-  <div class="grid grid-rows-2 grid-cols-4 w-1200 h-700">
-    <div class="grid grid-rows-2 grid-cols-1">
-      <div v-for="(likehouse, index) in likehouses" :key="index">
-        <img :src="likehouse.houseInfo.img" />
-        <div class="flex flex-col">
-          <div>{{ likehouse.dealType }} {{ likehouse.price }}</div>
-          <div>{{ likehouse.area }} {{ likehouse.floor }}</div>
-          <div>{{ likehouse.dongName }}</div>
-        </div>
-      </div>
-    </div>
+  <div class="flex flex-wrap w-1200 self-start mt-20">
+    <user-like-house-item
+      v-for="(house, index) in likeHouse"
+      :key="index"
+      :houseItem="house"
+      class="border-gray-200 cursor-pointer w-396 h-200 border-b-1 mb-20"></user-like-house-item>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import UserLikeHouseItem from "@/views/user/UserLikeHouseItem.vue";
+const userStore = "userStore";
 export default {
+  components: {
+    UserLikeHouseItem,
+  },
+  data() {
+    return {
+      likeHouse: null,
+    };
+  },
+  created() {
+    this.likeHouse = this.userInfo.likeList;
+  },
   computed: {
-    ...mapState(["likehouses"]),
+    ...mapState(userStore, ["userInfo"]),
   },
   methods: {},
 };
