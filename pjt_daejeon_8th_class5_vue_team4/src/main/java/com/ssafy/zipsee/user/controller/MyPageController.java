@@ -146,8 +146,10 @@ public class MyPageController {
 			List<BoardDto> list = new ArrayList<>();
 			
 			if(userId.equals("admin")) { //관리자일 경우
+				System.out.println("getInquiryList() 실행");
 				list = boardService.getInquiryList(); //질문 전체 리스트
 			} else { //일반 유저일 경우
+				System.out.println("getInquiryListByUserId(userId) 실행");
 				list = boardService.getInquiryListByUserId(userId); //자신이 문의한 질문 리스트
 			}
 			
