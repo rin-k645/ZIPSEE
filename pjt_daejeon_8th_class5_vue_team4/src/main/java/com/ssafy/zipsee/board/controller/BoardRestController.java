@@ -2,6 +2,8 @@ package com.ssafy.zipsee.board.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import com.ssafy.zipsee.board.model.BoardDto;
 import com.ssafy.zipsee.board.model.CommentDto;
 import com.ssafy.zipsee.board.model.service.BoardService;
 import com.ssafy.zipsee.board.model.service.CommentService;
+import com.ssafy.zipsee.user.model.UserDto;
+import com.ssafy.zipsee.user.model.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,13 +41,16 @@ public class BoardRestController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	
+	private UserService userService;
 	private BoardService boardService;
 	private CommentService commentService;
 
 	@Autowired
-	public BoardRestController(BoardService boardService) {
+	public BoardRestController(UserService userService, BoardService boardService, CommentService commentService) {
 		super();
+		this.userService = userService;
 		this.boardService = boardService;
+		this.commentService = commentService;
 	}
 
 	@GetMapping("/notice")
@@ -90,8 +97,16 @@ public class BoardRestController {
 	
 	@ApiOperation(value = "문의 글작성", notes = "새로운 문의 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/ask")
-	public ResponseEntity<String> writeAsk(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto board) throws Exception {
+	public ResponseEntity<String> writeAsk(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto board, HttpServletRequest request) throws Exception {
 		logger.info("writeAsk - 호출");
+		
+		String token = request.getHeader("refresh-token");
+		
+		UserDto userDto = userService.getUserByToken(token);
+		String userId = userDto.getUserId();
+		
+		board.setUserId(userId);
+		
 		if (boardService.registerBoard(board)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
