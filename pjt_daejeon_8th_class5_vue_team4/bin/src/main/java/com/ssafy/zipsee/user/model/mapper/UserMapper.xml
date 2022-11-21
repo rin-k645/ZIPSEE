@@ -76,10 +76,17 @@
 		where user_id = #{userId}
 	</update>
 	
-	<select id="getUserIdByToken" parameterType="string" resultType="string">
+	<select id="getUserByToken" parameterType="string" resultType="com.ssafy.zipsee.user.model.UserDto">
 		select
 			USER_ID as userId,
+			PASSWORD as password,
+			NICK_NAME as nickName,
+			NAME as name,
+			EMAIL as email,
+			PHONE as phone,
+			SEX as sex,
+			REGISTER_DATE as registerDate
 		from user
-		where token = #{token}
+		where token = #{token, jdbcType=VARCHAR}
 	</select>
 </mapper>

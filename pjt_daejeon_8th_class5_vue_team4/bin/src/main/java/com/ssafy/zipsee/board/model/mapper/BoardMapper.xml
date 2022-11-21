@@ -21,8 +21,9 @@
 			B.REGISTER_DATE as registerDate,
 			C.CONTENT as "comment.content",
 			C.REGISTER_DATE as "comment.registerDate"
-		FROM BOARD B, COMMENT C 
-		WHERE USER_ID != 'admin'
+		FROM BOARD B LEFT OUTER JOIN COMMENT C 
+			ON B.BOARD_ID = C.BOARD_ID 
+		WHERE B.USER_ID != 'admin'
 	</select>
 	
 	<select id="getBoard" parameterType="String" resultType="com.ssafy.zipsee.board.model.BoardDto">
@@ -58,9 +59,16 @@
 			B.TITLE as title,
 			B.CONTENT as content,
 			B.REGISTER_DATE as registerDate,
+			C.BOARD_ID as "comment.boardId",
 			C.CONTENT as "comment.content",
 			C.REGISTER_DATE as "comment.registerDate"
 		FROM BOARD B, COMMENT C 
-		WHERE USER_ID = #{userId}
+		WHERE B.BOARD_ID = C.BOARD_ID
+			AND B.USER_ID = #{userId}
 	</select>
+	
+	<delete id="deleteBoardByUserId" parameterType="String">
+		DELETE FROM BOARD
+		WHERE USER_ID = #{userId}
+	</delete>
 </mapper>
