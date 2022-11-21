@@ -7,14 +7,12 @@ function noticeList(success, fail) {
 }
 
 function writeNotice(notice, success, fail) {
-  api
-    .post(`/board/notice`, {
-      userId: "admin",
-      title: "공지사항",
-      content: notice,
-    })
-    .then(success)
-    .catch(fail);
+  api.post(`/board/notice`, notice).then(success).catch(fail);
+}
+
+function writeAsk(ask, success, fail) {
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token");
+  api.post(`/board/ask`, ask).then(success).catch(fail);
 }
 
 function getArticle(articleno, success, fail) {
@@ -34,4 +32,4 @@ function askList(success, fail) {
   api.get(`/mypage/ask`).then(success).catch(fail);
 }
 
-export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle, askList };
+export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle, askList, writeAsk };
