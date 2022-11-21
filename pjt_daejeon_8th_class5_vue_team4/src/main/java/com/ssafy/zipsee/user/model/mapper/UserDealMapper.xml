@@ -22,8 +22,13 @@
 			AND UH.USER_ID = #{userId}
 	</select>
 	
-	<delete id="deleteUserHouse">
+	<delete id="deleteUserDeal">
 		DELETE FROM USER_DEAL
 		WHERE USER_ID = #{userId} AND DEAL_ID = #{dealId}
+	</delete>
+	
+	<delete id="deleteUserDealByUserId">
+		DELETE FROM USER_DEAL
+		WHERE USER_ID = #{userId}
 	</delete>
 </mapper>

@@ -17,8 +17,8 @@
 			AND USER_ID = #{userId}
 	</select>
 	
-	<delete id="deleteUserInterest">
-		DELETE FROM USER_INTEREST
+	<delete id="deleteUserDong">
+		DELETE FROM USER_DONG
 		WHERE USER_ID = #{userId}
 	</delete>
 </mapper>

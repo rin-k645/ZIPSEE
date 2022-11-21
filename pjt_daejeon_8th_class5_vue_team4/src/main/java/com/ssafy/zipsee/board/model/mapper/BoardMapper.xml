@@ -66,4 +66,9 @@
 		WHERE B.BOARD_ID = C.BOARD_ID
 			AND B.USER_ID = #{userId}
 	</select>
+	
+	<delete id="deleteBoardByUserId" parameterType="String">
+		DELETE FROM BOARD
+		WHERE USER_ID = #{userId}
+	</delete>
 </mapper>

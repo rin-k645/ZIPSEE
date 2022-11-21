@@ -16,4 +16,5 @@ public interface BoardMapper {
 	public int modifyBoard(BoardDto board) throws SQLException;
 	public int deleteBoard(int boardId) throws SQLException;
 	public List<BoardDto> getInquiryListByUserId(String userId) throws SQLException;
+	public int deleteBoardByUserId(String userId) throws SQLException;
 }

@@ -65,7 +65,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteUser(String userId) throws Exception {
+		userInterestMapper.deleteUserInterest(userId); //관심사 삭제하기
+		userDongMapper.deleteUserDong(userId); //관심 지역 삭제하기
+		userDealMapper.deleteUserDealByUserId(userId); //관심 매물 삭제하기
+		//쓴 글 삭제하기 - 쓴 글에 연결된 답변 삭제하기
+		boardMapper.deleteBoardByUserId(userId);
+		
 		if(userMapper.deleteUser(userId) == 1) {
 			return true;
 		} else {

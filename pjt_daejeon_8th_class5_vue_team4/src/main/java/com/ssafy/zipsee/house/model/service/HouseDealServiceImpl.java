@@ -79,7 +79,7 @@ public class HouseDealServiceImpl implements HouseDealService {
 	@Override
 	@Transactional
 	public boolean unlikeHouse(String userId, int dealId) throws Exception {
-		if(userHouseMapper.deleteUserHouse(userId, dealId) == 1) {
+		if(userHouseMapper.deleteUserDeal(userId, dealId) == 1) {
 			houseDealMapper.decreaseLike(dealId);
 			return true;
 		} else {

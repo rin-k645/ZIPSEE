@@ -11,5 +11,6 @@ import com.ssafy.zipsee.user.model.UserDealDto;
 public interface UserDealMapper {
 	public int insertUserHouse(UserDealDto userHouseDto) throws SQLException;
 	public List<UserDealDto> getUserDealList(String userId) throws SQLException;
-	public int deleteUserHouse(String userId, int dealId) throws SQLException;
+	public int deleteUserDeal(String userId, int dealId) throws SQLException;
+	public int deleteUserDealByUserId(String userId) throws SQLException;
 }
