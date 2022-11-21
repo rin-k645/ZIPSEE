@@ -10,11 +10,19 @@
       <tbody v-for="(ask, index) in asks" :key="index" @click="clickContent(index)">
         <tr class="h-60">
           <td class="pl-30">{{ ask.title }}</td>
+          <td class="pl-20">
+            <div v-if="ask.comment == null">
+              미답변
+            </div>
+            <div v-else>
+              답변됨
+            </div>
+          </td>
           <td class="text-center">{{ ask.registerDate }}</td>
         </tr>
         <tr v-show="askNo == index" class="h-60">
           <td colspan="2">
-            <board-notice-detail :notice="ask"></board-notice-detail>
+            <board-ask-detail :ask="ask"></board-ask-detail>
           </td>
         </tr>
       </tbody>
@@ -23,13 +31,13 @@
 </template>
 
 <script>
-import BoardNoticeDetail from "@/views/board/BoardNoticeDetail";
+import BoardAskDetail from "@/views/board/BoardAskDetail";
 import { mapState, mapActions } from "vuex";
 const boardStore = "boardStore";
 
 export default {
   components: {
-    BoardNoticeDetail,
+    BoardAskDetail,
   },
   data() {
     return {

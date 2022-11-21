@@ -17,6 +17,7 @@ import BoardQuestion from "@/views/board/BoardQuestion";
 import BoardAsk from "@/views/board/BoardAsk";
 import BoardNotice from "@/views/board/BoardNotice";
 import BoardNoticeDetail from "@/views/board/BoardNoticeDetail";
+import BoardAskDetail from "@/views/board/BoardAskDetail";
 import BoardNoticeWrite from "@/views/board/BoardNoticeWrite";
 import store from "@/store";
 
@@ -133,6 +134,11 @@ const routes = [
         path: "notice/:noticeno",
         name: "boardnoticedetail",
         component: BoardNoticeDetail,
+      },
+      {
+        path: "ask/:askno",
+        name: "boardAskDetail",
+        component: BoardAskDetail,
       },
       {
         path: "notice/write",

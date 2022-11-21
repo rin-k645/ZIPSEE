@@ -29,7 +29,7 @@ export default {
         userId: "admin",
         title: null,
         content: "<p>공지할 내용을 적어주세요.</p>",
-      },
+    },
   }),
   methods: {
     ...mapActions(boardStore, ["writeNoticeAdmin"]),

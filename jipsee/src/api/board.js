@@ -32,4 +32,8 @@ function askList(success, fail) {
   api.get(`/mypage/ask`).then(success).catch(fail);
 }
 
-export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle, askList, writeAsk };
+function writeComment(comment, success, fail) {
+  api.post(`/board/comment`, comment).then(success).catch(fail);
+}
+
+export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle, askList, writeAsk, writeComment };

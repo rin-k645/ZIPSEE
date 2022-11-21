@@ -1,4 +1,4 @@
-import { writeNotice, noticeList, askList, writeAsk } from "@/api/board";
+import { writeNotice, noticeList, askList, writeAsk, writeComment } from "@/api/board";
 import router from "@/router";
 
 const boardStore = {
@@ -8,6 +8,7 @@ const boardStore = {
     notice: [],
     asks: [],
     ask: [],
+    comment: [],
   },
   getters: {},
   mutations: {
@@ -66,6 +67,21 @@ const boardStore = {
         ({ data }) => {
           console.log(data);
           commit("SET_ASK_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    writeComment(context, comment) {
+      writeComment(
+        comment,
+        ({ data }) => {
+          let msg = "등록 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "등록이 완료되었습니다.";
+          }
+          alert(msg);
         },
         (error) => {
           console.log(error);
