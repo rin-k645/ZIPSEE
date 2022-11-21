@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.zipsee.board.model.mapper.BoardMapper;
+import com.ssafy.zipsee.house.model.HouseDealDto;
+import com.ssafy.zipsee.house.model.mapper.HouseDealMapper;
 import com.ssafy.zipsee.user.model.UserDealDto;
 import com.ssafy.zipsee.user.model.UserDongDto;
 import com.ssafy.zipsee.user.model.UserDto;
@@ -31,15 +33,18 @@ public class UserServiceImpl implements UserService {
 	private UserDealMapper userDealMapper;
 	@Autowired
 	private BoardMapper boardMapper;
+	@Autowired
+	private HouseDealMapper houseDealMapper;
 
 	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper, UserDongMapper userDongMapper,
-			UserDealMapper userHouseMapper, BoardMapper boardMapper) {
+			UserDealMapper userDealMapper, BoardMapper boardMapper, HouseDealMapper houseDealMapper) {
 		super();
 		this.userMapper = userMapper;
 		this.userInterestMapper = userInterestMapper;
 		this.userDongMapper = userDongMapper;
-		this.userDealMapper = userHouseMapper;
+		this.userDealMapper = userDealMapper;
 		this.boardMapper = boardMapper;
+		this.houseDealMapper = houseDealMapper;
 	}
 
 	@Override
@@ -85,7 +90,15 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto = userMapper.getUser(userId);
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
-		userDto.setLikeList(userDealMapper.getUserDealList(userId));
+		
+		List<UserDealDto> likeList = userDealMapper.getUserDealList(userId);
+		for(UserDealDto userDeal : likeList) {
+			HouseDealDto houseDeal = houseDealMapper.getHouseDeal(userDeal.getDealId());
+			System.out.println(houseDeal);
+			userDeal.setHouseDeal(houseDeal);
+		}
+		userDto.setLikeList(likeList);
+		
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;
@@ -149,7 +162,15 @@ public class UserServiceImpl implements UserService {
 		String userId = userDto.getUserId();
 		userDto.setInterestList(userInterestMapper.getUserInterestList(userId));
 		userDto.setDongList(userDongMapper.getUserDongList(userId));
-		userDto.setLikeList(userDealMapper.getUserDealList(userId));
+
+		List<UserDealDto> likeList = userDealMapper.getUserDealList(userId);
+		for(UserDealDto userDeal : likeList) {
+			HouseDealDto houseDeal = houseDealMapper.getHouseDeal(userDeal.getDealId());
+			System.out.println(houseDeal);
+			userDeal.setHouseDeal(houseDeal);
+		}
+		userDto.setLikeList(likeList);
+		
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
 		
 		return userDto;
