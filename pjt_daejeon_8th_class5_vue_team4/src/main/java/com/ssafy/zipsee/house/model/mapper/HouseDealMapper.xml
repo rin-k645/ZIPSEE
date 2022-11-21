@@ -139,15 +139,15 @@
 		limit 10
 	</select>
 	
-	<update id="increaseLike" parameterType="String">
+	<update id="increaseLike" parameterType="Integer">
 		UPDATE HOUSEDEAL
-		SET LIKE = LIKE + 1
+		SET HOUSEDEAL.LIKE = HOUSEDEAL.LIKE + 1
 		WHERE DEAL_ID = #{dealId}
 	</update>
 	
-	<update id="decreaseLike" parameterType="String">
+	<update id="decreaseLike" parameterType="Integer">
 		UPDATE HOUSEDEAL
-		SET LIKE = LIKE - 1
+		SET HOUSEDEAL.LIKE = HOUSEDEAL.LIKE - 1
 		WHERE DEAL_ID = #{dealId}
 	</update>
 </mapper>

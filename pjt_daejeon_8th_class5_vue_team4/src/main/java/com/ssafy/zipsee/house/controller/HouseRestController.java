@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
+@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
 @RequestMapping("/deal")
 @Api("매물 정보 컨트롤러  API")
@@ -88,15 +89,21 @@ public class HouseRestController {
 	
 	@ApiOperation(value = "매물 찜하기", notes = "매물 id에 해당하는 매물을 찜한다", response = List.class)
 	@PostMapping("/like")
-	public ResponseEntity<?> likeHouse(@RequestBody @ApiParam(value = "찜하는 매물과 유저 정보", required = true) UserDealDto userHouseDto) throws Exception {
-		if (houseDealService.likeHouse(userHouseDto)) {
+	public ResponseEntity<?> likeHouse(@RequestBody @ApiParam(value = "찜하는 매물과 유저 정보", required = true) UserDealDto userDealDto) throws Exception {
+		System.out.println(userDealDto);
+
+		int dealId = userDealDto.getDealId();
+		
+		System.out.println(dealId);
+		
+		if (houseDealService.likeHouse(userDealDto)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "매물 찜하기 해제", notes = "매물 id에 해당하는 매물을 찜하기를 해제한다", response = List.class)
-	@PutMapping("/unlike/{dealid}")
+	@DeleteMapping("/unlike/{dealid}")
 	public ResponseEntity<?> unlikeHouse(@PathVariable("dealid") int dealId, HttpServletRequest request) throws Exception {
 		String token = request.getHeader("refresh-token");
 		UserDto userDto = userService.getUserByToken(token);
