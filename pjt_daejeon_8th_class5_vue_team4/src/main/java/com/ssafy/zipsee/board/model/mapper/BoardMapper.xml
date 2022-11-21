@@ -47,7 +47,7 @@
 		SET(BOARD_ID = #{boardId}, USER_ID = #{userId}, TITLE = #{title}, CONTENT = #{content}, REGISTER_DATE = #{registerDate})
 	</update>
 	
-	<delete id="deleteBoard" parameterType="String">
+	<delete id="deleteBoard" parameterType="Integer">
 		DELETE FROM BOARD
 		WHERE BOARD_ID = #{boardId}
 	</delete>

@@ -23,8 +23,8 @@ function modifyArticle(article, success, fail) {
   api.put(`/board`, JSON.stringify(article)).then(success).catch(fail);
 }
 
-function deleteArticle(articleno, success, fail) {
-  api.delete(`/board/${articleno}`).then(success).catch(fail);
+function deleteNotice(boardid, success, fail) {
+  api.delete(`/board/notice/${boardid}`).then(success).catch(fail);
 }
 
 function askList(success, fail) {
@@ -36,4 +36,13 @@ function writeComment(comment, success, fail) {
   api.post(`/board/comment`, comment).then(success).catch(fail);
 }
 
-export { noticeList, writeNotice, getArticle, modifyArticle, deleteArticle, askList, writeAsk, writeComment };
+export {
+  noticeList,
+  writeNotice,
+  getArticle,
+  modifyArticle,
+  deleteNotice,
+  askList,
+  writeAsk,
+  writeComment,
+};
