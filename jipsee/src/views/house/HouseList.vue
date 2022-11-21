@@ -1,50 +1,42 @@
 <template>
-  <div class="overflow-hidden">
-    <div
-      class="w-full h-full grid grid-cols-[auto_396px] grid-rows-[56px_auto] gap-y-17">
+  <div class="w-full h-full">
+    <div class="w-full h-full grid grid-cols-[auto_396px] grid-rows-[56px_auto] gap-y-17">
       <div class="flex items-end justify-between">
         <div>
           <select
             v-model="sidoCode"
             @change="gugunList"
-            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 ml-17 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400">
-            <option
-              v-for="(sido, index) in sidos"
-              :key="index"
-              :value="sido.value">
+            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 ml-17 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
+          >
+            <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">
               {{ sido.text }}
             </option>
           </select>
           <select
             v-model="gugunCode"
             @change="dongList"
-            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400">
-            <option
-              v-for="(gugun, index) in guguns"
-              :key="index"
-              :value="gugun.value">
+            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
+          >
+            <option v-for="(gugun, index) in guguns" :key="index" :value="gugun.value">
               {{ gugun.text | gugunFormat }}
             </option>
           </select>
           <select
             v-model="dongCode"
-            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400">
-            <option
-              v-for="(dong, index) in dongs"
-              :key="index"
-              :value="dong.value">
+            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
+          >
+            <option v-for="(dong, index) in dongs" :key="index" :value="dong.value">
               {{ dong.text | dongFormat }}
             </option>
           </select>
-          <button
-            class="bg-yellow-400 border-yellow-400 w-150 h-46 rounded-5 hover:brightness-90"
-            @click="searchHouse">
+          <button class="bg-yellow-400 border-yellow-400 w-150 h-46 rounded-5 hover:brightness-90" @click="searchHouse">
             검색하기
           </button>
         </div>
         <button
           class="text-yellow-400 bg-white border-yellow-400 border-solid w-120 h-46 rounded-5 border-1 hover:brightness-90"
-          @click="ChangeViewModal">
+          @click="ChangeViewModal"
+        >
           필터
         </button>
       </div>
@@ -54,20 +46,20 @@
 
       <div
         v-if="houses && houses.length != 0"
-        class="flex flex-col overflow-scroll border-t-2 border-gray-100 scrollbar-thin scrollbar-thumb-yellow-400">
+        class="flex flex-col overflow-scroll border-t-2 border-gray-100 scrollbar-thin scrollbar-thumb-yellow-400"
+      >
         <house-list-item
           v-for="(house, index) in houses"
           :key="index"
           :houseItem="house"
           @click.native="viewHouseLocation(house)"
-          class="border-gray-200 cursor-pointer w-396 h-200 border-b-1">
+          class="border-gray-200 cursor-pointer w-396 h-200 border-b-1"
+        >
         </house-list-item>
       </div>
       <div v-else class="flex flex-col items-center justify-center"></div>
     </div>
-    <house-filter-modal
-      v-if="!viewModal"
-      class="absolute z-10 right-[420px] top-[150px]"></house-filter-modal>
+    <house-filter-modal v-if="!viewModal" class="absolute z-10 right-[420px] top-[150px]"></house-filter-modal>
   </div>
 </template>
 
@@ -97,19 +89,14 @@ export default {
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
     this.CLEAR_DONG_LIST();
-    //this.CLEAR_HOUSES_LIST();
+    this.CLEAR_HOUSES_LIST();
     this.getSidoList();
   },
   computed: {
     ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "house"]),
   },
   methods: {
-    ...mapActions(houseStore, [
-      "getSidoList",
-      "getGugunList",
-      "getDongList",
-      "getHouseList",
-    ]),
+    ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList", "getHouseList"]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
@@ -126,6 +113,7 @@ export default {
       if (this.gugunCode) this.getDongList(this.gugunCode.slice(0, 4));
     },
     searchHouse() {
+      this.CLEAR_HOUSES_LIST();
       if (this.dongCode) this.getHouseList(this.dongCode);
     },
     ChangeViewModal() {

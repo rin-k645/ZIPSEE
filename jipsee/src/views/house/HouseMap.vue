@@ -1,33 +1,31 @@
 <template>
-  <div>
-    <div id="map" class="w-full h-full">
-      <ul id="category">
-        <li id="BK9" data-order="0">
-          <span class="category_bg bank"></span>
-          은행
-        </li>
-        <li id="MT1" data-order="1">
-          <span class="category_bg mart"></span>
-          마트
-        </li>
-        <li id="PM9" data-order="2">
-          <span class="category_bg pharmacy"></span>
-          약국
-        </li>
-        <li id="OL7" data-order="3">
-          <span class="category_bg oil"></span>
-          주유소
-        </li>
-        <li id="CE7" data-order="4">
-          <span class="category_bg cafe"></span>
-          카페
-        </li>
-        <li id="CS2" data-order="5">
-          <span class="category_bg store"></span>
-          편의점
-        </li>
-      </ul>
-    </div>
+  <div id="map" class="w-full h-full">
+    <ul id="category">
+      <li id="BK9" data-order="0">
+        <span class="category_bg bank"></span>
+        은행
+      </li>
+      <li id="MT1" data-order="1">
+        <span class="category_bg mart"></span>
+        마트
+      </li>
+      <li id="PM9" data-order="2">
+        <span class="category_bg pharmacy"></span>
+        약국
+      </li>
+      <li id="OL7" data-order="3">
+        <span class="category_bg oil"></span>
+        주유소
+      </li>
+      <li id="CE7" data-order="4">
+        <span class="category_bg cafe"></span>
+        카페
+      </li>
+      <li id="CS2" data-order="5">
+        <span class="category_bg store"></span>
+        편의점
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -60,9 +58,7 @@ export default {
 
   mounted() {
     /* global kakao */
-    window.kakao && window.kakao.maps
-      ? this.initMap()
-      : this.addKakaoMapScript();
+    window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
   },
   methods: {
     ...mapActions(houseStore, ["getHouseList"]),
@@ -166,16 +162,11 @@ export default {
       function displayPlaces(places) {
         // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
         // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
-        var order = document
-          .getElementById(currCategory)
-          .getAttribute("data-order");
+        var order = document.getElementById(currCategory).getAttribute("data-order");
 
         for (var i = 0; i < places.length; i++) {
           // 마커를 생성하고 지도에 표시합니다
-          var marker = addMarker(
-            new kakao.maps.LatLng(places[i].y, places[i].x),
-            order,
-          );
+          var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
 
           // 마커와 검색결과 항목을 클릭 했을 때
           // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
@@ -189,19 +180,14 @@ export default {
 
       // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
       function addMarker(position, order) {
-        var imageSrc =
-            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
           imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
           imgOptions = {
             spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
             spriteOrigin: new kakao.maps.Point(46, order * 36), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
             offset: new kakao.maps.Point(11, 28), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
           },
-          markerImage = new kakao.maps.MarkerImage(
-            imageSrc,
-            imageSize,
-            imgOptions,
-          ),
+          markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
           marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage,
@@ -246,20 +232,10 @@ export default {
             place.address_name +
             ")</span>";
         } else {
-          content +=
-            '    <span title="' +
-            place.address_name +
-            '">' +
-            place.address_name +
-            "</span>";
+          content += '    <span title="' + place.address_name + '">' + place.address_name + "</span>";
         }
 
-        content +=
-          '    <span class="tel">' +
-          place.phone +
-          "</span>" +
-          "</div>" +
-          '<div class="after"></div>';
+        content += '    <span class="tel">' + place.phone + "</span>" + "</div>" + '<div class="after"></div>';
 
         contentNode.innerHTML = content;
         placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
@@ -391,8 +367,7 @@ export default {
   height: 28px;
 }
 #category li .category_bg {
-  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png)
-    no-repeat;
+  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;
 }
 #category li .bank {
   background-position: -10px 0;
@@ -469,9 +444,8 @@ export default {
   padding: 10px;
   color: #fff;
   background: #d95050;
-  background: #d95050
-    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
-    no-repeat right 14px center;
+  background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px
+    center;
 }
 .placeinfo .tel {
   color: #0f7833;

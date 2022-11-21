@@ -1,18 +1,11 @@
 <template>
   <div
-    class="sticky top-0 z-10 flex items-center justify-between bg-white border-b-4 border-yellow-400 border-solid">
+    class="sticky top-0 z-10 flex items-center justify-between w-full bg-white border-b-4 border-yellow-400 border-solid"
+  >
     <div class="flex items-center ml-10">
-      <router-link to="/" class="h-80 w-80"
-        ><img src="@/assets/logo.png"
-      /></router-link>
-      <router-link
-        :to="{ name: 'houselist' }"
-        class="ml-32 font-semibold text-18"
-        >매물탐색</router-link
-      >
-      <router-link :to="{ name: 'board' }" class="ml-32 font-semibold text-18"
-        >공지사항</router-link
-      >
+      <router-link to="/" class="h-80 w-80"><img src="@/assets/logo.png" /></router-link>
+      <router-link :to="{ name: 'houselist' }" class="ml-32 font-semibold text-18">매물탐색</router-link>
+      <router-link :to="{ name: 'board' }" class="ml-32 font-semibold text-18">공지사항</router-link>
     </div>
     <div class="flex mr-16 w-700 h-35">
       <div class="relative w-500">
@@ -21,32 +14,19 @@
           name="search"
           id="search"
           v-model="keywordplace"
-          class="absolute right-0 bg-gray-200 border-none float w-500 h-35 rounded-5" />
+          class="absolute right-0 bg-gray-200 border-none float w-500 h-35 rounded-5"
+        />
         <div class="absolute float right-7 top-2 text-20" @click="setKeyword">
           <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
         </div>
       </div>
       <div v-if="!isLogin" class="flex items-center justify-center w-200">
-        <router-link
-          :to="{ name: 'userlogin' }"
-          class="ml-12 font-semibold text-18"
-          >로그인</router-link
-        >
-        <router-link
-          :to="{ name: 'usersignup' }"
-          class="ml-12 font-semibold text-18"
-          >회원가입</router-link
-        >
+        <router-link :to="{ name: 'userlogin' }" class="ml-12 font-semibold text-18">로그인</router-link>
+        <router-link :to="{ name: 'usersignup' }" class="ml-12 font-semibold text-18">회원가입</router-link>
       </div>
       <div v-else class="flex items-center justify-center w-200">
-        <div
-          class="ml-12 font-semibold cursor-pointer text-18"
-          @click="onClickLogout">
-          로그아웃
-        </div>
-        <router-link
-          :to="{ name: 'usermypage' }"
-          class="ml-12 font-semibold cursor-pointer text-18"
+        <div class="ml-12 font-semibold cursor-pointer text-18" @click="onClickLogout">로그아웃</div>
+        <router-link :to="{ name: 'usermypage' }" class="ml-12 font-semibold cursor-pointer text-18"
           >마이페이지</router-link
         >
       </div>
@@ -76,8 +56,7 @@ export default {
     // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     setKeyword() {
       this.SET_KEYWORD_SEARCH(this.keywordplace);
-      if (this.$route.path != "/house/list")
-        this.$router.push({ name: "houselist" });
+      if (this.$route.path != "/house/list") this.$router.push({ name: "houselist" });
     },
     onClickLogout() {
       // this.SET_IS_LOGIN(false);

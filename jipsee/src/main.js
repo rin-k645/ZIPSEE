@@ -12,10 +12,12 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
 import { faMagnifyingGlass, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 
 /* add icons to the library */
 library.add(faMagnifyingGlass);
 library.add(faHeart);
+library.add(faHeartRegular);
 
 /* add font awesome icon component */
 Vue.component("font-awesome-icon", FontAwesomeIcon);

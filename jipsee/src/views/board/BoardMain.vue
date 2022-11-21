@@ -52,7 +52,7 @@
           </button>
         </router-link>
       </div>
-      <router-view class="w-1200"></router-view>
+      <router-view class="w-1200 mb-100"></router-view>
     </div>
   </div>
 </template>

@@ -1,28 +1,31 @@
 <template>
   <div class="flex flex-col items-center">
     <div class="relative bg-yellow-200 w-1000 h-500">
-      <button
-        class="absolute h-40 font-bold bg-yellow-400 bottom-10 left-10 w-70">
+      <button class="absolute h-40 font-bold bg-yellow-400 bottom-10 left-10 w-70">
         <a href="http://localhost:8077/1/index.html">360</a>
       </button>
     </div>
     <div class="flex flex-row w-1000 h-500 mt-100">
       <div class="relative w-400 h-500">
-        <div class="absolute top-0 right-5">♥</div>
-        <div class="font-bold text-18">
+        <div v-if="like" class="absolute top-0 right-20" @click="onClickLike">
+          <font-awesome-icon icon="fa-solid fa-heart" class="text-red-500 cursor-pointer w-30 h-30" />
+        </div>
+        <div v-else class="absolute top-0 right-20" @click="onClickLike">
+          <font-awesome-icon icon="fa-regular fa-heart" class="text-red-500 cursor-pointer w-30 h-30" />
+        </div>
+        <div class="mb-10 font-bold text-24">
           {{ house.houseInfo.houseName }}
         </div>
-        <div class="pb-10 font-bold text-18">
+        <div class="pb-10 font-bold text-24">
           {{ house.dealType }}
           {{ house.deposit | changeMoneyUnit }} /
           {{ house.price | changeMoneyUnit }}
         </div>
-        <div class="text-16">
+        <div class="mb-10 text-18">
+          <!-- {{ house.houseInfo.dong.sidoName }} {{ house.houseInfo.dong.gugunName }} {{ house.houseInfo.dong.dongName }} -->
           {{ house.houseInfo.dongName }}
         </div>
-        <div>
-          {{ house.houseInfo.houseType }} {{ house.area }}m² {{ house.floor }}층
-        </div>
+        <div>{{ house.houseInfo.houseType }} {{ house.area }}m² {{ house.floor }}층</div>
       </div>
       <house-map class="w-600 h-500"></house-map>
     </div>
@@ -32,19 +35,68 @@
 
 <script>
 import HouseMap from "@/views/house/HouseMap";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 const houseStore = "houseStore";
+const userStore = "userStore";
+
 export default {
   components: {
     HouseMap,
   },
+  data() {
+    return {
+      like: false,
+    };
+  },
+
+  created() {
+    let isLikeHouse = false;
+    if (this.userInfo.likeList) {
+      this.userInfo.likeList.forEach((house) => {
+        if (house.dealId == this.house.dealId) {
+          isLikeHouse = true;
+          return false;
+        }
+      });
+    }
+    console.log(isLikeHouse);
+    if (isLikeHouse) this.like = true;
+    else this.like = false;
+  },
 
   computed: {
     ...mapState(houseStore, ["house"]),
+    ...mapState(userStore, ["isLogin", "userInfo"]),
+  },
+
+  methods: {
+    ...mapActions(userStore, ["userLikeHouse", "userUnLikeHouse", "getUserInfo"]),
+    onClickLike() {
+      if (!this.isLogin) alert("로그인이 필요합니다!");
+      else {
+        if (this.like) {
+          this.userUnLikeHouse(this.house.dealId);
+          this.like = false;
+        } else {
+          this.userLikeHouse({
+            userId: this.userInfo.userId,
+            dealId: this.house.dealId,
+          });
+          this.like = true;
+        }
+      }
+    },
   },
 
   filters: {
     changeMoneyUnit(money) {
+      if (money >= 100000000)
+        return (
+          Math.floor(money / 100000000) +
+          "억 " +
+          (Math.floor((money % 100000000) / 10000000) == 0 ? "" : Math.floor((money % 100000000) / 10000000) + "천")
+        );
+      else if (money >= 10000000) return money / 10000000 + "천";
       return money / 10000;
     },
   },

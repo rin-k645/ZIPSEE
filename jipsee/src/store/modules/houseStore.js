@@ -1,11 +1,4 @@
-import {
-  sidoList,
-  gugunList,
-  dongList,
-  houseList,
-  interestList,
-  recommendHouseList,
-} from "@/api/house.js";
+import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList } from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -82,7 +75,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getGugunList({ commit }, sido) {
@@ -93,7 +86,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getDongList({ commit }, gugun) {
@@ -104,7 +97,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getHouseList({ commit }, dongCode) {
@@ -117,7 +110,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getInterestList({ commit }) {
@@ -127,7 +120,7 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
     getRecommendHouseList({ commit }) {
@@ -138,9 +131,10 @@ const houseStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
+    //getPlaceId(context, pos) {},
   },
 };
 

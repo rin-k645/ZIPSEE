@@ -4,9 +4,7 @@
       <div class="relative flex items-center col-span-2 font-bold">
         {{ houseOneItem.houseInfo.houseName }}
         <div class="absolute top-7 right-5">
-          <font-awesome-icon
-            icon="fa-solid fa-heart"
-            class="text-red-500 w-30 h-30" />
+          <font-awesome-icon icon="fa-solid fa-heart" class="text-red-500 w-30 h-30" />
         </div>
       </div>
       <div class="grid justify-end">
@@ -43,10 +41,8 @@ export default {
     };
   },
   created() {
-    if (this.houseOneItem) this.House = this.houseItem;
+    if (this.houseItem) this.houseOneItem = this.houseItem;
     else this.houseOneItem = this.house;
-    console.log("houseItem", this.houseItem);
-    console.log("house", this.house);
   },
   computed: {
     ...mapState(houseStore, ["house"]),

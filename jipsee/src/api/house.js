@@ -30,4 +30,14 @@ function recommendHouseList(success, fail) {
   api.get(`/`).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList };
+function placeId(pos, success, fail) {
+  const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${pos.lat},${pos.lng}&key=AIzaSyBkGM0NNSyo1aUIFCrMYh3DmTdPfBbVD8A`;
+  api.get(url).then(success).catch(fail);
+}
+
+function reviewList(placeId, success, fail) {
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name%2Crating%2Cformatted_phone_number&key=AIzaSyBkGM0NNSyo1aUIFCrMYh3DmTdPfBbVD8A`;
+  api.get(url).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList, placeId, reviewList };

@@ -25,4 +25,14 @@ function signup(user, success, fail) {
   api.post(`/user`, user).then(success).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, signup };
+function likeHouse(deal, success, success2, fail) {
+  api.post(`/deal/like`, deal).then(success).then(success2).catch(fail);
+}
+
+function unLikeHouse(dealId, success, success2, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token");
+  api.delete(`/deal/unlike/${dealId}`, dealId).then(success).then(success2).catch(fail);
+}
+
+export { login, findById, tokenRegeneration, logout, signup, likeHouse, unLikeHouse };
