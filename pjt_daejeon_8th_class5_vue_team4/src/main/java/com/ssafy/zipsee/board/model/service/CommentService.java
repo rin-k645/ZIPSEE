@@ -8,4 +8,5 @@ public interface CommentService {
 	public boolean registerComment(CommentDto comment) throws SQLException;
 	public boolean modifyComment(CommentDto comment) throws SQLException;
 	public boolean deleteComment(int commentId) throws SQLException;
+	public int deleteCommentByBoardId(int boardId) throws SQLException;
 }

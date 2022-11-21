@@ -94,6 +94,19 @@ public class MyPageController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "회원 삭제", notes = "회원 아이디에 해당하는 회원의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/delete/{userid}")
+	public ResponseEntity<?> userDelete2(@PathVariable("userid") @ApiParam(value = "회원의 아이디.", required = true) String userId) throws Exception {
+		logger.info("deleteArticle - 호출");
+		
+		UserDto userDto = userService.getUser(userId);
+		
+		if (userService.deleteUser(userDto.getUserId())) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 	@ApiOperation(value = "찜한 매물 목록 보기", notes = "회원이 찜한 매물 목록을 반환한다", response = UserDealDto.class)
 	@GetMapping("/likehouse")
 	public ResponseEntity<?> getLikeHouseList(HttpServletRequest request) throws Exception {

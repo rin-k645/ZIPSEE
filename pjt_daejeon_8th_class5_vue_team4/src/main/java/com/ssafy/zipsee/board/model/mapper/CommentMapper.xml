@@ -11,8 +11,13 @@
 		SET(COMMENT_ID = #{commentId}, BOARD_ID = #{boardId}, CONTENT = #{content}, REGISTER_DATE = #{registerDate})
 	</update>
 	
-	<delete id="deleteComment" parameterType="String">
+	<delete id="deleteComment" parameterType="Integer">
 		DELETE FROM COMMENT
 		WHERE COMMENT_ID = #{commentId}
+	</delete>
+	
+	<delete id="deleteCommentByBoardId" parameterType="Integer">
+		DELETE FROM COMMENT
+		WHERE BOARD_ID = #{boardId}
 	</delete>
 </mapper>

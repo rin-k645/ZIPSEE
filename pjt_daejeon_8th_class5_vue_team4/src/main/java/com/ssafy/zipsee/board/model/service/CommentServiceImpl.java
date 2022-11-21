@@ -40,4 +40,10 @@ public class CommentServiceImpl implements CommentService {
 		return false;
 	}
 
+	@Override
+	public int deleteCommentByBoardId(int boardId) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

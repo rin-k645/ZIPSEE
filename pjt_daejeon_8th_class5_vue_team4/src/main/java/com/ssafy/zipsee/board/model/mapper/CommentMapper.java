@@ -11,4 +11,5 @@ public interface CommentMapper {
 	public int registerComment(CommentDto comment) throws SQLException;
 	public int modifyComment(CommentDto comment) throws SQLException;
 	public int deleteComment(int commentId) throws SQLException;
+	public int deleteCommentByBoardId(int boardId) throws SQLException;
 }

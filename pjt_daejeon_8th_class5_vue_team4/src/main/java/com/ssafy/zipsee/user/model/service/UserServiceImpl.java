@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.zipsee.board.model.BoardDto;
 import com.ssafy.zipsee.board.model.mapper.BoardMapper;
+import com.ssafy.zipsee.board.model.mapper.CommentMapper;
 import com.ssafy.zipsee.house.model.HouseDealDto;
 import com.ssafy.zipsee.house.model.mapper.HouseDealMapper;
 import com.ssafy.zipsee.user.model.UserDealDto;
@@ -35,9 +37,12 @@ public class UserServiceImpl implements UserService {
 	private BoardMapper boardMapper;
 	@Autowired
 	private HouseDealMapper houseDealMapper;
+	@Autowired
+	private CommentMapper commentMapper;
 
 	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper, UserDongMapper userDongMapper,
-			UserDealMapper userDealMapper, BoardMapper boardMapper, HouseDealMapper houseDealMapper) {
+			UserDealMapper userDealMapper, BoardMapper boardMapper, HouseDealMapper houseDealMapper,
+			CommentMapper commentMapper) {
 		super();
 		this.userMapper = userMapper;
 		this.userInterestMapper = userInterestMapper;
@@ -45,6 +50,7 @@ public class UserServiceImpl implements UserService {
 		this.userDealMapper = userDealMapper;
 		this.boardMapper = boardMapper;
 		this.houseDealMapper = houseDealMapper;
+		this.commentMapper = commentMapper;
 	}
 
 	@Override
@@ -75,7 +81,12 @@ public class UserServiceImpl implements UserService {
 		userInterestMapper.deleteUserInterest(userId); //관심사 삭제하기
 		userDongMapper.deleteUserDong(userId); //관심 지역 삭제하기
 		userDealMapper.deleteUserDealByUserId(userId); //관심 매물 삭제하기
-		//쓴 글 삭제하기 - 쓴 글에 연결된 답변 삭제하기
+		
+		//쓴 글에 연결된 답변 삭제하기 -> 쓴 글 삭제하기
+		List<BoardDto> boardList = boardMapper.getInquiryListByUserId(userId);
+		for(BoardDto board : boardList) {
+			commentMapper.deleteCommentByBoardId(board.getBoardId());
+		}
 		boardMapper.deleteBoardByUserId(userId);
 		
 		if(userMapper.deleteUser(userId) == 1) {
