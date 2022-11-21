@@ -1,6 +1,15 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout, signup, likeHouse, unLikeHouse } from "@/api/user";
+import {
+  login,
+  findById,
+  tokenRegeneration,
+  logout,
+  signup,
+  modify,
+  likeHouse,
+  unLikeHouse,
+} from "@/api/user";
 
 const userStore = {
   namespaced: true,
@@ -40,7 +49,11 @@ const userStore = {
           if (data.message === "success") {
             let accessToken = data["access-token"];
             let refreshToken = data["refresh-token"];
-            console.log("login success token created!!!! >> ", accessToken, refreshToken);
+            console.log(
+              "login success token created!!!! >> ",
+              accessToken,
+              refreshToken,
+            );
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -54,7 +67,7 @@ const userStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
 
@@ -72,15 +85,21 @@ const userStore = {
           }
         },
         async (error) => {
-          console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+          console.log(
+            "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
+            error.response.status,
+          );
           commit("SET_IS_VALID_TOKEN", false);
           await dispatch("tokenRegeneration");
-        }
+        },
       );
     },
 
     async tokenRegeneration({ commit, state }) {
-      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+      console.log(
+        "토큰 재발급 >> 기존 토큰 정보 : {}",
+        sessionStorage.getItem("access-token"),
+      );
       await tokenRegeneration(
         JSON.stringify(state.userInfo),
         ({ data }) => {
@@ -114,10 +133,10 @@ const userStore = {
                 console.log(error);
                 commit("SET_IS_LOGIN", false);
                 commit("SET_USER_INFO", null);
-              }
+              },
             );
           }
-        }
+        },
       );
     },
 
@@ -135,7 +154,7 @@ const userStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
 
@@ -151,7 +170,23 @@ const userStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
+      );
+    },
+
+    userModify(context, user) {
+      modify(
+        user,
+        ({ data }) => {
+          let msg = "회원 수정 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "회원 수정이 완료되었습니다.";
+          }
+          alert(msg);
+        },
+        (error) => {
+          console.log(error);
+        },
       );
     },
 
@@ -175,7 +210,7 @@ const userStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
 
@@ -199,7 +234,7 @@ const userStore = {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     },
   },
