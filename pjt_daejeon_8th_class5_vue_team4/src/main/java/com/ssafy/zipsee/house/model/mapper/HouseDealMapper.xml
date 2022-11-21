@@ -56,6 +56,7 @@
 		d.deposit as deposit,
 		d.price as price,
 		i.house_name as "houseInfo.houseName",
+		i.dong_code as "houseInfo.dongCode",
 		i.dong_name as "houseInfo.dongName",
 		i.build_year as "houseInfo.buildYear",
 		i.jibun as "houseInfo.jibun", 

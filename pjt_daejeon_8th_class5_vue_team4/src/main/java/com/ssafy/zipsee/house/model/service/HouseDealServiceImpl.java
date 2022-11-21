@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.zipsee.house.model.DongDto;
 import com.ssafy.zipsee.house.model.HouseDealDto;
+import com.ssafy.zipsee.house.model.HouseInfoDto;
+import com.ssafy.zipsee.house.model.mapper.DongMapper;
 import com.ssafy.zipsee.house.model.mapper.HouseDealMapper;
 import com.ssafy.zipsee.user.model.UserDealDto;
 import com.ssafy.zipsee.user.model.mapper.UserDealMapper;
@@ -18,6 +21,8 @@ public class HouseDealServiceImpl implements HouseDealService {
 	private HouseDealMapper houseDealMapper;
 	@Autowired
 	private UserDealMapper userHouseMapper;
+	@Autowired
+	private DongMapper dongMapper;
 
 	public HouseDealServiceImpl(HouseDealMapper houseDealMapper, UserDealMapper userHouseMapper) {
 		super();
@@ -32,7 +37,12 @@ public class HouseDealServiceImpl implements HouseDealService {
 
 	@Override
 	public HouseDealDto getHouseDeal(int dealId) throws Exception {
-		return houseDealMapper.getHouseDeal(dealId);
+		HouseDealDto houseDealDto = houseDealMapper.getHouseDeal(dealId);
+		HouseInfoDto houInfoDto = houseDealDto.getHouseInfo();
+		
+		houInfoDto.setDong(dongMapper.getDong(houInfoDto.getDongCode()));
+		
+		return houseDealDto;
 	}
 
 	@Override
