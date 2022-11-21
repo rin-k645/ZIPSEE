@@ -3,8 +3,15 @@
     <div class="grid grid-rows-[47px_153px] grid-cols-[168px_192px]">
       <div class="relative flex items-center col-span-2 font-bold">
         {{ houseOneItem.houseInfo.houseName }}
-        <div class="absolute top-7 right-5">
-          <font-awesome-icon icon="fa-solid fa-heart" class="text-red-500 w-30 h-30" />
+        <div v-if="like" class="absolute top-7 right-5" @click="onClickLike">
+          <font-awesome-icon
+            icon="fa-solid fa-heart"
+            class="text-red-500 cursor-pointer w-30 h-30" />
+        </div>
+        <div v-else class="absolute top-7 right-5" @click="onClickLike">
+          <font-awesome-icon
+            icon="fa-regular fa-heart"
+            class="text-red-500 cursor-pointer w-30 h-30" />
         </div>
       </div>
       <div class="grid justify-end">
@@ -28,8 +35,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 const houseStore = "houseStore";
+const userStore = "userStore";
 export default {
   name: "HouseListItem",
   props: {
@@ -38,17 +46,51 @@ export default {
   data() {
     return {
       houseOneItem: null,
+      like: false,
     };
   },
   created() {
     if (this.houseItem) this.houseOneItem = this.houseItem;
     else this.houseOneItem = this.house;
+
+    let isLikeHouse = false;
+    if (this.userInfo.likeList) {
+      this.userInfo.likeList.forEach((house) => {
+        if (house.dealId == this.house.dealId) {
+          isLikeHouse = true;
+          return false;
+        }
+      });
+    }
+    console.log(isLikeHouse);
+    if (isLikeHouse) this.like = true;
+    else this.like = false;
   },
   computed: {
     ...mapState(houseStore, ["house"]),
+    ...mapState(userStore, ["isLogin", "userInfo"]),
   },
   methods: {
-    likeHouse() {},
+    ...mapActions(userStore, [
+      "userLikeHouse",
+      "userUnLikeHouse",
+      "getUserInfo",
+    ]),
+    onClickLike() {
+      if (!this.isLogin) alert("로그인이 필요합니다!");
+      else {
+        if (this.like) {
+          this.userUnLikeHouse(this.house.dealId);
+          this.like = false;
+        } else {
+          this.userLikeHouse({
+            userId: this.userInfo.userId,
+            dealId: this.house.dealId,
+          });
+          this.like = true;
+        }
+      }
+    },
   },
   filters: {
     changeMoneyUnit(money) {
