@@ -193,6 +193,7 @@ public class UserServiceImpl implements UserService {
 		userDto.setLikeList(likeList);
 		
 		userDto.setBoardList(boardMapper.getInquiryListByUserId(userId));
+		System.out.println("유저의 문의글: " + userDto.getBoardList());
 		
 		return userDto;
 	}

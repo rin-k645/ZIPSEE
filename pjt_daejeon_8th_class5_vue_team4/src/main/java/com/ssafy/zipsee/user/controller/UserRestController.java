@@ -61,6 +61,14 @@ public class UserRestController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "회원 정보 보기", notes = "유저 확인용 (임시)", response = String.class)
+	@GetMapping("/{userid}")
+	public ResponseEntity<?> viewUser(@PathVariable("userid") @ApiParam(value = "회원의 아이디.", required = true) String userId) throws Exception {
+		logger.info("registerUser - 호출");
+		
+		return new ResponseEntity<UserDto>(userService.getUser(userId), HttpStatus.OK);
+	}
+	
 	////////////////////////////////////////////////////////////////////////
 	// jwt 토큰 사용
 	
