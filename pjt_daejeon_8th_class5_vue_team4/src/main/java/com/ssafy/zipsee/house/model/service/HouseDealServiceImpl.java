@@ -12,6 +12,7 @@ import com.ssafy.zipsee.house.model.HouseDealDto;
 import com.ssafy.zipsee.house.model.HouseInfoDto;
 import com.ssafy.zipsee.house.model.mapper.DongMapper;
 import com.ssafy.zipsee.house.model.mapper.HouseDealMapper;
+import com.ssafy.zipsee.house.model.mapper.HouseInfoMapper;
 import com.ssafy.zipsee.user.model.UserDealDto;
 import com.ssafy.zipsee.user.model.mapper.UserDealMapper;
 
@@ -22,27 +23,34 @@ public class HouseDealServiceImpl implements HouseDealService {
 	@Autowired
 	private UserDealMapper userHouseMapper;
 	@Autowired
-	private DongMapper dongMapper;
+	private HouseInfoMapper houseInfoMapper;
 
-	public HouseDealServiceImpl(HouseDealMapper houseDealMapper, UserDealMapper userHouseMapper) {
+	public HouseDealServiceImpl(HouseDealMapper houseDealMapper, UserDealMapper userHouseMapper,
+			HouseInfoMapper houseInfoMapper) {
 		super();
 		this.houseDealMapper = houseDealMapper;
 		this.userHouseMapper = userHouseMapper;
+		this.houseInfoMapper = houseInfoMapper;
 	}
 
 	@Override
 	public List<HouseDealDto> getHouseDealList(String dongCode) throws Exception {
-		return houseDealMapper.getHouseDealList(dongCode);
+		List<HouseDealDto> dealList = houseDealMapper.getHouseDealList(dongCode);
+		for(HouseDealDto houseDeal : dealList) {
+			HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
+			houseDeal.setHouseInfo(houseInfo);
+		}
+		
+		return dealList;
 	}
 
 	@Override
 	public HouseDealDto getHouseDeal(int dealId) throws Exception {
-		HouseDealDto houseDealDto = houseDealMapper.getHouseDeal(dealId);
-		HouseInfoDto houInfoDto = houseDealDto.getHouseInfo();
+		HouseDealDto houseDeal = houseDealMapper.getHouseDeal(dealId);
+		HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
+		houseDeal.setHouseInfo(houseInfo);
 		
-		houInfoDto.setDong(dongMapper.getDong(houInfoDto.getDongCode()));
-		
-		return houseDealDto;
+		return houseDeal;
 	}
 
 	@Override
@@ -85,6 +93,11 @@ public class HouseDealServiceImpl implements HouseDealService {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public HouseInfoDto getHouseInfo(int houseId) throws Exception {
+		return houseInfoMapper.getHouseInfo(houseId);
 	}
 
 }

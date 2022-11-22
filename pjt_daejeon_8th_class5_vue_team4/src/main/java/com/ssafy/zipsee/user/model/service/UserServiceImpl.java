@@ -13,7 +13,9 @@ import com.ssafy.zipsee.board.model.BoardDto;
 import com.ssafy.zipsee.board.model.mapper.BoardMapper;
 import com.ssafy.zipsee.board.model.mapper.CommentMapper;
 import com.ssafy.zipsee.house.model.HouseDealDto;
+import com.ssafy.zipsee.house.model.HouseInfoDto;
 import com.ssafy.zipsee.house.model.mapper.HouseDealMapper;
+import com.ssafy.zipsee.house.model.mapper.HouseInfoMapper;
 import com.ssafy.zipsee.user.model.UserDealDto;
 import com.ssafy.zipsee.user.model.UserDongDto;
 import com.ssafy.zipsee.user.model.UserDto;
@@ -39,6 +41,8 @@ public class UserServiceImpl implements UserService {
 	private HouseDealMapper houseDealMapper;
 	@Autowired
 	private CommentMapper commentMapper;
+	@Autowired
+	private HouseInfoMapper houseInfoMapper;
 
 	public UserServiceImpl(UserMapper userMapper, UserInterestMapper userInterestMapper, UserDongMapper userDongMapper,
 			UserDealMapper userDealMapper, BoardMapper boardMapper, HouseDealMapper houseDealMapper,
@@ -105,7 +109,10 @@ public class UserServiceImpl implements UserService {
 		List<UserDealDto> likeList = userDealMapper.getUserDealList(userId);
 		for(UserDealDto userDeal : likeList) {
 			HouseDealDto houseDeal = houseDealMapper.getHouseDeal(userDeal.getDealId());
+			HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
 			System.out.println(houseDeal);
+			houseDeal.setHouseInfo(houseInfo);
+			System.out.println(houseInfo);
 			userDeal.setHouseDeal(houseDeal);
 		}
 		userDto.setLikeList(likeList);
@@ -177,7 +184,10 @@ public class UserServiceImpl implements UserService {
 		List<UserDealDto> likeList = userDealMapper.getUserDealList(userId);
 		for(UserDealDto userDeal : likeList) {
 			HouseDealDto houseDeal = houseDealMapper.getHouseDeal(userDeal.getDealId());
+			HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
 			System.out.println(houseDeal);
+			houseDeal.setHouseInfo(houseInfo);
+			System.out.println(houseInfo);
 			userDeal.setHouseDeal(houseDeal);
 		}
 		userDto.setLikeList(likeList);

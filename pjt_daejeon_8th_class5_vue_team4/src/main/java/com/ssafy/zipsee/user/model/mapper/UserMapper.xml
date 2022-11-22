@@ -45,7 +45,7 @@
 	<update id="modifyUser" parameterType="com.ssafy.zipsee.user.model.UserDto">
 		update user
 		set user_id = #{userId}, password = #{password}, name = #{name}, nick_name = #{nickName}, email = #{email}, phone = #{phone},
-			sex = #{sex}, register_date = #{registerDate}
+			sex = #{sex}
 		where user_id = #{userId}
 	</update>
 	

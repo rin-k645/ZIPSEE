@@ -63,6 +63,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardDto> getInquiryListByUserId(String userId) throws Exception {
+		System.out.println("BoardServiceImpl : getInquiryListByUserId 실행");
 		return boardMapper.getInquiryListByUserId(userId);
 	}
 
