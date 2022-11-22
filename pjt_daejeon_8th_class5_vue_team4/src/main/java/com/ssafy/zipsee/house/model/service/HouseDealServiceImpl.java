@@ -57,36 +57,41 @@ public class HouseDealServiceImpl implements HouseDealService {
 	@Override
 	public List<HouseDealDto> getHouseDealListByFilter(Map<String, Object> map) throws Exception {
 		List<HouseDealDto> result = new ArrayList<>();
+		List<HouseDealDto> result2 = new ArrayList<>();
+		
+		System.out.println("map으로 들어온거: " + map);
 		
 		//맵
 		String dongCode = (String) map.get("dongCode");
+		List<String> houseTypeList = (List<String>) map.get("houseTypeList"); //주택유형 <String, List<String>
+		List<String> dealTypeList = (List<String>) map.get("dealTypeList"); //거래유형 <String, List<String>
+		Long minDealMoney =  Long.valueOf(String.valueOf(map.get("minDealMoney")));
+		Long maxDealMoney =  Long.valueOf(String.valueOf(map.get("maxDealMoney")));
+		int minArea = (int) map.get("minArea");
+		int maxArea = (int) map.get("maxArea");
 		
-		//주택유형 <String, List<String>
-		List<String> houseTypeList = (List<String>) map.get("houseTypeList");
-		
-		if(houseTypeList != null) {
+		//
+		List<HouseDealDto> dealList = houseDealMapper.getHouseDealListByFilter(dongCode, minDealMoney, maxDealMoney, minArea, maxArea);
+		for(HouseDealDto houseDeal : dealList) {
 			for(String houseType : houseTypeList) {
-				List<HouseDealDto> houseDealList = houseDealMapper.getHouseDealListByHouseType(dongCode, houseType);
-				result.addAll(houseDealList);
-			}
+				if(houseDeal.getHouseInfo().getHouseType().equals(houseType)) {
+					result.add(houseDeal);
+				}
+			}	
 		}
 		
-		//거래유형 <String, List<String>
-		List<String> dealTypeList = (List<String>) map.get("dealTypeList");
-		
-		if(dealTypeList != null) {
+		for(HouseDealDto r: result) {
 			for(String dealType : dealTypeList) {
-				List<HouseDealDto> houseDealList = houseDealMapper.getHouseDealListByDealType(dongCode, dealType);
-				result.addAll(houseDealList);
+				if(r.getDealType().equals(dealType)) {
+					result2.add(r);
+				}
 			}
 		}
 		
-		System.out.println(result);
-		
-		//최소가격, 최대가격
+		System.out.println("필터 검색 결과: " + result2);
 		
 		
-		return result;
+		return result2;
 	}
 
 	@Override

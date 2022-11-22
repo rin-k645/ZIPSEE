@@ -12,8 +12,6 @@ import com.ssafy.zipsee.house.model.HouseDealDto;
 public interface HouseDealMapper {
 	List<HouseDealDto> getHouseDealList(String dongCode) throws SQLException;
 	HouseDealDto getHouseDeal(int dealId) throws SQLException;
-	List<HouseDealDto> getHouseDealListByHouseType(String dongCode, String houseType) throws SQLException; //필터 검색-집 유형
-	List<HouseDealDto> getHouseDealListByDealType(String dongCode, String dealType) throws SQLException; //필터 검색-거래 유형
 	
 	List<HouseDealDto> getApartRecommandList(String dongCode) throws SQLException; //해당 동코드의 아파트 10개
 	List<HouseDealDto> getOneRoomRecommandList(String dongCode) throws SQLException; //해당 동코드의 원룸 10개
@@ -21,4 +19,6 @@ public interface HouseDealMapper {
 	
 	int increaseLike(int dealId) throws SQLException;
 	int decreaseLike(int dealId) throws SQLException;
+	
+	List<HouseDealDto> getHouseDealListByFilter(String dongCode, Long minDealMoney, Long maxDealMoney, int minArea, int maxArea); //필터 검색-일단 집 유형, 매매유형 제외하고 
 }

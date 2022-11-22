@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.zipsee.board.model.BoardDto;
 import com.ssafy.zipsee.house.model.HouseDealDto;
 import com.ssafy.zipsee.house.model.service.HouseDealService;
 import com.ssafy.zipsee.user.model.UserDto;
@@ -65,9 +63,9 @@ public class HouseRestController {
 		}
 	}
 	
-	@ApiOperation(value = "매물 검색", notes = "필터 조건(동코드, 집유형, 거래타입, 최소가격, 최대가격)에 맞는 매물을 검색해 반환한다", response = List.class)
-	@GetMapping("/filter")
-	public ResponseEntity<?> listByFilter(@RequestParam Map<String, Object> map) {
+	@ApiOperation(value = "매물 검색", notes = "필터 조건(동코드, 집유형, 거래타입, 최소가격, 최대가격, 최소면적, 최대면적)에 맞는 매물을 검색해 반환한다", response = List.class)
+	@PostMapping("/filter")
+	public ResponseEntity<?> listByFilter(@RequestBody Map<String, Object> map) {
 		try {
 			List<HouseDealDto> list = houseDealService.getHouseDealListByFilter(map);
 			if (list != null && !list.isEmpty()) {
@@ -80,6 +78,7 @@ public class HouseRestController {
 			return exceptionHandling(e);
 		}
 	}
+	
 	
 	@ApiOperation(value = "매물 보기", notes = "매물 id에 해당하는 매물을 반환한다", response = List.class)
 	@GetMapping("/{dealid}")
