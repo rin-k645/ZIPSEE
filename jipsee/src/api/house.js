@@ -17,8 +17,8 @@ function dongList(gugun, success, fail) {
   api.get(url).then(success).catch(fail);
 }
 
-function houseList(params, success, fail) {
-  api.get(`/deal`, { params: params }).then(success).catch(fail);
+function houseList(filterList, success, fail) {
+  api.post(`/deal/filter`, filterList).then(success).catch(fail);
 }
 
 function interestList(success, fail) {
@@ -30,8 +30,4 @@ function recommendHouseList(success, fail) {
   api.get(`/`).then(success).catch(fail);
 }
 
-function houseListByFilter(map, success, fail) {
-  api.get(`/deal/filter`, map).then(success).catch(fail);
-}
-
-export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList, houseListByFilter };
+export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList };

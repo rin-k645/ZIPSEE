@@ -6,7 +6,7 @@
           <select
             v-model="sidoCode"
             @change="gugunList"
-            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 ml-17 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
+            class="border-yellow-400 border-solid cursor-pointer w-180 h-46 ml-17 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
           >
             <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">
               {{ sido.text }}
@@ -15,7 +15,7 @@
           <select
             v-model="gugunCode"
             @change="dongList"
-            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
+            class="border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
           >
             <option v-for="(gugun, index) in guguns" :key="index" :value="gugun.value">
               {{ gugun.text | gugunFormat }}
@@ -23,7 +23,7 @@
           </select>
           <select
             v-model="dongCode"
-            class="text-yellow-400 border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
+            class="border-yellow-400 border-solid cursor-pointer w-180 h-46 mr-36 rounded-5 hover:brightness-90 focus:ring-white focus:border-yellow-400"
           >
             <option v-for="(dong, index) in dongs" :key="index" :value="dong.value">
               {{ dong.text | dongFormat }}
@@ -34,7 +34,7 @@
           </button>
         </div>
         <button
-          class="text-yellow-400 bg-white border-yellow-400 border-solid w-120 h-46 rounded-5 border-1 hover:brightness-90"
+          class="bg-white border-yellow-400 border-solid w-120 h-46 rounded-5 border-1 hover:brightness-90"
           @click="ChangeViewModal"
         >
           필터
@@ -59,7 +59,11 @@
       </div>
       <div v-else class="flex flex-col items-center justify-center"></div>
     </div>
-    <house-filter-modal v-if="!viewModal" class="absolute z-10 right-[420px] top-[150px]"></house-filter-modal>
+    <house-filter-modal
+      v-if="!viewModal"
+      :dongCode="dongCode"
+      class="absolute z-10 right-[420px] top-[150px]"
+    ></house-filter-modal>
   </div>
 </template>
 
@@ -78,13 +82,6 @@ export default {
       gugunCode: null,
       dongCode: null,
       viewModal: false,
-      map: {
-        dongCode: null,
-        //주택유형 List<String> : houseTypeList
-        houseTypeList: [],
-        //거래유형 List<String> : dealTypeList
-        dealTypeList: [],
-      },
     };
   },
   components: {
@@ -98,20 +95,21 @@ export default {
     this.CLEAR_DONG_LIST();
     this.CLEAR_HOUSES_LIST();
     this.getSidoList();
-    this.CLEAR_FILTERED_HOUSES_LIST();
+    this.CLEAR_FILTER_LIST();
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "house", "filteredHouses"]),
+    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "house", "filterList"]),
   },
   methods: {
-    ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList", "getHouseList", "getHouseListByFilter"]),
+    ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList", "getHouseList"]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
       "CLEAR_HOUSES_LIST",
+      "CLEAR_FILTER_LIST",
       "SET_DETAIL_HOUSE",
-      "CLEAR_FILTERED_HOUSES_LIST",
+      "SET_FILTER_DONGCODE",
     ]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
@@ -123,10 +121,10 @@ export default {
     },
     searchHouse() {
       this.CLEAR_HOUSES_LIST();
-      if (this.dongCode) this.getHouseList(this.dongCode);
-
-      // this.CLEAR_FILTERED_HOUSES_LIST();
-      // if(this.map) this.getHouseListByFilter(this.map);
+      if (this.dongCode) {
+        this.SET_FILTER_DONGCODE(this.dongCode);
+        this.getHouseList(this.filterList);
+      }
     },
     ChangeViewModal() {
       this.viewModal = !this.viewModal;

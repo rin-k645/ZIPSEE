@@ -1,4 +1,4 @@
-import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList, houseListByFilter } from "@/api/house.js";
+import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList } from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -14,7 +14,7 @@ const houseStore = {
     dealType: null,
     interests: [],
     recommendHouses: [],
-    filteredHouses: [],
+    filterList: [],
     keyword: "",
   },
   getters: {},
@@ -49,8 +49,8 @@ const houseStore = {
     SET_KEYWORD_SEARCH(state, keyword) {
       state.keyword = keyword;
     },
-    SET_FILTERED_HOUSE_LIST(state, filteredHouses) {
-      state.filteredHouses = filteredHouses;
+    SET_FILTER_DONGCODE(state, dongCode) {
+      state.filterList.dongCode = dongCode;
     },
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: null, text: "시/도" }];
@@ -67,8 +67,16 @@ const houseStore = {
     CLEAR_HOUSE_LIST(state) {
       state.house = null;
     },
-    CLEAR_FILTERED_HOUSES_LIST(state) {
-      state.filteredHouses = [];
+    CLEAR_FILTER_LIST(state) {
+      state.filterList = {
+        dongCode: null,
+        houseTypeList: ["아파트", "원룸"],
+        dealTypeList: ["매매", "전세", "월세"],
+        minDealMoney: 0,
+        maxDealMoney: 10000000000,
+        minArea: 0,
+        maxArea: 200,
+      };
     },
     CLEAR_KEYWORD_LIST(state) {
       state.keyword = null;
@@ -107,13 +115,14 @@ const houseStore = {
         }
       );
     },
-    getHouseList({ commit }, dongCode) {
-      const params = { dongCode: dongCode };
+    getHouseList({ commit }, filterList) {
+      console.log(filterList);
       houseList(
-        params,
+        filterList,
         ({ data }) => {
           commit("SET_HOUSE_LIST", data);
           commit("SET_DETAIL_HOUSE", data[0]);
+          console.log(data);
         },
         (error) => {
           console.log(error);
@@ -132,17 +141,6 @@ const houseStore = {
     },
     getRecommendHouseList({ commit }) {
       recommendHouseList(
-        ({ data }) => {
-          commit("SET_RECOMMEND_HOUSE_LIST", data);
-          console.log(data);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    },
-    getHouseListByFilter({ commit }) {
-      houseListByFilter(
         ({ data }) => {
           commit("SET_RECOMMEND_HOUSE_LIST", data);
           console.log(data);

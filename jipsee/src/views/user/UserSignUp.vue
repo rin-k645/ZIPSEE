@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center">
-    <div class="relative flex flex-col items-center justify-center w-640 h-900">
-      <div class="h-24 w-74 mb-19">회원가입</div>
+    <div class="relative flex flex-col items-center justify-center w-640">
+      <div class="h-24 mt-20 font-bold mb-25 w-100 text-24">회원가입</div>
       <div class="h-2 bg-black w-640 mb-17"></div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">아이디*</div>
@@ -22,7 +22,9 @@
           @click="onClick('userId')"
           class="mr-12 border-[#e5e5e5] rounded-md w-330 h-46 border-1 ml-84 focus:border-yellow-400 focus:ring-yellow-400"
         />
-        <button class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">중복확인</button>
+        <button class="text-yellow-400 bg-white border-yellow-400 rounded-md w-120 h-46 border-1 hover:brightness-90">
+          중복확인
+        </button>
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-84">비밀번호*</div>
@@ -103,7 +105,9 @@
           @click="onClick('email')"
           class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12 focus:border-yellow-400 focus:ring-yellow-400"
         />
-        <button class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">중복확인</button>
+        <button class="text-yellow-400 bg-white border-yellow-400 rounded-md w-120 h-46 border-1 hover:brightness-90">
+          중복확인
+        </button>
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">휴대폰*</div>
@@ -134,7 +138,7 @@
               name="sex"
               v-model="user.sex"
               value="남자"
-              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0"
+              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none hover:brightness-90 checked:bg-none focus:ring-offset-0 focus:ring-0"
             />
             남자
           </div>
@@ -144,7 +148,7 @@
               name="sex"
               v-model="user.sex"
               value="여자"
-              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0"
+              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none hover:brightness-90 checked:bg-none focus:ring-offset-0 focus:ring-0"
             />
             여자
           </div>
@@ -154,7 +158,7 @@
               name="sex"
               v-model="user.sex"
               value="선택안함"
-              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0"
+              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none hover:brightness-90 checked:bg-none focus:ring-offset-0 focus:ring-0"
             />
             선택안함
           </div>
@@ -166,7 +170,7 @@
           <label v-for="(interest, index) in interests" :key="index" class="cursor-pointer">
             <input type="checkbox" name="interest" v-model="user.interestList" :value="interest" class="sr-only peer" />
             <div
-              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
+              class="flex items-center justify-center h-40 text-black bg-white border-yellow-400 hover:brightness-90 bg rounded-5 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
             >
               {{ interest.interestName }}
             </div>
@@ -185,18 +189,24 @@
               checked
             />
             <div
-              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
+              class="flex items-center justify-center h-40 text-black bg-white border-yellow-400 hover:brightness-90 bg rounded-5 text-14 border-1 peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
             >
               {{ dong.dongName | dongFormat }}
             </div>
           </label>
         </div>
 
-        <button class="ml-12 text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1" @click="ChangeViewModal">
+        <button
+          class="ml-12 text-yellow-400 bg-white border-yellow-400 rounded-md hover:brightness-90 w-120 h-46 border-1"
+          @click="ChangeViewModal"
+        >
           추가하기
         </button>
       </div>
-      <button class="font-bold text-black bg-yellow-400 border-yellow-400 rounded-5 w-640 h-50 text-20" @click="signup">
+      <button
+        class="font-bold text-black bg-yellow-400 border-yellow-400 mb-30 w-640 h-50 text-20 hover:brightness-90"
+        @click="signup"
+      >
         가입하기
       </button>
       <user-sign-up-modal

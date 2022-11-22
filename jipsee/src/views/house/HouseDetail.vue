@@ -50,7 +50,8 @@ export default {
 
   created() {
     let isLikeHouse = false;
-    if (this.userInfo.likeList) {
+    console.log(this.userInfo);
+    if (this.userInfo && this.userInfo.likeList) {
       this.userInfo.likeList.forEach((house) => {
         if (house.dealId == this.house.dealId) {
           isLikeHouse = true;

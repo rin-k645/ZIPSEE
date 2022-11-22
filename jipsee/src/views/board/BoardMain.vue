@@ -7,7 +7,7 @@
           <button
             v-if="buttonAttribute == 'question'"
             @click="switchButton('question')"
-            class="h-64 font-bold text-white bg-yellow-400 border-yellow-400 border-solid text-16 w-400 border-1 hover:brightness-90"
+            class="h-64 font-bold bg-yellow-400 border-yellow-400 border-solid text-16 w-400 border-1 hover:brightness-90"
           >
             자주 묻는 질문
           </button>
@@ -23,7 +23,7 @@
           <button
             v-if="buttonAttribute == 'ask'"
             @click="switchButton('ask')"
-            class="h-64 font-bold text-white bg-yellow-400 border-yellow-400 border-solid text-16 w-400 border-1 hover:brightness-90"
+            class="h-64 font-bold bg-yellow-400 border-yellow-400 border-solid text-16 w-400 border-1 hover:brightness-90"
           >
             1:1 문의
           </button>
@@ -39,7 +39,7 @@
           <button
             v-if="buttonAttribute == 'notice'"
             @click="switchButton('notice')"
-            class="h-64 font-bold text-white bg-yellow-400 border-yellow-400 border-solid text-16 w-400 border-1 hover:brightness-90"
+            class="h-64 font-bold bg-yellow-400 border-yellow-400 border-solid text-16 w-400 border-1 hover:brightness-90"
           >
             공지사항
           </button>

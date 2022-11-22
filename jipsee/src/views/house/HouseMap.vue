@@ -301,12 +301,34 @@ export default {
       this.map.panTo(moveLatLon);
     },
     setMarker(lat, lng) {
-      // 마커가 표시될 위치입니다
+      // // 마커가 표시될 위치입니다
+      // var imageSrc = require("@/assets/map/house.png"), // 마커이미지의 주소입니다
+      //   imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
+      //   imageOption = { offset: new kakao.maps.Point(27, 40) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+      // // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      // var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+      //   markerPosition = new kakao.maps.LatLng(lat, lng);
+
+      // // 마커를 생성합니다
+      // var marker = new kakao.maps.Marker({
+      //   position: markerPosition,
+      //   image: markerImage,
+      // });
+
+      var content = '<div class="w-40 h-40">';
+      content += '        <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/place_thumb.png" alt="">';
+
+      content += "</div>";
+
       var markerPosition = new kakao.maps.LatLng(lat, lng);
 
-      // 마커를 생성합니다
-      var marker = new kakao.maps.Marker({
+      // 커스텀 오버레이를 생성합니다
+      var marker = new kakao.maps.CustomOverlay({
         position: markerPosition,
+        content: content,
+        xAnchor: 0.5, // 커스텀 오버레이의 x축 위치입니다. 1에 가까울수록 왼쪽에 위치합니다. 기본값은 0.5 입니다
+        yAnchor: 1.1, // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
       });
 
       marker.setMap(this.map);

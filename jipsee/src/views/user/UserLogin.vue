@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center">
     <div class="flex flex-col items-center justify-center w-500 h-350 mb-100">
-      <div class="w-56 h-24 mb-59">로그인</div>
+      <div class="h-24 font-bold w-72 mb-59 text-24">로그인</div>
       <div class="flex flex-col justify-between mb-40 w-447 h-115">
         <div class="flex items-center justify-between w-447 h-46">
           <div class="w-56 h-24">아이디</div>
@@ -23,8 +23,15 @@
         </div>
       </div>
       <div class="flex justify-between w-447 h-50">
-        <button class="text-black bg-yellow-400 rounded-md w-200 h-50" @click="confirm">로그인</button>
-        <button class="text-black border-yellow-400 rounded-md w-200 h-50 border-1" @click="movePage">가입하기</button>
+        <button class="text-black bg-yellow-400 rounded-md w-200 h-50 hover:brightness-90" @click="confirm">
+          로그인
+        </button>
+        <button
+          class="text-black bg-white border-yellow-400 rounded-md w-200 h-50 border-1 hover:brightness-90"
+          @click="movePage"
+        >
+          가입하기
+        </button>
       </div>
     </div>
   </div>
