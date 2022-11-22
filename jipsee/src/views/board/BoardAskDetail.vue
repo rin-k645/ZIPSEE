@@ -3,7 +3,7 @@
     <div class="pl-40 pt-30 pb-30 bg-gray-50" v-html="ask.content"></div>
     <hr />
     <div v-if="ask.comment != null" class="pl-40 pt-30 pb-30 bg-gray-50">
-      <div class="mb-10 flex justify-between">
+      <div class="flex justify-between mb-10">
         <div>안녕하세요 <b>JIPSEE</b> 입니다.</div>
         <div class="mr-49">{{ ask.comment.registerDate }}</div>
       </div>
@@ -11,12 +11,10 @@
       <div>{{ ask.comment.content }}</div>
     </div>
     <div v-else>
-      <div class="flex flex-col items-end mt-50">
-        <div><b>답변 달기</b></div>
+      <div class="flex flex-col mb-20 mt-50">
+        <div class="mb-10 font-semibold text-16"><b>답변 달기</b></div>
         <ckeditor :editor="editor" v-model="comment.content" />
-        <button
-          class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50"
-          @click="writeNewComment">
+        <button class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50 place-self-end" @click="writeNewComment">
           작성하기
         </button>
       </div>

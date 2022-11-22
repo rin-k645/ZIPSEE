@@ -1,8 +1,7 @@
 <template>
   <div class="flex items-center justify-center">
     <div class="relative flex flex-col items-center justify-center w-640 h-900">
-      <div class="h-24 w-74 mb-19">회원가입</div>
-      <div class="h-2 bg-black w-640 mb-17"></div>
+      <div class="h-2 mt-20 bg-black w-640 mb-17"></div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">아이디*</div>
         <input
@@ -11,11 +10,9 @@
           placeholder="아이디를 입력해주세요"
           v-model="user.userId"
           disabled
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12" />
-        <button
-          class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">
-          중복확인
-        </button>
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12"
+        />
+        <button class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">중복확인</button>
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-84">비밀번호*</div>
@@ -24,7 +21,8 @@
           name="password"
           placeholder="비밀번호를 입력해주세요"
           v-model="user.password"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-66" />
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-66"
+        />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-47">이름*</div>
@@ -33,7 +31,8 @@
           name="name"
           placeholder="이름을 입력해주세요"
           v-model="user.name"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-103" />
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-103"
+        />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">닉네임*</div>
@@ -42,7 +41,8 @@
           name="nickname"
           placeholder="닉네임을 입력해주세요"
           v-model="user.nickName"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84" />
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84"
+        />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">이메일*</div>
@@ -51,11 +51,9 @@
           name="email"
           placeholder="예: ssafy@ssafy.com"
           v-model="user.email"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12" />
-        <button
-          class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">
-          중복확인
-        </button>
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12"
+        />
+        <button class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">중복확인</button>
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">휴대폰*</div>
@@ -64,7 +62,8 @@
           name="phone"
           placeholder="예: 010-1234-5678"
           v-model="user.phone"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84" />
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84"
+        />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-37">성별</div>
@@ -75,7 +74,8 @@
               name="sex"
               v-model="user.sex"
               value="남자"
-              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0" />
+              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0"
+            />
             남자
           </div>
           <div class="flex items-center justify-between w-66 h-22">
@@ -84,7 +84,8 @@
               name="sex"
               v-model="user.sex"
               value="여자"
-              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0" />
+              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0"
+            />
             여자
           </div>
           <div class="flex items-center justify-between w-99 h-22">
@@ -93,7 +94,8 @@
               name="sex"
               v-model="user.sex"
               value="선택안함"
-              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0" />
+              class="w-20 h-20 text-yellow-400 bg-gray-200 border-none checked:bg-none focus:ring-offset-0 focus:ring-0"
+            />
             선택안함
           </div>
         </div>
@@ -101,18 +103,11 @@
       <div class="flex mb-20 w-612 h-180">
         <div class="h-24 w-66">관심사</div>
         <div class="grid grid-cols-4 grid-rows-4 gap-5 w-330 h-180 ml-85">
-          <label
-            v-for="(interest, index) in interests"
-            :key="index"
-            class="cursor-pointer">
-            <input
-              type="checkbox"
-              name="interest"
-              v-model="user.interestList"
-              :value="interest"
-              class="sr-only peer" />
+          <label v-for="(interest, index) in interests" :key="index" class="cursor-pointer">
+            <input type="checkbox" name="interest" v-model="user.interestList" :value="interest" class="sr-only peer" />
             <div
-              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
+              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
+            >
               {{ interest.interestName }}
             </div>
           </label>
@@ -121,38 +116,37 @@
       <div class="flex mb-20 w-612 h-90">
         <div class="h-24 w-80">관심 지역</div>
         <div class="grid grid-cols-4 grid-rows-2 gap-5 w-330 h-90 ml-73">
-          <label
-            v-for="(dong, index) in dongs"
-            :key="index"
-            class="cursor-pointer">
+          <label v-for="(dong, index) in dongs" :key="index" class="cursor-pointer">
             <input
               type="checkbox"
               v-model="user.dongList"
               :value="{ dongCode: dong.dongCode }"
               class="sr-only peer"
-              checked />
+              checked
+            />
             <div
-              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
+              class="flex items-center justify-center h-40 text-black border-yellow-400 bg rounded-5 text-14 border-1 peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0"
+            >
               {{ dong.dongName | dongFormat }}
             </div>
           </label>
         </div>
 
-        <button
-          class="ml-12 text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1"
-          @click="ChangeViewModal">
+        <button class="ml-12 text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1" @click="ChangeViewModal">
           추가하기
         </button>
       </div>
       <button
-        class="font-bold text-black bg-yellow-400 border-yellow-400 rounded-5 w-640 h-50 text-20"
-        @click="modify">
-        가입하기
+        class="mb-20 font-bold text-black bg-yellow-400 border-yellow-400 rounded-5 w-640 h-50 text-20"
+        @click="modify"
+      >
+        수정하기
       </button>
       <user-sign-up-modal
         v-if="viewModal"
         @setUserRegion="setDongList"
-        class="absolute left-[650px] bottom-160 bg-gray-200 w-180 h-224"></user-sign-up-modal>
+        class="absolute left-[650px] bottom-160 bg-gray-200 w-180 h-224"
+      ></user-sign-up-modal>
     </div>
   </div>
 </template>
@@ -209,16 +203,18 @@ export default {
     this.user.sex = this.userInfo.sex;
     this.user.interestList = this.userInfo.interestList;
     this.user.dongList = this.userInfo.dongList;
-
-    console.log(this.user.interestList);
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
   },
   methods: {
-    ...mapActions(userStore, ["userModify"]),
+    ...mapActions(userStore, ["userModify", "getUserInfo"]),
     modify() {
-      this.userModify(this.user);
+      this.userModify(this.user)
+        .then(async () => {
+          await this.getUserInfo();
+        })
+        .then(this.$router.push({ name: "usermypage" }));
     },
     ChangeViewModal() {
       this.viewModal = !this.viewModal;

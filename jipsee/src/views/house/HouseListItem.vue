@@ -4,14 +4,10 @@
       <div class="relative flex items-center col-span-2 font-bold">
         {{ houseOneItem.houseInfo.houseName }}
         <div v-if="like" class="absolute top-7 right-5" @click="onClickLike">
-          <font-awesome-icon
-            icon="fa-solid fa-heart"
-            class="text-red-500 cursor-pointer w-30 h-30" />
+          <font-awesome-icon icon="fa-solid fa-heart" class="text-red-500 cursor-pointer w-30 h-30" />
         </div>
         <div v-else class="absolute top-7 right-5" @click="onClickLike">
-          <font-awesome-icon
-            icon="fa-regular fa-heart"
-            class="text-red-500 cursor-pointer w-30 h-30" />
+          <font-awesome-icon icon="fa-regular fa-heart" class="text-red-500 cursor-pointer w-30 h-30" />
         </div>
       </div>
       <div class="grid justify-end">
@@ -26,16 +22,14 @@
           {{ houseOneItem.price | changeMoneyUnit }}
         </div>
         <div>{{ houseOneItem.area }}m² {{ houseOneItem.floor }}층</div>
-        <button class="mt-20 bg-yellow-400 h-38 w-100">
-          <router-link :to="{ name: 'housedetail' }">보러가기</router-link>
-        </button>
+        <button class="mt-20 bg-yellow-400 h-38 w-100" @click="onClickHouse">보러가기</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 const houseStore = "houseStore";
 const userStore = "userStore";
 export default {
@@ -71,11 +65,12 @@ export default {
     ...mapState(userStore, ["isLogin", "userInfo"]),
   },
   methods: {
-    ...mapActions(userStore, [
-      "userLikeHouse",
-      "userUnLikeHouse",
-      "getUserInfo",
-    ]),
+    ...mapMutations(houseStore, ["SET_DETAIL_HOUSE"]),
+    ...mapActions(userStore, ["userLikeHouse", "userUnLikeHouse"]),
+    onClickHouse() {
+      this.SET_DETAIL_HOUSE(this.houseItem);
+      this.$router.push({ name: "housedetail" });
+    },
     onClickLike() {
       if (!this.isLogin) alert("로그인이 필요합니다!");
       else {
@@ -98,9 +93,7 @@ export default {
         return (
           Math.floor(money / 100000000) +
           "억 " +
-          (Math.floor((money % 100000000) / 10000000) == 0
-            ? ""
-            : Math.floor((money % 100000000) / 10000000) + "천")
+          (Math.floor((money % 100000000) / 10000000) == 0 ? "" : Math.floor((money % 100000000) / 10000000) + "천")
         );
       else if (money >= 10000000) return money / 10000000 + "천";
       return money / 10000;

@@ -1,17 +1,10 @@
 <template>
   <div class="flex flex-col mt-50">
-    <div class="">
-      <input
-        type="text"
-        name="id"
-        placeholder="제목을 입력해주세요"
-        v-model="ask.title"
-        class="w-full mb-15" />
+    <div>
+      <input type="text" name="id" placeholder="제목을 입력해주세요" v-model="ask.title" class="w-full mb-15" />
     </div>
     <ckeditor :editor="editor" v-model="ask.content" />
-    <button
-      class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50 place-self-end"
-      @click="writeNewNotice">
+    <button class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50 place-self-end" @click="writeNewNotice">
       전송하기
     </button>
   </div>
@@ -39,8 +32,6 @@ export default {
   methods: {
     ...mapActions(boardStore, ["writeAsk"]),
     writeNewNotice() {
-      console.log(this.content);
-      console.log(typeof this.content);
       this.writeAsk(this.ask);
     },
   },

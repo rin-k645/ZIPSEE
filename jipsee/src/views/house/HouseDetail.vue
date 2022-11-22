@@ -22,7 +22,7 @@
           {{ house.price | changeMoneyUnit }}
         </div>
         <div class="mb-10 text-18">
-          <!-- {{ house.houseInfo.dong.sidoName }} {{ house.houseInfo.dong.gugunName }} {{ house.houseInfo.dong.dongName }} -->
+          {{ house.houseInfo.dong.sidoName }} {{ house.houseInfo.dong.gugunName }} {{ house.houseInfo.dong.dongName }}
         </div>
         <div>{{ house.houseInfo.houseType }} {{ house.area }}m² {{ house.floor }}층</div>
       </div>

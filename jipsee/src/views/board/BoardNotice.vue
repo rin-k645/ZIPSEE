@@ -19,7 +19,7 @@
         </tr>
       </tbody>
     </table>
-    <router-link :to="{ name: 'boardnoticewrite' }">
+    <router-link v-if="isAdmin" :to="{ name: 'boardnoticewrite' }">
       <button class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50">글쓰기</button>
     </router-link>
   </div>
@@ -29,6 +29,7 @@
 import BoardNoticeDetail from "@/views/board/BoardNoticeDetail";
 import { mapState, mapActions } from "vuex";
 const boardStore = "boardStore";
+const userStore = "userStore";
 
 export default {
   components: {
@@ -37,13 +38,16 @@ export default {
   data() {
     return {
       noticeNo: -1,
+      isAdmin: false,
     };
   },
   created() {
     this.getNoticeList();
+    if (this.userInfo.userId == "admin") this.isAdmin = true;
   },
   computed: {
     ...mapState(boardStore, ["notices"]),
+    ...mapState(userStore, ["userInfo"]),
   },
   methods: {
     ...mapActions(boardStore, ["getNoticeList"]),
