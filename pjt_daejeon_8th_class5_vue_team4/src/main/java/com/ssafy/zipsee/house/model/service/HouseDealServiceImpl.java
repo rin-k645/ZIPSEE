@@ -91,17 +91,35 @@ public class HouseDealServiceImpl implements HouseDealService {
 
 	@Override
 	public List<HouseDealDto> getApartRecommandList(String dongCode) throws Exception {
-		return houseDealMapper.getApartRecommandList(dongCode);
+		List<HouseDealDto> dealList = houseDealMapper.getApartRecommandList(dongCode);
+		for(HouseDealDto houseDeal : dealList) {
+			HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
+			houseDeal.setHouseInfo(houseInfo);
+		}
+		
+		return dealList;
 	}
 
 	@Override
 	public List<HouseDealDto> getOneRoomRecommandList(String dongCode) throws Exception {
-		return houseDealMapper.getOneRoomRecommandList(dongCode);
+		List<HouseDealDto> dealList = houseDealMapper.getOneRoomRecommandList(dongCode);
+		for(HouseDealDto houseDeal : dealList) {
+			HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
+			houseDeal.setHouseInfo(houseInfo);
+		}
+		
+		return dealList;
 	}
 
 	@Override
 	public List<HouseDealDto> getPopularDealList() throws Exception {
-		return houseDealMapper.getPopularDealList();
+		List<HouseDealDto> dealList = houseDealMapper.getPopularDealList();
+		for(HouseDealDto houseDeal : dealList) {
+			HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
+			houseDeal.setHouseInfo(houseInfo);
+		}
+		
+		return dealList;
 	}
 
 	@Override
