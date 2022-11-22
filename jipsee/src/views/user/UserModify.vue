@@ -1,68 +1,127 @@
 <template>
   <div class="flex items-center justify-center">
-    <div class="relative flex flex-col items-center justify-center w-640 h-900">
+    <div class="relative flex flex-col items-center justify-center w-640">
       <div class="h-2 mt-20 bg-black w-640 mb-17"></div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">아이디*</div>
         <input
+          v-if="click.userId && !user.userId"
           type="text"
           name="id"
           placeholder="아이디를 입력해주세요"
           v-model="user.userId"
-          disabled
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12"
+          class="mr-12 border-2 border-pink-600 rounded-md w-330 h-46 ml-84 focus:border-yellow-400 focus:ring-yellow-400"
+        />
+        <input
+          v-else
+          type="text"
+          name="id"
+          placeholder="아이디를 입력해주세요"
+          v-model="user.userId"
+          @click="onClick('userId')"
+          class="mr-12 border-[#e5e5e5] rounded-md w-330 h-46 border-1 ml-84 focus:border-yellow-400 focus:ring-yellow-400"
         />
         <button class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">중복확인</button>
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-84">비밀번호*</div>
         <input
+          v-if="click.password && !user.password"
           type="password"
           name="password"
           placeholder="비밀번호를 입력해주세요"
           v-model="user.password"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-66"
+          class="border-2 border-pink-600 rounded-md w-330 h-46 focus:border-yellow-400 focus:ring-yellow-400 ml-66"
+        />
+        <input
+          v-else
+          type="password"
+          name="password"
+          placeholder="비밀번호를 입력해주세요"
+          v-model="user.password"
+          @click="onClick('password')"
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-66 focus:border-yellow-400 focus:ring-yellow-400"
         />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-47">이름*</div>
         <input
+          v-if="click.name && !user.name"
           type="text"
           name="name"
           placeholder="이름을 입력해주세요"
           v-model="user.name"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-103"
+          class="border-2 border-pink-600 rounded-md w-330 h-46 ml-103 focus:border-yellow-400 focus:ring-yellow-400"
+        />
+        <input
+          v-else
+          type="text"
+          name="name"
+          placeholder="이름을 입력해주세요"
+          v-model="user.name"
+          @click="onClick('name')"
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-103 focus:border-yellow-400 focus:ring-yellow-400"
         />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">닉네임*</div>
         <input
+          v-if="click.nickName && !user.nickName"
           type="text"
           name="nickname"
           placeholder="닉네임을 입력해주세요"
           v-model="user.nickName"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84"
+          class="border-2 border-pink-600 rounded-md w-330 h-46 ml-84 focus:border-yellow-400 focus:ring-yellow-400"
+        />
+        <input
+          v-else
+          type="text"
+          name="nickname"
+          placeholder="닉네임을 입력해주세요"
+          v-model="user.nickName"
+          @click="onClick('nickName')"
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 focus:border-yellow-400 focus:ring-yellow-400"
         />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">이메일*</div>
         <input
+          v-if="click.email && !user.email"
           type="email"
           name="email"
           placeholder="예: ssafy@ssafy.com"
           v-model="user.email"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12"
+          class="mr-12 border-2 border-pink-600 rounded-md w-330 h-46 ml-84 focus:border-yellow-400 focus:ring-yellow-400"
+        />
+        <input
+          v-else
+          type="email"
+          name="email"
+          placeholder="예: ssafy@ssafy.com"
+          v-model="user.email"
+          @click="onClick('email')"
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 mr-12 focus:border-yellow-400 focus:ring-yellow-400"
         />
         <button class="text-yellow-400 border-yellow-400 rounded-md w-120 h-46 border-1">중복확인</button>
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
         <div class="h-24 w-66">휴대폰*</div>
         <input
+          v-if="click.phone && !user.phone"
           type="text"
           name="phone"
           placeholder="예: 010-1234-5678"
           v-model="user.phone"
-          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84"
+          class="border-2 border-pink-600 rounded-md w-330 h-46 ml-84 focus:border-yellow-400 focus:ring-yellow-400"
+        />
+        <input
+          v-else
+          type="text"
+          name="phone"
+          placeholder="예: 010-1234-5678"
+          v-model="user.phone"
+          @click="onClick('phone')"
+          class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md ml-84 focus:border-yellow-400 focus:ring-yellow-400"
         />
       </div>
       <div class="flex items-center mb-20 w-612 h-46">
@@ -136,11 +195,18 @@
           추가하기
         </button>
       </div>
+      <div class="h-2 mt-20 bg-black w-640 mb-17"></div>
       <button
         class="mb-20 font-bold text-black bg-yellow-400 border-yellow-400 rounded-5 w-640 h-50 text-20"
         @click="modify"
       >
         수정하기
+      </button>
+      <button
+        class="mb-20 font-bold text-black bg-pink-600 border-pink-600 rounded-5 w-640 h-50 text-20"
+        @click="onUserDelete"
+      >
+        탈퇴하기
       </button>
       <user-sign-up-modal
         v-if="viewModal"
@@ -192,6 +258,14 @@ export default {
         interestList: [],
         dongList: [],
       },
+      click: {
+        userId: false,
+        password: false,
+        name: false,
+        nickName: false,
+        email: false,
+        phone: false,
+      },
     };
   },
   created() {
@@ -208,13 +282,12 @@ export default {
     ...mapState(userStore, ["userInfo"]),
   },
   methods: {
-    ...mapActions(userStore, ["userModify", "getUserInfo"]),
+    ...mapActions(userStore, ["userModify", "userDelete"]),
     modify() {
-      this.userModify(this.user)
-        .then(async () => {
-          await this.getUserInfo();
-        })
-        .then(this.$router.push({ name: "usermypage" }));
+      this.userModify(this.user).then(() => {
+        this.$emit("buttonAttribute", "like");
+        this.$router.push({ name: "usermypage" });
+      });
     },
     ChangeViewModal() {
       this.viewModal = !this.viewModal;
@@ -222,6 +295,14 @@ export default {
     setDongList(data) {
       this.dongs.push(data);
       this.user.dongList.push({ dongCode: data.dongCode });
+    },
+    onClick(id) {
+      this.click[id] = true;
+    },
+    onUserDelete() {
+      this.userDelete().then(() => {
+        this.$router.push({ name: "main" });
+      });
     },
   },
   filters: {

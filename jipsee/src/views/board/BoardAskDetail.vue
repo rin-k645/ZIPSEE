@@ -11,7 +11,7 @@
       <div>{{ ask.comment.content }}</div>
     </div>
     <div v-else>
-      <div class="flex flex-col mb-20 mt-50">
+      <div v-if="isAdmin" class="flex flex-col mb-20 mt-50">
         <div class="mb-10 font-semibold text-16"><b>답변 달기</b></div>
         <ckeditor :editor="editor" v-model="comment.content" />
         <button class="mt-20 font-semibold text-white bg-yellow-700 w-100 h-50 place-self-end" @click="writeNewComment">
@@ -25,14 +25,16 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CKEditor from "@ckeditor/ckeditor5-vue2";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 const boardStore = "boardStore";
+const userStore = "userStore";
 
 export default {
   name: "BoardAskDetail",
   props: {
     ask: Object,
   },
+
   components: {
     ckeditor: CKEditor.component,
   },
@@ -42,10 +44,17 @@ export default {
       boardId: null,
       content: "<p>답변할 내용을 적어주세요.</p>",
     },
+    isAdmin: false,
   }),
+
   created() {
     this.comment.boardId = this.ask.boardId;
+    if (this.userInfo.userId == "admin") this.isAdmin = true;
   },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
+  },
+
   methods: {
     ...mapActions(boardStore, ["writeComment"]),
     writeNewComment() {

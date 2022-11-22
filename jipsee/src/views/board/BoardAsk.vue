@@ -32,7 +32,8 @@ export default {
   methods: {
     ...mapActions(boardStore, ["writeAsk"]),
     writeNewNotice() {
-      this.writeAsk(this.ask);
+      this.$emit("buttonAttribute", "notice");
+      this.writeAsk(this.ask).then(this.$router.push({ name: "board" }));
     },
   },
 };

@@ -3,7 +3,9 @@
     <div class="flex items-center ml-10">
       <router-link to="/" class="h-80 w-80"><img src="@/assets/logo.png" /></router-link>
       <router-link :to="{ name: 'houselist' }" class="ml-32 font-semibold text-18">매물탐색</router-link>
-      <router-link :to="{ name: 'board' }" class="ml-32 font-semibold text-18">공지사항</router-link>
+      <router-link :to="{ name: 'board' }" class="ml-32 font-semibold text-18" @click="onClickBoard"
+        >공지사항</router-link
+      >
     </div>
     <div class="flex mr-16 w-700 h-35">
       <div class="relative w-500">
@@ -24,7 +26,10 @@
       </div>
       <div v-else class="flex items-center justify-center w-200">
         <div class="ml-12 font-semibold cursor-pointer text-18" @click="onClickLogout">로그아웃</div>
-        <router-link :to="{ name: 'usermypage' }" class="ml-12 font-semibold cursor-pointer text-18"
+        <router-link
+          :to="{ name: 'usermypage' }"
+          class="ml-12 font-semibold cursor-pointer text-18"
+          @click="onClickMyPage"
           >마이페이지</router-link
         >
       </div>
@@ -70,6 +75,12 @@ export default {
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
       if (this.$route.path != "/") this.$router.push({ name: "main" });
+    },
+    onClickBoard() {
+      this.$emit("buttonAttribute", "notice");
+    },
+    onClickMyPage() {
+      this.$emit("buttonAttribute", "like");
     },
   },
 };

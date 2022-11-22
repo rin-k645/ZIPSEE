@@ -9,7 +9,8 @@
             type="text"
             placeholder="아이디를 입력해주세요"
             v-model="user.userId"
-            class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md" />
+            class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md"
+          />
         </div>
         <div class="flex items-center justify-between w-447 h-46">
           <div class="w-[74px] h-24">비밀번호</div>
@@ -17,20 +18,13 @@
             type="password"
             placeholder="비밀번호를 입력해주세요"
             v-model="user.password"
-            class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md" />
+            class="w-330 h-46 border-1 border-[#e5e5e5] rounded-md"
+          />
         </div>
       </div>
       <div class="flex justify-between w-447 h-50">
-        <button
-          class="w-200 h-50 bg-yellow-400 rounded-md text-black"
-          @click="confirm">
-          로그인
-        </button>
-        <button
-          class="text-black border-yellow-400 rounded-md w-200 h-50 border-1"
-          @click="movePage">
-          가입하기
-        </button>
+        <button class="text-black bg-yellow-400 rounded-md w-200 h-50" @click="confirm">로그인</button>
+        <button class="text-black border-yellow-400 rounded-md w-200 h-50 border-1" @click="movePage">가입하기</button>
       </div>
     </div>
   </div>
@@ -69,7 +63,7 @@ export default {
       }
     },
     movePage() {
-      this.$router.push({ name: "signup" });
+      this.$router.push({ name: "usersignup" });
     },
   },
 };

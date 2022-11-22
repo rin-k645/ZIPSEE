@@ -52,7 +52,7 @@
           </button>
         </router-link>
       </div>
-      <router-view class="w-1200 mb-100"></router-view>
+      <router-view @buttonAttribute="setButton" class="w-1200 mb-100"></router-view>
     </div>
   </div>
 </template>
@@ -79,6 +79,9 @@ export default {
         default:
           break;
       }
+    },
+    setButton(id) {
+      this.buttonAttribute = id;
     },
   },
 };

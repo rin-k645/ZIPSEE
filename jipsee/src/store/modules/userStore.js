@@ -7,6 +7,7 @@ import {
   logout,
   signup,
   modify,
+  deleteUser,
   likeHouse,
   unLikeHouse,
 } from "@/api/user";
@@ -49,11 +50,7 @@ const userStore = {
           if (data.message === "success") {
             let accessToken = data["access-token"];
             let refreshToken = data["refresh-token"];
-            console.log(
-              "login success token created!!!! >> ",
-              accessToken,
-              refreshToken,
-            );
+            console.log("login success token created!!!! >> ", accessToken, refreshToken);
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -67,7 +64,7 @@ const userStore = {
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
 
@@ -85,21 +82,15 @@ const userStore = {
           }
         },
         async (error) => {
-          console.log(
-            "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
-            error.response.status,
-          );
+          console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
           commit("SET_IS_VALID_TOKEN", false);
           await dispatch("tokenRegeneration");
-        },
+        }
       );
     },
 
     async tokenRegeneration({ commit, state }) {
-      console.log(
-        "토큰 재발급 >> 기존 토큰 정보 : {}",
-        sessionStorage.getItem("access-token"),
-      );
+      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
       await tokenRegeneration(
         JSON.stringify(state.userInfo),
         ({ data }) => {
@@ -133,14 +124,15 @@ const userStore = {
                 console.log(error);
                 commit("SET_IS_LOGIN", false);
                 commit("SET_USER_INFO", null);
-              },
+              }
             );
           }
-        },
+        }
       );
     },
 
     async userLogout({ commit }, userId) {
+      let msg = "로그아웃 실패!";
       await logout(
         userId,
         ({ data }) => {
@@ -148,45 +140,78 @@ const userStore = {
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
+            msg = "로그아웃 되었습니다.";
+            alert(msg);
           } else {
+            alert(msg);
             console.log("유저 정보 없음!!!!");
           }
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
 
     userSignup(context, user) {
+      let msg = "회원 등록 처리시 문제가 발생했습니다.";
       signup(
         user,
         ({ data }) => {
-          let msg = "회원 등록 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "회원 등록이 완료되었습니다.";
+            alert(msg);
+            router.push({ name: "userlogin" });
           }
-          alert(msg);
         },
         (error) => {
+          alert(msg);
           console.log(error);
-        },
+        }
       );
     },
 
-    userModify(context, user) {
+    userModify({ dispatch }, user) {
+      let msg = "회원 수정 처리시 문제가 발생했습니다.";
       modify(
         user,
-        ({ data }) => {
-          let msg = "회원 수정 처리시 문제가 발생했습니다.";
+        async ({ data }) => {
           if (data === "success") {
+            let token = sessionStorage.getItem("access-token");
             msg = "회원 수정이 완료되었습니다.";
+            await dispatch("getUserInfo", token);
+            alert(msg);
+            return token;
           }
-          alert(msg);
+        },
+        (token) => {
+          let newToken = sessionStorage.getItem("access-token");
+          if (token != newToken) dispatch("getUserInfo", newToken);
         },
         (error) => {
+          alert(msg);
           console.log(error);
+        }
+      );
+    },
+
+    userDelete({ commit }) {
+      let msg = "회원 삭제 처리시 문제가 발생했습니다.";
+      deleteUser(
+        ({ data }) => {
+          if (data === "success") {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_USER_INFO", null);
+            commit("SET_IS_VALID_TOKEN", false);
+            msg = "회원 삭제가 완료되었습니다.";
+            alert(msg);
+            router.push({ name: "main" });
+          }
         },
+        (error) => {
+          alert(msg);
+          console.log(error);
+        }
       );
     },
 
@@ -194,23 +219,19 @@ const userStore = {
       likeHouse(
         deal,
         async ({ data }) => {
-          console.log(data);
           if (data === "success") {
             let token = sessionStorage.getItem("access-token");
-            console.log(token);
             await dispatch("getUserInfo", token);
             return token;
           }
         },
         (token) => {
           let newToken = sessionStorage.getItem("access-token");
-          console.log(token);
-          console.log(newToken);
           if (token != newToken) dispatch("getUserInfo", newToken);
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
 
@@ -218,23 +239,19 @@ const userStore = {
       unLikeHouse(
         dealId,
         async ({ data }) => {
-          console.log(data);
           if (data === "success") {
             let token = sessionStorage.getItem("access-token");
-            console.log(token);
             await dispatch("getUserInfo", token);
             return token;
           }
         },
         (token) => {
           let newToken = sessionStorage.getItem("access-token");
-          console.log(token);
-          console.log(newToken);
           if (token != newToken) dispatch("getUserInfo", newToken);
         },
         (error) => {
           console.log(error);
-        },
+        }
       );
     },
   },

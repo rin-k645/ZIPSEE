@@ -25,8 +25,14 @@ function signup(user, success, fail) {
   api.post(`/user`, user).then(success).catch(fail);
 }
 
-function modify(user, success, fail) {
-  api.put(`/mypage/modify`, user).then(success).catch(fail);
+function modify(user, success, success2, fail) {
+  api.put(`/mypage/modify`, user).then(success).then(success2).catch(fail);
+}
+
+function deleteUser(success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token");
+  api.delete(`/mypage/delete`).then(success).catch(fail);
 }
 
 function likeHouse(deal, success, success2, fail) {
@@ -39,4 +45,4 @@ function unLikeHouse(dealId, success, success2, fail) {
   api.delete(`/deal/unlike/${dealId}`, dealId).then(success).then(success2).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, signup, modify, likeHouse, unLikeHouse };
+export { login, findById, tokenRegeneration, logout, signup, modify, deleteUser, likeHouse, unLikeHouse };

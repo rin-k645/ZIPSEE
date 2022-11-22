@@ -1,11 +1,4 @@
-import {
-  writeNotice,
-  noticeList,
-  askList,
-  writeAsk,
-  writeComment,
-  deleteNotice,
-} from "@/api/board";
+import { writeNotice, noticeList, askList, writeAsk, writeComment, deleteNotice } from "@/api/board";
 import router from "@/router";
 
 const boardStore = {
@@ -39,32 +32,42 @@ const boardStore = {
       );
     },
     writeNoticeAdmin(context, notice) {
+      let msg = "등록 처리시 문제가 발생했습니다.";
       writeNotice(
         notice,
         ({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "등록이 완료되었습니다.";
+            alert(msg);
           }
-          alert(msg);
+
           router.push({ name: "boardnotice" });
         },
         (error) => {
+          alert(msg);
           console.log(error);
         }
       );
     },
-    writeAsk(context, ask) {
+    writeAsk({ dispatch }, ask) {
+      let msg = "1:1 답변 문의 중 문제가 발생했습니다.";
       writeAsk(
         ask,
-        ({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
+        async ({ data }) => {
           if (data === "success") {
-            msg = "등록이 완료되었습니다.";
+            let token = sessionStorage.getItem("access-token");
+            msg = "1:1 문의 등록이 완료되었습니다.";
+            await dispatch("getUserInfo", token);
+            alert(msg);
+            return token;
           }
-          alert(msg);
+        },
+        (token) => {
+          let newToken = sessionStorage.getItem("access-token");
+          if (token != newToken) dispatch("getUserInfo", newToken);
         },
         (error) => {
+          alert(msg);
           console.log(error);
         }
       );
@@ -81,31 +84,33 @@ const boardStore = {
       );
     },
     writeComment(context, comment) {
+      let msg = "등록 처리시 문제가 발생했습니다.";
       writeComment(
         comment,
         ({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "등록이 완료되었습니다.";
+            alert(msg);
           }
-          alert(msg);
         },
         (error) => {
+          alert(msg);
           console.log(error);
         }
       );
     },
     deleteNotice(context, boardId) {
+      let msg = "삭제시 문제가 발생했습니다.";
       deleteNotice(
         boardId,
         ({ data }) => {
-          let msg = "삭제시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "삭제가 완료되었습니다.";
+            alert(msg);
           }
-          alert(msg);
         },
         (error) => {
+          alert(msg);
           console.log(error);
         }
       );
