@@ -1,29 +1,101 @@
 <template>
-  <div id="map" class="w-full h-full">
+  <div id="map" class="w-[calc(100%-396px)] h-full">
     <ul id="category">
-      <li id="BK9" data-order="0">
-        <span class="category_bg bank"></span>
+      <li id="BK9" data-order="bank">
+        <span class="category_bg bank"
+          ><img src="@/assets/map/bank.png"
+        /></span>
         은행
       </li>
-      <li id="MT1" data-order="1">
-        <span class="category_bg mart"></span>
-        마트
+      <li id="MT1" data-order="shop">
+        <span class="category_bg mart"
+          ><img src="@/assets/map/shop.png"
+        /></span>
+        대형마트
       </li>
-      <li id="PM9" data-order="2">
-        <span class="category_bg pharmacy"></span>
+      <li id="PM9" data-order="drugstore">
+        <span class="category_bg pharmacy"
+          ><img src="@/assets/map/drugstore.png"
+        /></span>
         약국
       </li>
-      <li id="OL7" data-order="3">
-        <span class="category_bg oil"></span>
+      <li id="OL7" data-order="gas-station">
+        <span class="category_bg oil"
+          ><img src="@/assets/map/gas-station.png"
+        /></span>
         주유소
       </li>
-      <li id="CE7" data-order="4">
-        <span class="category_bg cafe"></span>
+      <li id="CE7" data-order="cafe">
+        <span class="category_bg cafe"
+          ><img src="@/assets/map/cafe.png"
+        /></span>
         카페
       </li>
-      <li id="CS2" data-order="5">
-        <span class="category_bg store"></span>
+      <li id="CS2" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
         편의점
+      </li>
+      <li id="PS3" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        유치원
+      </li>
+      <li id="SC4" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        학교
+      </li>
+      <li id="AC5" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        학원
+      </li>
+      <li id="PK6" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        주차장
+      </li>
+      <li id="SW8" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        지하철역
+      </li>
+      <li id="CT1" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        문화시설
+      </li>
+      <li id="PO3" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        공공기관
+      </li>
+      <li id="AT4" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        관광명소
+      </li>
+      <li id="FD6" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        음식점
+      </li>
+      <li id="HP8" data-order="24-hours">
+        <span class="category_bg store"
+          ><img src="@/assets/map/24-hours.png"
+        /></span>
+        병원
       </li>
     </ul>
   </div>
@@ -36,6 +108,7 @@ export default {
   data() {
     return {
       map: null,
+      marker: null,
     };
   },
   computed: {
@@ -45,6 +118,7 @@ export default {
     house() {
       if (this.house) {
         this.panTo(this.house.houseInfo.lat, this.house.houseInfo.lng);
+        this.removeMarker();
         this.setMarker(this.house.houseInfo.lat, this.house.houseInfo.lng);
         console.log(this.house.houseInfo.lat, this.house.houseInfo.lng);
       }
@@ -58,7 +132,9 @@ export default {
 
   mounted() {
     /* global kakao */
-    window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
+    window.kakao && window.kakao.maps
+      ? this.initMap()
+      : this.addKakaoMapScript();
   },
   methods: {
     ...mapActions(houseStore, ["getHouseList"]),
@@ -162,11 +238,16 @@ export default {
       function displayPlaces(places) {
         // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
         // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
-        var order = document.getElementById(currCategory).getAttribute("data-order");
+        var order = document
+          .getElementById(currCategory)
+          .getAttribute("data-order");
 
         for (var i = 0; i < places.length; i++) {
           // 마커를 생성하고 지도에 표시합니다
-          var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
+          var marker = addMarker(
+            new kakao.maps.LatLng(places[i].y, places[i].x),
+            order,
+          );
 
           // 마커와 검색결과 항목을 클릭 했을 때
           // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
@@ -179,22 +260,45 @@ export default {
       }
 
       // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-      function addMarker(position, order) {
-        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-          imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
-          imgOptions = {
-            spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
-            spriteOrigin: new kakao.maps.Point(46, order * 36), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(11, 28), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-          },
-          markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-          marker = new kakao.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage,
-          });
+      function addMarker(position, category) {
+        // // var imageSrc =
+        // //     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        // //   imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
+        // //   imgOptions = {
+        // //     spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
+        // //     spriteOrigin: new kakao.maps.Point(46, order * 36), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+        // //     offset: new kakao.maps.Point(11, 28), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        // //   },
+        // //   markerImage = new kakao.maps.MarkerImage(
+        // //     imageSrc,
+        // //     imageSize,
+        // //     imgOptions,
+        // //   ),
+        // //   marker = new kakao.maps.Marker({
+        // //     position: position, // 마커의 위치
+        // //     image: markerImage,
+        // //   });
 
-        marker.setMap(map); // 지도 위에 마커를 표출합니다
-        markers.push(marker); // 배열에 생성된 마커를 추가합니다
+        // // marker.setMap(map); // 지도 위에 마커를 표출합니다
+        // // markers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+        // return marker;
+        var imageSrc = require(`@/assets/map/${category}.png`);
+        var content = '<div class="w-30 h-30">';
+        content += `<img src="${imageSrc}" alt="" >`;
+
+        content += "</div>";
+
+        // 커스텀 오버레이를 생성합니다
+        var marker = new kakao.maps.CustomOverlay({
+          position: position,
+          content: content,
+          xAnchor: 0.5, // 커스텀 오버레이의 x축 위치입니다. 1에 가까울수록 왼쪽에 위치합니다. 기본값은 0.5 입니다
+          yAnchor: 1.1, // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
+        });
+
+        marker.setMap(map);
+        markers.push(marker);
 
         return marker;
       }
@@ -232,10 +336,20 @@ export default {
             place.address_name +
             ")</span>";
         } else {
-          content += '    <span title="' + place.address_name + '">' + place.address_name + "</span>";
+          content +=
+            '    <span title="' +
+            place.address_name +
+            '">' +
+            place.address_name +
+            "</span>";
         }
 
-        content += '    <span class="tel">' + place.phone + "</span>" + "</div>" + '<div class="after"></div>';
+        content +=
+          '    <span class="tel">' +
+          place.phone +
+          "</span>" +
+          "</div>" +
+          '<div class="after"></div>';
 
         contentNode.innerHTML = content;
         placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
@@ -301,37 +415,27 @@ export default {
       this.map.panTo(moveLatLon);
     },
     setMarker(lat, lng) {
-      // // 마커가 표시될 위치입니다
-      // var imageSrc = require("@/assets/map/house.png"), // 마커이미지의 주소입니다
-      //   imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
-      //   imageOption = { offset: new kakao.maps.Point(27, 40) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
-      // // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-      // var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-      //   markerPosition = new kakao.maps.LatLng(lat, lng);
-
-      // // 마커를 생성합니다
-      // var marker = new kakao.maps.Marker({
-      //   position: markerPosition,
-      //   image: markerImage,
-      // });
-
-      var content = '<div class="w-40 h-40">';
-      content += '        <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/place_thumb.png" alt="">';
+      var imageSrc = require("@/assets/map/house.png");
+      var content = '<div class="w-40 h-40 animate-bounce">';
+      content += `<img src="${imageSrc}" alt="" >`;
 
       content += "</div>";
 
       var markerPosition = new kakao.maps.LatLng(lat, lng);
 
       // 커스텀 오버레이를 생성합니다
-      var marker = new kakao.maps.CustomOverlay({
+      this.marker = new kakao.maps.CustomOverlay({
         position: markerPosition,
         content: content,
         xAnchor: 0.5, // 커스텀 오버레이의 x축 위치입니다. 1에 가까울수록 왼쪽에 위치합니다. 기본값은 0.5 입니다
         yAnchor: 1.1, // 커스텀 오버레이의 y축 위치입니다. 1에 가까울수록 위쪽에 위치합니다. 기본값은 0.5 입니다
       });
 
-      marker.setMap(this.map);
+      this.marker.setMap(this.map);
+    },
+
+    removeMarker() {
+      this.marker.setMap(null);
     },
   },
 };
@@ -352,6 +456,7 @@ export default {
 }
 #category {
   position: absolute;
+  font-size: 14px;
   top: 10px;
   left: 10px;
   border-radius: 5px;
@@ -364,7 +469,7 @@ export default {
 #category li {
   float: left;
   list-style: none;
-  width: 50px;
+  width: 65px;
   border-right: 1px solid #acacac;
   padding: 6px 0;
   text-align: center;
@@ -388,30 +493,7 @@ export default {
   width: 27px;
   height: 28px;
 }
-#category li .category_bg {
-  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;
-}
-#category li .bank {
-  background-position: -10px 0;
-}
-#category li .mart {
-  background-position: -10px -36px;
-}
-#category li .pharmacy {
-  background-position: -10px -72px;
-}
-#category li .oil {
-  background-position: -10px -108px;
-}
-#category li .cafe {
-  background-position: -10px -144px;
-}
-#category li .store {
-  background-position: -10px -180px;
-}
-#category li.on .category_bg {
-  background-position-x: -46px;
-}
+
 .placeinfo_wrap {
   position: absolute;
   bottom: 28px;
@@ -466,8 +548,9 @@ export default {
   padding: 10px;
   color: #fff;
   background: #d95050;
-  background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px
-    center;
+  background: #d95050
+    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+    no-repeat right 14px center;
 }
 .placeinfo .tel {
   color: #0f7833;
