@@ -24,6 +24,7 @@
 		FROM BOARD B LEFT OUTER JOIN COMMENT C 
 			ON B.BOARD_ID = C.BOARD_ID 
 		WHERE B.USER_ID != 'admin'
+		ORDER BY B.REGISTER_DATE DESC
 	</select>
 	
 	<select id="getBoard" parameterType="String" resultType="com.ssafy.zipsee.board.model.BoardDto">
@@ -64,6 +65,7 @@
 		FROM BOARD B LEFT OUTER JOIN COMMENT C 
 		ON B.BOARD_ID = C.BOARD_ID
 		WHERE B.USER_ID = #{userId}
+		ORDER BY B.REGISTER_DATE DESC
 	</select>
 	
 	<delete id="deleteBoardByUserId" parameterType="String">
