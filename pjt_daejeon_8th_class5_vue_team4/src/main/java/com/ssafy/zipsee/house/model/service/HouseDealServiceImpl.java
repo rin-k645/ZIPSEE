@@ -1,5 +1,6 @@
 package com.ssafy.zipsee.house.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +56,37 @@ public class HouseDealServiceImpl implements HouseDealService {
 
 	@Override
 	public List<HouseDealDto> getHouseDealListByFilter(Map<String, Object> map) throws Exception {
-		return houseDealMapper.getHouseDealListByFilter(map);
+		List<HouseDealDto> result = new ArrayList<>();
+		
+		//맵
+		String dongCode = (String) map.get("dongCode");
+		
+		//주택유형 <String, List<String>
+		List<String> houseTypeList = (List<String>) map.get("houseTypeList");
+		
+		if(houseTypeList != null) {
+			for(String houseType : houseTypeList) {
+				List<HouseDealDto> houseDealList = houseDealMapper.getHouseDealListByHouseType(dongCode, houseType);
+				result.addAll(houseDealList);
+			}
+		}
+		
+		//거래유형 <String, List<String>
+		List<String> dealTypeList = (List<String>) map.get("dealTypeList");
+		
+		if(dealTypeList != null) {
+			for(String dealType : dealTypeList) {
+				List<HouseDealDto> houseDealList = houseDealMapper.getHouseDealListByDealType(dongCode, dealType);
+				result.addAll(houseDealList);
+			}
+		}
+		
+		System.out.println(result);
+		
+		//최소가격, 최대가격
+		
+		
+		return result;
 	}
 
 	@Override
