@@ -30,4 +30,8 @@ function recommendHouseList(success, fail) {
   api.get(`/`).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList };
+function houseListByFilter(map, success, fail) {
+  api.get(`/deal/filter`, map).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList, houseListByFilter };

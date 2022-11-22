@@ -78,6 +78,13 @@ export default {
       gugunCode: null,
       dongCode: null,
       viewModal: false,
+      map: {
+        dongCode: null,
+        //주택유형 List<String> : houseTypeList
+        houseTypeList: [],
+        //거래유형 List<String> : dealTypeList
+        dealTypeList: [],
+      },
     };
   },
   components: {
@@ -91,18 +98,20 @@ export default {
     this.CLEAR_DONG_LIST();
     this.CLEAR_HOUSES_LIST();
     this.getSidoList();
+    this.CLEAR_FILTERED_HOUSES_LIST();
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "house"]),
+    ...mapState(houseStore, ["sidos", "guguns", "dongs", "houses", "house", "filteredHouses"]),
   },
   methods: {
-    ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList", "getHouseList"]),
+    ...mapActions(houseStore, ["getSidoList", "getGugunList", "getDongList", "getHouseList", "getHouseListByFilter"]),
     ...mapMutations(houseStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
       "CLEAR_HOUSES_LIST",
       "SET_DETAIL_HOUSE",
+      "CLEAR_FILTERED_HOUSES_LIST",
     ]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
@@ -115,6 +124,9 @@ export default {
     searchHouse() {
       this.CLEAR_HOUSES_LIST();
       if (this.dongCode) this.getHouseList(this.dongCode);
+
+      // this.CLEAR_FILTERED_HOUSES_LIST();
+      // if(this.map) this.getHouseListByFilter(this.map);
     },
     ChangeViewModal() {
       this.viewModal = !this.viewModal;

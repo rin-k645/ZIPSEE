@@ -11,38 +11,38 @@
       <div
         class="grid content-center grid-cols-2 mb-10 ml-20 w-150 justify-items-center">
         <label class="cursor-pointer">
-          <input type="checkbox" name="housetype" class="sr-only peer" />
+          <input type="checkbox" name="housetype" class="sr-only peer" checked/>
           <div
             class="flex items-center justify-center h-32 text-yellow-400 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             아파트
           </div>
         </label>
         <label class="cursor-pointer">
-          <input type="checkbox" name="housetype" class="sr-only peer" />
+          <input type="checkbox" name="housetype" class="sr-only peer" checked/>
           <div
             class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-80 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
-            주택/원룸
+            원룸
           </div>
         </label>
       </div>
       <div
         class="grid content-center grid-cols-3 mb-10 w-210 justify-items-center">
         <label class="cursor-pointer">
-          <input type="checkbox" name="dealtype" class="sr-only peer" />
+          <input type="checkbox" name="dealtype" class="sr-only peer" checked/>
           <div
             class="flex items-center justify-center h-32 text-yellow-400 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             매매
           </div>
         </label>
         <label class="cursor-pointer">
-          <input type="checkbox" name="dealtype" class="sr-only peer" />
+          <input type="checkbox" name="dealtype" class="sr-only peer" checked/>
           <div
             class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             전세
           </div>
         </label>
         <label class="cursor-pointer">
-          <input type="checkbox" name="dealtype" class="sr-only peer" />
+          <input type="checkbox" name="dealtype" class="sr-only peer" checked/>
           <div
             class="flex items-center justify-center h-32 text-yellow-400 border-l-0 border-yellow-400 w-70 text-14 border-1 peer-checked:text-white peer-checked:bg-yellow-400 focus:ring-offset-0 focus:ring-0">
             월세

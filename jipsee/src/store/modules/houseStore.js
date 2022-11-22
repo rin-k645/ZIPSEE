@@ -1,4 +1,4 @@
-import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList } from "@/api/house.js";
+import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList, houseListByFilter } from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
@@ -14,6 +14,7 @@ const houseStore = {
     dealType: null,
     interests: [],
     recommendHouses: [],
+    filteredHouses: [],
     keyword: "",
   },
   getters: {},
@@ -48,6 +49,9 @@ const houseStore = {
     SET_KEYWORD_SEARCH(state, keyword) {
       state.keyword = keyword;
     },
+    SET_FILTERED_HOUSE_LIST(state, filteredHouses) {
+      state.filteredHouses = filteredHouses;
+    },
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: null, text: "시/도" }];
     },
@@ -62,6 +66,9 @@ const houseStore = {
     },
     CLEAR_HOUSE_LIST(state) {
       state.house = null;
+    },
+    CLEAR_FILTERED_HOUSES_LIST(state) {
+      state.filteredHouses = [];
     },
     CLEAR_KEYWORD_LIST(state) {
       state.keyword = null;
@@ -125,6 +132,17 @@ const houseStore = {
     },
     getRecommendHouseList({ commit }) {
       recommendHouseList(
+        ({ data }) => {
+          commit("SET_RECOMMEND_HOUSE_LIST", data);
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getHouseListByFilter({ commit }) {
+      houseListByFilter(
         ({ data }) => {
           commit("SET_RECOMMEND_HOUSE_LIST", data);
           console.log(data);
