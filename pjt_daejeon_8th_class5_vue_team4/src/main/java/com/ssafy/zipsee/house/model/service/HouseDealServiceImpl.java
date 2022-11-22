@@ -75,6 +75,9 @@ public class HouseDealServiceImpl implements HouseDealService {
 		for(HouseDealDto houseDeal : dealList) {
 			for(String houseType : houseTypeList) {
 				if(houseDeal.getHouseInfo().getHouseType().equals(houseType)) {
+					HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(houseDeal.getHouseId());
+					houseDeal.setHouseInfo(houseInfo);
+					
 					result.add(houseDeal);
 				}
 			}	
@@ -83,6 +86,9 @@ public class HouseDealServiceImpl implements HouseDealService {
 		for(HouseDealDto r: result) {
 			for(String dealType : dealTypeList) {
 				if(r.getDealType().equals(dealType)) {
+					HouseInfoDto houseInfo = houseInfoMapper.getHouseInfo(r.getHouseId());
+					r.setHouseInfo(houseInfo);
+					
 					result2.add(r);
 				}
 			}
