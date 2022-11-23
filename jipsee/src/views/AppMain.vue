@@ -14,7 +14,7 @@
               class="swiper-slide"
               @click="onClickDetailHouseView(houseDeal)"
             >
-              <img src="@/assets/sample.jpg" />
+              <img :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
               <div v-if="houseDeal.dealType == '월세'" class="mt-10 font-bold text-20">
                 {{ houseDeal.dealType }} {{ houseDeal.deposit | changeMoneyUnit }} /
                 {{ houseDeal.price | changeMoneyUnit }}
@@ -51,7 +51,7 @@
                 class="swiper-slide"
                 @click="onClickDetailHouseView(houseDeal)"
               >
-                <img src="@/assets/sample.jpg" />
+                <img :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
                 <div v-if="houseDeal.dealType == '월세'" class="mt-10 font-bold text-20">
                   {{ houseDeal.dealType }} {{ houseDeal.deposit | changeMoneyUnit }} /
                   {{ houseDeal.price | changeMoneyUnit }}
@@ -89,7 +89,7 @@
                 class="swiper-slide"
                 @click="onClickDetailHouseView(houseDeal)"
               >
-                <img src="@/assets/sample.jpg" />
+                <img :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
                 <div v-if="houseDeal.dealType == '월세'" class="mt-10 font-bold text-20">
                   {{ houseDeal.dealType }} {{ houseDeal.deposit | changeMoneyUnit }} /
                   {{ houseDeal.price | changeMoneyUnit }}
