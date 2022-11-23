@@ -73,7 +73,7 @@
           <div
             v-if="recommendHouses.user.nickName != null"
             class="mt-20 mb-10 mr-20 font-bold text-24"
-            v-text="`${recommendHouses.user.nickName}님을 위한 ${oneRoomList[i].houseInfo.dongName} 추천 주택/원룸`"
+            v-text="`${recommendHouses.user.nickName}님을 위한 ${oneRoomList[i].houseInfo.dongName} 추천 원룸`"
           ></div>
           <div
             v-else

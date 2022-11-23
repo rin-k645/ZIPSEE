@@ -11,9 +11,7 @@
         </div>
       </div>
       <div class="grid justify-end">
-        <div class="bg-gray-100 w-168 h-130">
-          <!-- <img :src="houseItem.houseDeal.houseInfo.img" /> -->
-        </div>
+        <img class="w-168 h-130 object-cover" :src="require(`@/assets/${houseItem.houseDeal.houseInfo.houseId}/1.jpg`)" />
       </div>
       <div class="pt-10 pl-15">
         <div class="pb-10 font-bold text-18">
