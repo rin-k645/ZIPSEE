@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 z-10 flex items-center justify-between w-full bg-white border-gray-200 border-b-1">
+  <div class="sticky top-0 z-10 flex items-center justify-between w-full bg-white border-gray-200 shadow-md border-b-1">
     <div class="flex items-center ml-10">
       <router-link to="/" class="h-80 w-80"><img :src="logoImg" /></router-link>
       <router-link :to="{ name: 'houselist' }" class="ml-32 font-semibold text-18 hover:text-yellow-400"

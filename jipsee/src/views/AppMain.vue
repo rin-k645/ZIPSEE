@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col items-center w-full">
     <div class="w-1200">
-      <img src="@/assets/main.jpg" class="object-cover object-center w-full h-500" />
+      <img src="@/assets/main.jpg" class="object-cover object-center w-full rounded-5 h-500" />
       <div>
-        <div class="mt-20 mb-10 font-bold text-24">실시간 매물 TOP 10</div>
+        <div class="mb-10 font-bold mt-80 text-24">실시간 매물 TOP 10</div>
         <!-- Slider main container -->
         <div ref="swiper" class="swiper">
           <div class="swiper-wrapper">
@@ -18,7 +18,7 @@
                 <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
               </div>
               <div v-else>
-                <img class="houseInfo-img" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
+                <img class="houseInfo-img rounded-5" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
               </div>
               <div v-if="houseDeal.dealType == '월세'" class="mt-10 font-bold text-20">
                 {{ houseDeal.dealType }} {{ houseDeal.deposit | changeMoneyUnit }} /
@@ -60,7 +60,10 @@
                   <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
                 </div>
                 <div v-else>
-                  <img class="houseInfo-img" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
+                  <img
+                    class="houseInfo-img rounded-5"
+                    :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)"
+                  />
                 </div>
                 <div v-if="houseDeal.dealType == '월세'" class="mt-10 font-bold text-20">
                   {{ houseDeal.dealType }} {{ houseDeal.deposit | changeMoneyUnit }} /
@@ -103,7 +106,10 @@
                   <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
                 </div>
                 <div v-else>
-                  <img class="houseInfo-img" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
+                  <img
+                    class="houseInfo-img rounded-5"
+                    :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)"
+                  />
                 </div>
                 <div v-if="houseDeal.dealType == '월세'" class="mt-10 font-bold text-20">
                   {{ houseDeal.dealType }} {{ houseDeal.deposit | changeMoneyUnit }} /
