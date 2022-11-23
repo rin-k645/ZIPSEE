@@ -17,9 +17,15 @@
           {{ house.houseInfo.houseName }}
         </div>
         <div class="pb-10 font-bold text-24">
-          {{ house.dealType }}
-          {{ house.deposit | changeMoneyUnit }} /
-          {{ house.price | changeMoneyUnit }}
+          <div v-if="house.dealType == '월세'">
+            {{ house.dealType }}
+            {{ house.deposit | changeMoneyUnit }} /
+            {{ house.price | changeMoneyUnit }}
+          </div>
+          <div v-else>
+            {{ house.dealType }}
+            {{ house.price | changeMoneyUnit }}
+          </div>
         </div>
         <div class="mb-10 text-18">
           {{ house.houseInfo.dong.sidoName }} {{ house.houseInfo.dong.gugunName }} {{ house.houseInfo.dong.dongName }}

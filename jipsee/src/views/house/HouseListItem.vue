@@ -17,9 +17,15 @@
       </div>
       <div class="pt-10 pl-15">
         <div class="pb-10 font-bold text-18">
-          {{ houseOneItem.dealType }}
-          {{ houseOneItem.deposit | changeMoneyUnit }} /
-          {{ houseOneItem.price | changeMoneyUnit }}
+          <div v-if="houseOneItem.dealType == '월세'">
+            {{ houseOneItem.dealType }}
+            {{ houseOneItem.deposit | changeMoneyUnit }} /
+            {{ houseOneItem.price | changeMoneyUnit }}
+          </div>
+          <div v-else>
+            {{ houseOneItem.dealType }}
+            {{ houseOneItem.price | changeMoneyUnit }}
+          </div>
         </div>
         <div>{{ houseOneItem.area }}m² {{ houseOneItem.floor }}층</div>
         <button class="mt-20 bg-yellow-400 h-38 w-100" @click="onClickHouse">보러가기</button>

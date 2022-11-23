@@ -54,6 +54,7 @@
         <div
           v-if="houses && houses.length != 0"
           class="flex flex-col w-[396px] h-full overflow-scroll border-t-2 border-gray-100 scrollbar-thin scrollbar-thumb-yellow-400">
+          <div v-text="`총 ${houses.length}개의 매물이 있습니다.`"></div>
           <house-list-item
             v-for="(house, index) in houses"
             :key="index"

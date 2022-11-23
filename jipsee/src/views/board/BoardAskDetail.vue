@@ -8,7 +8,7 @@
         <div class="mr-49">{{ ask.comment.registerDate }}</div>
       </div>
 
-      <div>{{ ask.comment.content }}</div>
+      <div v-html="ask.comment.content"></div>
     </div>
     <div v-else>
       <div v-if="isAdmin" class="flex flex-col mb-20 mt-50">
