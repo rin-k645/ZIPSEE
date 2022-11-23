@@ -13,6 +13,7 @@
 			H.JIBUN AS jibun,
 			H.LAT AS lat,
 			H.LNG AS lng,
+			H.IMG AS img,
 			D.DONG_NAME AS "dong.dongName",
 			D.GUGUN_NAME AS "dong.gugunName",
 			D.SIDO_NAME AS "dong.sidoName"
