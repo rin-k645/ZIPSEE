@@ -1,3 +1,4 @@
+/*global kakao*/
 import { sidoList, gugunList, dongList, houseList, interestList, recommendHouseList } from "@/api/house.js";
 
 const houseStore = {
@@ -14,6 +15,7 @@ const houseStore = {
     dealType: null,
     interests: [],
     recommendHouses: [],
+    algoRecommendHouses: [],
     filterList: [],
     keyword: "",
   },
@@ -45,6 +47,46 @@ const houseStore = {
     },
     SET_RECOMMEND_HOUSE_LIST(state, recommendHouses) {
       state.recommendHouses = recommendHouses;
+    },
+    SET_ALGO_RECOMMEND_HOUSE_LIST(state, userInfo) {
+      const script = document.createElement("script");
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src =
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a129da21c80496260f16ba43b6b9918b&libraries=services";
+      document.head.appendChild(script);
+
+      let houseList = [];
+      state.recommendHouses.apartListBydong.forEach((apartList) => {
+        apartList.forEach((e) => houseList.push(e));
+      });
+
+      console.log(houseList);
+      console.log(userInfo);
+      let result = [];
+      let ps = new kakao.maps.services.Places();
+      let tempHouse = null;
+      houseList.forEach((house) => {
+        userInfo.interestList.forEach((e) => {
+          tempHouse = house;
+          ps.categorySearch(e.interestId, placesSearchCB, {
+            radius: 50,
+            location: new kakao.maps.LatLng(tempHouse.houseInfo.lat, tempHouse.houseInfo.lng),
+          });
+        });
+      });
+      console.log("result", result);
+
+      state.algoRecommendHouses = result;
+
+      function placesSearchCB(data, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          if (data.length >= 5) result.push(tempHouse);
+        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+          // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
+        } else if (status === kakao.maps.services.Status.ERROR) {
+          // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
+        }
+      }
     },
     SET_KEYWORD_SEARCH(state, keyword) {
       state.keyword = keyword;

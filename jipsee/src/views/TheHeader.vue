@@ -70,7 +70,7 @@ export default {
     ...mapActions(userStore, ["userLogout"]),
     // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     changeLogo(b) {
-      if (b) this.logoImg = require("@/assets/logo.jpg");
+      if (b) this.logoImg = require("@/assets/logo.png");
       else this.logoImg = require("@/assets/logo.gif");
     },
     setKeyword() {

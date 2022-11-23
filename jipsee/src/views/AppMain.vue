@@ -15,7 +15,7 @@
               @click="onClickDetailHouseView(houseDeal)"
             >
               <div v-if="houseDeal.houseInfo.img == null">
-                <img class="w-168 h-130 object-cover" :src="require(`@/assets/sample.jpg`)" />
+                <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
               </div>
               <div v-else>
                 <img class="houseInfo-img" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
@@ -36,7 +36,7 @@
         </div>
 
         <!-- 아파트 추천 리스트(동코드) -->
-        <div v-for="(apartList, i) in recommendHouses.apartListBydong" :key="i">
+        <div v-for="(apartList, i) in recommendHouses.apartListBydong" :key="'apart' + i">
           <div
             v-if="recommendHouses.user.nickName != null"
             class="mt-20 mb-10 mr-20 font-bold text-24"
@@ -57,7 +57,7 @@
                 @click="onClickDetailHouseView(houseDeal)"
               >
                 <div v-if="houseDeal.houseInfo.img == null">
-                  <img class="w-168 h-130 object-cover" :src="require(`@/assets/sample.jpg`)" />
+                  <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
                 </div>
                 <div v-else>
                   <img class="houseInfo-img" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
@@ -79,7 +79,7 @@
         </div>
 
         <!-- 원룸 추천 리스트(동코드) -->
-        <div v-for="(oneRoomList, i) in recommendHouses.oneRoomListByDong" :key="i">
+        <div v-for="(oneRoomList, i) in recommendHouses.oneRoomListByDong" :key="'oneRoom' + i">
           <div
             v-if="recommendHouses.user.nickName != null"
             class="mt-20 mb-10 mr-20 font-bold text-24"
@@ -100,7 +100,7 @@
                 @click="onClickDetailHouseView(houseDeal)"
               >
                 <div v-if="houseDeal.houseInfo.img == null">
-                  <img class="w-168 h-130 object-cover" :src="require(`@/assets/sample.jpg`)" />
+                  <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
                 </div>
                 <div v-else>
                   <img class="houseInfo-img" :src="require(`@/assets/${houseDeal.houseInfo.houseId}/1.jpg`)" />
@@ -132,13 +132,20 @@ import "swiper/swiper-bundle.min.css";
 import TheFooter from "@/views/TheFooter.vue";
 import { mapState, mapMutations, mapActions } from "vuex";
 const houseStore = "houseStore";
+const userStore = "userStore";
 
 export default {
   components: { TheFooter },
+  data() {
+    return {
+      algorithmRecommend: null,
+    };
+  },
   created() {
     this.getRecommendHouseList().then(() => console.log(this.recommendHouses));
   },
   mounted() {
+    // this.algorithmRecommend = this.SET_ALGO_RECOMMEND_HOUSE_LIST(this.userInfo);
     let user = this.recommendHouses.user;
     console.log("user", user);
 
@@ -183,12 +190,22 @@ export default {
 
       num++;
     }
+
+    //알고리즘 매물 추천 리스트
+    new Swiper(this.$refs["swiper" + num], {
+      modules: [Navigation, Pagination, Autoplay],
+      grabCursor: true,
+      slidesPerView: 4.3,
+      spaceBetween: 10,
+      freeMode: true,
+    });
   },
   computed: {
     ...mapState(houseStore, ["recommendHouses", "house"]),
+    ...mapState(userStore, ["userInfo"]),
   },
   methods: {
-    ...mapMutations(houseStore, ["SET_DETAIL_HOUSE"]),
+    ...mapMutations(houseStore, ["SET_DETAIL_HOUSE", "SET_ALGO_RECOMMEND_HOUSE_LIST"]),
     ...mapActions(houseStore, ["getRecommendHouseList"]),
     onClickDetailHouseView(house) {
       this.SET_DETAIL_HOUSE(house);

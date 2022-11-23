@@ -83,6 +83,7 @@
 </template>
 
 <script>
+/*global kakao*/
 import { mapState, mapMutations, mapActions } from "vuex";
 const houseStore = "houseStore";
 export default {
@@ -113,7 +114,6 @@ export default {
   },
 
   mounted() {
-    /* global kakao */
     window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
   },
   methods: {
