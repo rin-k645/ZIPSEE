@@ -1,7 +1,7 @@
 <template>
   <div class="sticky top-0 z-10 flex items-center justify-between w-full bg-white border-gray-200 border-b-1">
     <div class="flex items-center ml-10">
-      <router-link to="/" class="h-80 w-80"><img src="@/assets/logo.png" /></router-link>
+      <router-link to="/" class="h-80 w-80"><img :src="logoImg" /></router-link>
       <router-link :to="{ name: 'houselist' }" class="ml-32 font-semibold text-18 hover:text-yellow-400"
         >매물탐색</router-link
       >
@@ -57,6 +57,7 @@ export default {
   data() {
     return {
       keywordplace: null,
+      logoImg: require("@/assets/logo.gif"),
     };
   },
   computed: {
@@ -68,6 +69,10 @@ export default {
     ...mapMutations(houseStore, ["SET_KEYWORD_SEARCH"]),
     ...mapActions(userStore, ["userLogout"]),
     // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    changeLogo(b) {
+      if (b) this.logoImg = require("@/assets/logo.jpg");
+      else this.logoImg = require("@/assets/logo.gif");
+    },
     setKeyword() {
       this.SET_KEYWORD_SEARCH(this.keywordplace);
       if (this.$route.path != "/house/list") this.$router.push({ name: "houselist" });

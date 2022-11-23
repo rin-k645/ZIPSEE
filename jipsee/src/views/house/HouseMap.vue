@@ -2,67 +2,67 @@
   <div id="map" class="relative w-[calc(100%-396px)] h-full">
     <ul id="category" v-show="category">
       <li id="BK9" data-order="bank">
-        <span class="category_bg bank"><img src="@/assets/map/bank.png" /></span>
+        <span><img src="@/assets/map/bank.png" /></span>
         은행
       </li>
       <li id="MT1" data-order="shop">
-        <span class="category_bg mart"><img src="@/assets/map/shop.png" /></span>
+        <span><img src="@/assets/map/shop.png" /></span>
         대형마트
       </li>
       <li id="PM9" data-order="drugstore">
-        <span class="category_bg pharmacy"><img src="@/assets/map/drugstore.png" /></span>
+        <span><img src="@/assets/map/drugstore.png" /></span>
         약국
       </li>
       <li id="OL7" data-order="gas-station">
-        <span class="category_bg oil"><img src="@/assets/map/gas-station.png" /></span>
+        <span><img src="@/assets/map/gas-station.png" /></span>
         주유소
       </li>
       <li id="CE7" data-order="cafe">
-        <span class="category_bg cafe"><img src="@/assets/map/cafe.png" /></span>
+        <span><img src="@/assets/map/cafe.png" /></span>
         카페
       </li>
       <li id="CS2" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+        <span><img src="@/assets/map/24-hours.png" /></span>
         편의점
       </li>
-      <li id="PS3" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="PS3" data-order="kid-school">
+        <span><img src="@/assets/map/kid-school.png" /></span>
         유치원
       </li>
-      <li id="SC4" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="SC4" data-order="school">
+        <span><img src="@/assets/map/school.png" /></span>
         학교
       </li>
-      <li id="AC5" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="AC5" data-order="trainning">
+        <span><img src="@/assets/map/training.png" /></span>
         학원
       </li>
-      <li id="PK6" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="PK6" data-order="parking-area">
+        <span><img src="@/assets/map/parking-area.png" /></span>
         주차장
       </li>
-      <li id="SW8" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="SW8" data-order="train">
+        <span><img src="@/assets/map/train.png" /></span>
         지하철역
       </li>
-      <li id="CT1" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="CT1" data-order="musical">
+        <span class="category_bg store"><img src="@/assets/map/musical.png" /></span>
         문화시설
       </li>
-      <li id="PO3" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="PO3" data-order="city-hall">
+        <span class="category_bg store"><img src="@/assets/map/city-hall.png" /></span>
         공공기관
       </li>
-      <li id="AT4" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="AT4" data-order="trip">
+        <span class="category_bg store"><img src="@/assets/map/trip.png" /></span>
         관광명소
       </li>
-      <li id="FD6" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="FD6" data-order="restaurant">
+        <span class="category_bg store"><img src="@/assets/map/restaurant.png" /></span>
         음식점
       </li>
-      <li id="HP8" data-order="24-hours">
-        <span class="category_bg store"><img src="@/assets/map/24-hours.png" /></span>
+      <li id="HP8" data-order="hospital">
+        <span class="category_bg store"><img src="@/assets/map/hospital.png" /></span>
         병원
       </li>
       <li @click="viewCategory">
@@ -94,7 +94,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["house", "houses", "keyword"]),
+    ...mapState(houseStore, ["house", "houses", "keyword", "filterList"]),
   },
   watch: {
     house() {
@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     ...mapActions(houseStore, ["getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_KEYWORD_LIST"]),
+    ...mapMutations(houseStore, ["CLEAR_KEYWORD_LIST", "CLEAR_HOUSES_LIST", "SET_FILTER_DONGCODE"]),
     viewCategory() {
       this.category = !this.category;
     },
@@ -154,7 +154,11 @@ export default {
           this.panTo(data[0].y, data[0].x);
           console.log(keyword);
           geocoder.coord2RegionCode(data[0].x, data[0].y, (result) => {
-            if (result) this.getHouseList(result[0].code);
+            if (result) {
+              this.CLEAR_HOUSES_LIST();
+              this.SET_FILTER_DONGCODE(result[0].code);
+              this.getHouseList(this.filterList);
+            }
           });
         });
 
@@ -225,7 +229,7 @@ export default {
 
         for (var i = 0; i < places.length; i++) {
           // 마커를 생성하고 지도에 표시합니다
-          var marker = addMarker(places[i], new kakao.maps.LatLng(places[i].y, places[i].x), order);
+          var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
 
           // 마커와 검색결과 항목을 클릭 했을 때
           // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
@@ -240,7 +244,7 @@ export default {
       }
 
       // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-      function addMarker(place, position, category) {
+      function addMarker(position, category) {
         var imageSrc = require(`@/assets/map/${category}.png`), // 마커 이미지 url, 스프라이트 이미지를 씁니다
           imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
           markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
