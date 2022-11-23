@@ -12,10 +12,13 @@
       </div>
       <div class="grid justify-end">
         <div v-if="houseItem.houseDeal.houseInfo.img == null">
-          <img class="w-168 h-130 object-cover" :src="require(`@/assets/sample.jpg`)" />
+          <img class="object-cover w-168 h-130" :src="require(`@/assets/sample.jpg`)" />
         </div>
         <div v-else>
-          <img class="houseInfo-img" :src="require(`@/assets/${houseItem.houseDeal.houseInfo.houseId}/1.jpg`)" />
+          <img
+            class="object-cover w-168 h-130"
+            :src="require(`@/assets/${houseItem.houseDeal.houseInfo.houseId}/1.jpg`)"
+          />
         </div>
       </div>
       <div class="pt-10 pl-15">

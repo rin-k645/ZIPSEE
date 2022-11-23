@@ -1,8 +1,14 @@
 <template>
   <div class="flex flex-col items-center">
-    <div class="relative bg-yellow-200 w-1000 h-500">
-      <button class="absolute h-40 font-bold bg-yellow-400 bottom-10 left-10 w-70">
-        <a href="http://localhost:8077/1/index.html">360˚</a>
+    <div class="relative w-1000 h-500">
+      <div v-if="house.houseInfo.img == null">
+        <img class="object-cover w-1000 h-500" :src="require(`@/assets/sample.jpg`)" />
+      </div>
+      <div v-else>
+        <img class="object-cover w-1000 h-500" :src="require(`@/assets/${house.houseInfo.houseId}/1.jpg`)" />
+      </div>
+      <button class="absolute h-40 font-bold bg-[#e7e7e7] rounded-5 bottom-10 left-10 w-90">
+        <a href="http://localhost:8077/1/index.html">360˚ VR</a>
       </button>
     </div>
     <div class="flex flex-row w-1000 h-500 mt-100">
